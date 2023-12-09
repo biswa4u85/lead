@@ -10,9 +10,8 @@ export async function GET(request: NextRequest) {
 
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
-
+        
         const counts = await prisma[resource].count()
-        console.log('counts ', counts)
         const result = await prisma[resource].findMany({
             skip,
             take,
@@ -20,7 +19,6 @@ export async function GET(request: NextRequest) {
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
     } catch (error: any) {
-        console.log('error', error)
         errorResponse(error.message);
     }
 }
@@ -60,7 +58,7 @@ export async function DELETE(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
-        const id = Number(request.nextUrl.searchParams.get("id"))
+        const id:any = request.nextUrl.searchParams.get("id")
         if (!id) return errorResponse("Record Not Found");
 
         const res = await prisma[resource].delete({ where: { id } });

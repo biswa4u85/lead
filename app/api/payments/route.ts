@@ -35,13 +35,13 @@ export async function POST(request: NextRequest) {
 
         const data = await request.json();
         const { userId, type, amount, refId } = data
-        const res = await prisma[resource].create({ data: { userId: parseInt(userId), type, amount: parseInt(amount), refId } });
+        const res = await prisma[resource].create({ data: { userId: userId, type, amount: parseInt(amount), refId } });
 
         // Update wallet
-        const user: any = await prisma[subRes].findUnique({ where: { id: parseInt(userId) } });
+        const user: any = await prisma[subRes].findUnique({ where: { id: userId } });
         let wallet = Number(user.wallet)
         let updAmount = wallet + Number(amount)
-        await prisma[subRes].update({ where: { id: parseInt(userId) }, data: { wallet: updAmount } });
+        await prisma[subRes].update({ where: { id: userId }, data: { wallet: updAmount } });
 
         return successResponse(res);
     } catch (error: any) {

@@ -59,7 +59,7 @@ export async function DELETE(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
-        const id = Number(request.nextUrl.searchParams.get("id"))
+        const id:any = request.nextUrl.searchParams.get("id")
         if (!id) return errorResponse("Record Not Found");
 
         const res = await prisma[resource].delete({ where: { id } });

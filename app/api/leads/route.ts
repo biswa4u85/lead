@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].create({
             data: {
-                projectId: Number(projectId), serviceId: Number(serviceId), title, description, address: {
+                projectId, serviceId, title, description, address: {
                     create: address
                 }
             }
@@ -56,7 +56,7 @@ export async function PATCH(request: NextRequest) {
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].update({
             where: { id },
-            data: { projectId: parseInt(projectId), serviceId: parseInt(serviceId), title, description, status, address: { update: address } },
+            data: { projectId, serviceId, title, description, status, address: { update: address } },
             include: { address: true }
         });
         return successResponse(res);
@@ -70,7 +70,7 @@ export async function DELETE(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
-        const id = Number(request.nextUrl.searchParams.get("id"))
+        const id:any = request.nextUrl.searchParams.get("id")
         if (!id) return errorResponse("Record Not Found");
 
         const res = await prisma[resource].delete({ where: { id }, include: { address: true } });
