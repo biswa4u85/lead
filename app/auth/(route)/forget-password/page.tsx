@@ -3,7 +3,6 @@ import React, { useLayoutEffect, useEffect, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MainContext } from "@/contexts";
 import { usePost } from "@/contexts/usePost";
 import { InputBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
@@ -13,14 +12,7 @@ import { toast } from 'react-toastify';
 
 const Page: React.FC = () => {
   const router = useRouter();
-  const { token } = useContext(MainContext)
   const { create, data, loading } = usePost();
-
-  useLayoutEffect(() => {
-    if (token) {
-      router.push("/admin");
-    }
-  }, [token])
 
   useEffect(() => {
     if (data) {

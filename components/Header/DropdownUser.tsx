@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MainContext } from "@/contexts";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from 'next-auth/react'
 
 const DropdownUser = () => {
-  const { logout } = useContext(MainContext)
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef<any>(null);
@@ -164,7 +162,6 @@ const DropdownUser = () => {
         </ul>
         <button onClick={() => {
           signOut()
-          logout()
           router.push("/auth");
         }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg

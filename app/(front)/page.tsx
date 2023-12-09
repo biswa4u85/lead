@@ -81,7 +81,7 @@ const page = async () => {
                             </div>
 
                             <p className="py-5 text-lg font-medium text-black">Step 3</p>
-                            <p className="text-sm text-gray">Receive multiple quotes and choose your craftsman: We let's forward your request to 4 artisans according Read more .</p>
+                            <p className="text-sm text-gray">{`Receive multiple quotes and choose your craftsman: We let's forward your request to 4 artisans according Read more .`}</p>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ const page = async () => {
                 <div className="container mx-auto">
                     <div className="py-10">
                         <h2 className="mb-6 text-lg font-semibold text-center text-black md:text-xl">Finding the right craftsman <span className="font-bold text-indigo-800 underline">craftsman</span> </h2>
-                        <p className="text-sm text-center whitespace-normal text-black-light md:whitespace-normal md:text-title-sm">Has never been easier Avec Travaux Renove, simplifiez votre recherche d'artisans pour<br /> des projets de qualité."</p>
+                        <p className="text-sm text-center whitespace-normal text-black-light md:whitespace-normal md:text-title-sm">{`Has never been easier Avec Travaux Renove, simplifiez votre recherche d'artisans pour<br /> des projets de qualité."`}</p>
                         <div className="flex flex-col items-center pt-6 space-y-4 md:flex-row md:space-x-4">
 
                             {data?.data && data.data.map((item: any, key: any) => <div key={key} className="basis-1/4 bg-white p-4 shadow-custom text-center w-80 rounded-[16px]">

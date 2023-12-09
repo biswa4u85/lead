@@ -19,18 +19,18 @@ const page = async () => {
     return (
         <>
             <div className="bg-custom-blue">
-                <div className="container flex flex-col mx-auto md:flex-row md:justify-between md:items-center px-10">
-                    <div className="grid grid-cols-9 gap-1  justify-between items-center">
-                        <div className="col-span-5 flex flex-col justify-center">
-                            <p className="md:text-6xl py-5 text-black font-medium leading-tight">Increase your business productivity and performance with our <span className="font-bold text-indigo-800 border-b" >services</span>
+                <div className="container flex flex-col px-10 mx-auto md:flex-row md:justify-between md:items-center">
+                    <div className="grid items-center justify-between grid-cols-9 gap-1">
+                        <div className="flex flex-col justify-center col-span-5">
+                            <p className="py-5 font-medium leading-tight text-black md:text-6xl">Increase your business productivity and performance with our <span className="font-bold text-indigo-800 border-b" >services</span>
                             </p>
-                            <button className="flex flex-initial w-60 items-center justify-between px-4 py-4 my-6 text-xs font-semibold text-white bg-indigo-800 rounded-md hover:bg-blue-700">
+                            <button className="flex items-center justify-between flex-initial px-4 py-4 my-6 text-xs font-semibold text-white bg-indigo-800 rounded-md w-60 hover:bg-blue-700">
                                 What do you need ?
                                 <AiOutlineRight className="mt-1" />
                             </button>
 
                         </div>
-                        <div className="pt-5 md:pt-6 col-span-4 flex justify-items-end">
+                        <div className="flex col-span-4 pt-5 md:pt-6 justify-items-end">
                             <Image
                                 alt=""
                                 width="384"
@@ -59,7 +59,7 @@ const page = async () => {
                                 <AiOutlineRight className="mt-1" />
                             </button>
                         </div> */}
-                        <button className="flex flex-initial w-60 items-center justify-between px-4 py-4 my-6 text-xs font-semibold text-white bg-indigo-800 rounded-md hover:bg-blue-700">
+                        <button className="flex items-center justify-between flex-initial px-4 py-4 my-6 text-xs font-semibold text-white bg-indigo-800 rounded-md w-60 hover:bg-blue-700">
                             What do you need ?
                             <AiOutlineRight className="mt-1" />
                         </button>
@@ -74,12 +74,6 @@ const page = async () => {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
 
 
             <div className="container mx-auto">
@@ -108,7 +102,7 @@ const page = async () => {
                             </div>
 
                             <p className="py-5 text-lg font-medium text-black">Step 3</p>
-                            <p className="text-sm text-gray">Receive multiple quotes and choose your craftsman: We let's forward your request to 4 artisans according Read more .</p>
+                            <p className="text-sm text-gray">{`Receive multiple quotes and choose your craftsman: We let's forward your request to 4 artisans according Read more .`}</p>
                         </div>
                     </div>
                 </div>
@@ -118,7 +112,7 @@ const page = async () => {
                 <div className="container mx-auto">
                     <div className="py-10">
                         <h2 className="mb-6 text-lg font-semibold text-center text-black md:text-xl">Finding the right craftsman <span className="font-bold text-indigo-800 underline">craftsman</span> </h2>
-                        <p className="text-sm text-center whitespace-normal text-black-light md:whitespace-normal md:text-title-sm">Has never been easier Avec Travaux Renove, simplifiez votre recherche d'artisans pour<br /> des projets de qualité."</p>
+                        <p className="text-sm text-center whitespace-normal text-black-light md:whitespace-normal md:text-title-sm">{`Has never been easier Avec Travaux Renove, simplifiez votre recherche d'artisans pour<br /> des projets de qualité."`}</p>
                         <div className="flex flex-col items-center pt-6 space-y-4 md:flex-row md:space-x-4">
 
                             <div className="basis-1/4 bg-white p-4 shadow-custom text-center w-80 rounded-[16px]">
