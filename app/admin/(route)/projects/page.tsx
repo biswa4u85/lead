@@ -29,7 +29,7 @@ export default function Page() {
     {
       title: 'Icon',
       dataIndex: 'icon',
-      render: (text: any) => <Avatar shape="square" src={<img src={"http://localhost:3000" + (text ? text : "/images/user.png")} alt="" />} />
+      render: (text: any) => <Avatar shape="square" src={<img src={text ? text : "/images/user.png"} alt="" />} />
 
     },
     {

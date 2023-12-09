@@ -176,7 +176,7 @@ const FileBox = (props: any) => {
             {form?.errors[props.name] && form?.touched[props.name] && (
               <div className="mt-1 text-xs-1 text-meta-1">{form.errors[props.name]}</div>
             )}
-            <span className="absolute right-4 top-2"><Avatar shape="square" src={<img src={"http://localhost:3000" + (field.value ? field.value : "/images/user.png")} alt="" />} /></span>
+            <span className="absolute right-4 top-2"><Avatar shape="square" src={<img src={field.value ? field.value : "/images/user.png"} alt="" />} /></span>
           </div>
         </>
       }}

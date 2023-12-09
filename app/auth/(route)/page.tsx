@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect, useContext } from "react";
+import React, { useLayoutEffect, useContext, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import { useSession, signIn } from "next-auth/react";
 const Page: React.FC = (props: any) => {
   const { status } = useSession()
   const router = useRouter();
+  const [loading, setLoading] = useState(false)
 
   useLayoutEffect(() => {
     if (status == "authenticated") {
@@ -29,11 +30,8 @@ const Page: React.FC = (props: any) => {
   });
 
   const onPressHandle = async (values: any) => {
-    signIn("credentials", {
-      ...values,
-      redirect: false,
-      callbackUrl: props?.callbackUrl ?? "http://localhost:3000/admin"
-    })
+    setLoading(true)
+    signIn("credentials", values)
   };
 
   return (
@@ -81,7 +79,7 @@ const Page: React.FC = (props: any) => {
                   />
                 </div>
                 <div className="mb-4">
-                  <Buttons value={"Sign In"} isLoading={status == "loading"} onClick={handleSubmit} />
+                  <Buttons value={"Sign In"} isLoading={loading} onClick={handleSubmit} />
                 </div>
                 <div className="mt-6 text-center">
                   <p>
