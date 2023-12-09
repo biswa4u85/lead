@@ -146,7 +146,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                         />
                     </div>
                     <div className="fixed bottom-3 right-5 z-999">
-                        <Buttons value={initialValues?.edit ? "Update" : "Add new"} isLoading={loading} onClick={handleSubmit} />
+                        <Buttons value={initialValues?.edit ? "Update" : "Add new"} loading={loading} onClick={handleSubmit} />
                     </div>
                 </div>
             )}

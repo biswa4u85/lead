@@ -2,18 +2,15 @@ import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import * as dateFn from "date-fns";
-import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "@/app/libs/getToken";
+import { successResponse, errorResponse } from "@/app/libs/utility";
+import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     const file: any = formData.get("file") as Blob | null;
-    if (!file) {
-        return NextResponse.json(
-            { error: "File blob is required." },
-            { status: 400 }
-        );
-    }
+    if (!file) return errorResponse("File blob is required.", 400);
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
@@ -25,14 +22,7 @@ export async function POST(request: NextRequest) {
         if (e.code === "ENOENT") {
             await mkdir(uploadDir, { recursive: true });
         } else {
-            console.error(
-                "Error while trying to create directory when uploading a file\n",
-                e
-            );
-            return NextResponse.json(
-                { error: "Something went wrong." },
-                { status: 500 }
-            );
+            return errorResponse("Something went wrong.", 500);
         }
     }
     try {
@@ -42,12 +32,8 @@ export async function POST(request: NextRequest) {
             ""
         )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
         await writeFile(`${uploadDir}/${filename}`, buffer);
-        return NextResponse.json({ fileUrl: `${relativeUploadDir}/${filename}` });
+        return successResponse({ fileUrl: `${relativeUploadDir}/${filename}` });
     } catch (e) {
-        console.error("Error while trying to upload a file\n", e);
-        return NextResponse.json(
-            { error: "Something went wrong." },
-            { status: 500 }
-        );
+        return errorResponse("Something went wrong.", 500);
     }
 }

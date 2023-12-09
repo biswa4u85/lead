@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import SiteApis from "./SiteApis";
+import SiteApis, {axiosInstance} from "./SiteApis";
 import { useSession } from "next-auth/react";
 
 export function useFetch(params: any) {
@@ -9,7 +9,7 @@ export function useFetch(params: any) {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const response: any = await SiteApis.getDataApi(params.url, params.query ? JSON.parse(params.query) : {}, session?.data?.accessToken);
+            const response: any = await SiteApis.getDataApi(params.url, params.query ? JSON.parse(params.query) : {}, session?.data?.user?.token);
             if (!response?.error) {
                 setData(response);
             }

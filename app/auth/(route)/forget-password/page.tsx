@@ -68,7 +68,7 @@ const Page: React.FC = () => {
                   />
                 </div>
                 <div className="mb-4">
-                  <Buttons value={"Reset Now"} isLoading={loading} onClick={handleSubmit} />
+                  <Buttons value={"Reset Now"} loading={loading} onClick={handleSubmit} />
                 </div>
 
                 <div className="mt-6 text-center">

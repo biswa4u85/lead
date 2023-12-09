@@ -17,16 +17,15 @@ const showError = (error: any) => {
     if (messages) {
         return toast.error(messages?.message);
     }
-    console.log('error ', error)
     if (error?.code == "ERR_NETWORK" || error?.code == "ERR_BAD_RESPONSE") {
         // window.location.href = "/login";
     }
 };
 
 const SiteApis = {
-    login: async (params: any) => {
+    login: async (body: any) => {
         return axiosInstance
-            .post("auth/login", { ...params, loginType: "email" }, { withCredentials: false })
+            .post("auth/login", body, { withCredentials: false })
             .then((response: any) => {
                 if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
                     return response?.data?.data
@@ -59,7 +58,8 @@ const SiteApis = {
                 return { error: true, message: error?.message }
             });
     },
-    addDataApi: async (url: any, body: any) => {
+    addDataApi: async (url: any, body: any, token: any) => {
+        axiosInstance.defaults.headers['Authorization'] = token
         return axiosInstance
             .post(url, body, { withCredentials: false })
             .then((response: any) => {
@@ -74,7 +74,8 @@ const SiteApis = {
                 return { error: true, message: error?.message }
             });
     },
-    editDataApi: async (url: any, body: any) => {
+    editDataApi: async (url: any, body: any, token: any) => {
+        axiosInstance.defaults.headers['Authorization'] = token
         return axiosInstance
             .patch(url, body, { withCredentials: false })
             .then((response: any) => {
@@ -89,7 +90,8 @@ const SiteApis = {
                 return { error: true, message: error?.message }
             });
     },
-    deleteDataApi: async (url: any, body: any) => {
+    deleteDataApi: async (url: any, body: any, token: any) => {
+        axiosInstance.defaults.headers['Authorization'] = token
         const URL = `${url}?id=${body.id}`
         return axiosInstance
             .delete(URL, { withCredentials: false })
@@ -112,7 +114,7 @@ const SiteApis = {
             .post(url, body, { withCredentials: false })
             .then((response: any) => {
                 if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-                    return response?.data
+                    return response?.data?.data
                 } else {
                     throw new Error(response)
                 }

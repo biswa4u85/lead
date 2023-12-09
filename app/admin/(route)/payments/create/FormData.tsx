@@ -134,7 +134,7 @@ function Form({ resource, router }: any) {
                         {values?.type == "card" && (<div className='mt-5'><PaymentElement /></div>)}
                     </div>
                     <div className="mb-4">
-                        <Buttons value={"Add new"} isLoading={loading} onClick={handleSubmit} />
+                        <Buttons value={"Add new"} loading={loading} onClick={handleSubmit} />
                     </div>
                 </div>
             }}

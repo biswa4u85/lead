@@ -9,11 +9,11 @@ const Buttons = (props: any) => {
   return (
     <button
       type="button"
-      disabled={props.isLoading}
+      disabled={props.loading}
       className="flex justify-center w-full p-3 text-white transition border rounded-lg cursor-pointer border-primary bg-primary hover:bg-opacity-90"
       {...props}>
-      {props.isLoading && (<div className="w-8 h-8 mr-5 border-t-4 border-blue-100 border-solid rounded-full animate-spin"></div>)}
-      {props.isLoading ? "Processing..." : props.value}
+      {props.loading && (<div className="w-8 h-8 mr-5 border-t-4 border-blue-100 border-solid rounded-full animate-spin"></div>)}
+      {props.loading ? "Processing..." : props.value}
     </button>
   );
 };

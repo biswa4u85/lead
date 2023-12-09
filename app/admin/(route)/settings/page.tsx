@@ -15,7 +15,7 @@ const resource = "users";
 
 const Settings = () => {
   const { data }: any = useSession()
-  const { edit, data: respond, loading: editLoading } = usePatch();
+  const { edit, data: respond, loading: editoading } = usePatch();
   const { data: user, loading } = useFetch({ url: `${resource}/${data?.user?.id}`, query: JSON.stringify({}) });
 
   const validationSchema = Yup.object().shape({
@@ -104,7 +104,7 @@ const Settings = () => {
                         />
                       </div>
                       <div className="flex justify-end gap-4.5">
-                        <Buttons value={"Save"} isLoading={editLoading} onClick={handleSubmit} />
+                        <Buttons value={"Save"} loading={editoading} onClick={handleSubmit} />
                       </div>
                     </form>
                   </div>
@@ -148,7 +148,7 @@ const Settings = () => {
                         label="Profile"
                         placeholder="Upload Profile"
                       />
-                      <div className="mt-5"><Buttons value={"Save"} isLoading={editLoading} onClick={handleSubmit} /></div>
+                      <div className="mt-5"><Buttons value={"Save"} loading={editoading} onClick={handleSubmit} /></div>
                     </>
                   )}
                 </Formik>

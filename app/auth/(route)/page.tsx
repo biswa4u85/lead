@@ -1,24 +1,15 @@
 "use client";
-import React, { useLayoutEffect, useContext, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { MdOutlineMail } from "react-icons/md";
-import { useSession, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const Page: React.FC = (props: any) => {
-  const { status } = useSession()
-  const router = useRouter();
   const [loading, setLoading] = useState(false)
-
-  useLayoutEffect(() => {
-    if (status == "authenticated") {
-      router.push("/admin");
-    }
-  }, [status])
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -31,12 +22,12 @@ const Page: React.FC = (props: any) => {
 
   const onPressHandle = async (values: any) => {
     setLoading(true)
-    signIn("credentials", values)
+    signIn("credentials", { ...values, callbackUrl: `${"http://localhost:3000"}/admin` })
   };
 
   return (
     <Formik
-      initialValues={{ email: "admin@admin.com", password: "Demo@123" }}
+      initialValues={{ email: "admin@admin.com", password: "admin123" }}
       validationSchema={validationSchema}
       onSubmit={(values) => onPressHandle(values)}
     >
@@ -79,7 +70,7 @@ const Page: React.FC = (props: any) => {
                   />
                 </div>
                 <div className="mb-4">
-                  <Buttons value={"Sign In"} isLoading={loading} onClick={handleSubmit} />
+                  <Buttons value={"Sign In"} loading={loading} onClick={handleSubmit} />
                 </div>
                 <div className="mt-6 text-center">
                   <p>

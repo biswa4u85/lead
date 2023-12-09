@@ -70,8 +70,15 @@ module.exports = {
       backgroundColor: {
         "custom-blue": "rgba(0, 74, 173, 0.05)",
       },
+      backgroundImage: {
+        'hero': "(url:'./public/images/constuction2.png')",
+      },
       boxShadow: {
-        custom: "0 5px 20px rgba(0, 74, 173, 0.05)", // Define your custom box shadow
+        // custom: "0 5px 20px rgba(0, 74, 173, 0.10)",
+        custom: "2 2px 4px rgba(0, 74, 173, 0.10)",
+      },
+      dropShadow:{
+        '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
       },
       fontSize: {
         "title-xxl": ["44px", "55px"],

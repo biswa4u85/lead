@@ -1,16 +1,16 @@
 import prisma from "@/app/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/app/libs/utility";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { getToken } from "@/app/libs/getToken";
+import bcryptjs from "bcryptjs";
 
 const resource = "user";
 
 export async function GET(request: NextRequest) {
     try {
 
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
@@ -26,20 +26,24 @@ export async function GET(request: NextRequest) {
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
     } catch (error: any) {
-        console.log('error', error)
         errorResponse(error.message);
     }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
         delete data.firstName
         delete data.lastName
 
+        // Hash password
+        if (data.password) {
+            const salt = await bcryptjs.genSalt(10)
+            data.password = await bcryptjs.hash(data.password, salt)
+        }
         const res = await prisma[resource].create({ data });
         return successResponse(res);
     } catch (error: any) {
@@ -47,10 +51,10 @@ export async function POST(request: Request) {
     }
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
         const { id, name, status } = data
@@ -66,8 +70,8 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const id = Number(request.nextUrl.searchParams.get("id"))
         if (!id) return errorResponse("Record Not Found");

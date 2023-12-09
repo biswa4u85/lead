@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const getData = async (): Promise<any> => {
     const data: any = await getServerSession(authOptions)
-    const response: any = await SiteApis.getDataApi("projects", {}, data?.accessToken);
+    const response: any = await SiteApis.getDataApi("projects", {}, data?.token);
     if (!response?.error) {
         return response;
     }
@@ -54,12 +54,11 @@ const page = async () => {
                 </div>
             </div>
 
-
             <div className="container mx-auto">
                 <div className="my-10">
                     <h2 className="mb-6 text-lg font-semibold text-center text-black md:xl">How it <span className="font-bold text-indigo-800 underline">works</span> </h2>
                     <div className="flex flex-col items-center md:flex-row md:justify-center ">
-                        <div className="py-8 px-4 shadow-custom text-center w-80 rounded-[16px] flex flex-col items-center justify-center">
+                        <div className="py-8 px-4 bg-white shadow-lg shadow-custom  text-center w-80 rounded-[16px] flex flex-col items-center justify-center">
                             <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
                                 <span className="text-lg font-bold text-indigo-800">1</span>
                             </div>
@@ -67,7 +66,7 @@ const page = async () => {
                             <p className="py-5 text-lg font-medium text-black">Step 1</p>
                             <p className="text-sm text-gray">.Describe your project in a few simple steps: Nothing could be easier, let yourself be guided by our simplified route.</p>
                         </div>
-                        <div className="py-8 px-4 mx-4 shadow-custom text-center w-80 rounded-[16px] flex flex-col items-center justify-center">
+                        <div className="py-8 px-4 mx-4 dropShadow-3xl bg-white text-center w-80 rounded-[16px] flex flex-col items-center justify-center">
                             <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
                                 <span className="text-lg font-bold text-indigo-800">2</span>
                             </div>

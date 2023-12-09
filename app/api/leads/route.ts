@@ -1,16 +1,15 @@
 import prisma from "@/app/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/app/libs/utility";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { getToken } from "@/app/libs/getToken";
 
 const resource = "lead";
 
 export async function GET(request: NextRequest) {
     try {
 
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
@@ -28,10 +27,8 @@ export async function GET(request: NextRequest) {
     }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
-        // const session = await getServerSession(authOptions);
-        // if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
         const { projectId, serviceId, title, description, firstName, lastName, city, email, phone, postalCode } = data
@@ -45,15 +42,14 @@ export async function POST(request: Request) {
         });
         return successResponse(res);
     } catch (error: any) {
-        console.log(error)
-        errorResponse("asfdsf");
+        errorResponse(error.message);
     }
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
         const { id, projectId, serviceId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
@@ -71,8 +67,8 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (!session?.user?.email) return errorResponse("You are not Not Authorized", 401);
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const id = Number(request.nextUrl.searchParams.get("id"))
         if (!id) return errorResponse("Record Not Found");
