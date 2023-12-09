@@ -22,7 +22,7 @@ const Page: React.FC = (props: any) => {
 
   const onPressHandle = async (values: any) => {
     setLoading(true)
-    signIn("credentials", { ...values, callbackUrl: `${"http://localhost:3000"}/admin` })
+    signIn("credentials", { ...values, callbackUrl: `${"https://lead-dusky.vercel.app"}/admin` })
   };
 
   return (
