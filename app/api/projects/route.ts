@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
 
         const counts = await prisma[resource].count()
+        console.log('counts ', counts)
         const result = await prisma[resource].findMany({
             skip,
             take,
