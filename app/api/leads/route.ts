@@ -1,7 +1,7 @@
-import prisma from "@/app/libs/prisma";
+import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
-import { successResponse, errorResponse } from "@/app/libs/utility";
-import { getToken } from "@/app/libs/getToken";
+import { successResponse, errorResponse } from "@/libs/utility";
+import { getToken } from "@/libs/getToken";
 
 const resource = "lead";
 
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
-            include: { address: true }
+            include: { address: true, project:true }
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
@@ -52,7 +52,11 @@ export async function PATCH(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        const { id, projectId, serviceId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
+        let id = JSON.parse(JSON.stringify(data.id))
+        delete data.id
+        delete data.edit
+
+        const { projectId, serviceId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].update({
             where: { id },
@@ -70,7 +74,7 @@ export async function DELETE(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
-        const id:any = request.nextUrl.searchParams.get("id")
+        const id: any = request.nextUrl.searchParams.get("id")
         if (!id) return errorResponse("Record Not Found");
 
         const res = await prisma[resource].delete({ where: { id }, include: { address: true } });

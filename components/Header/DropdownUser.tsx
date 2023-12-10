@@ -10,7 +10,7 @@ const DropdownUser = () => {
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
   const { data } = useSession()
-
+  
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -56,9 +56,9 @@ const DropdownUser = () => {
           <Image
             width={112}
             height={112}
-            // src={data?.user?.image ? data?.user?.image : "/images/user/user-01.png"}
-            src={"/images/user/user-01.png"}
+            src={data?.user?.image ? data?.user?.image : "/images/user.png"}
             alt="User"
+            className="rounded-full"
           />
         </span>
 

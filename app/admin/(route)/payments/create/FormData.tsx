@@ -47,7 +47,7 @@ function Form({ resource, router }: any) {
 
     const { data: users } = useFetch({ url: "users", query: JSON.stringify({ "role": "user" }) });
     const userOptions = users?.data ? users.data.map((item: any) => {
-        return { label: `${item?.name}`, value: item?.id }
+        return { label: `${item?.firstName} ${item?.lastName}`, value: item?.id }
     }) : []
 
     const { create, data: respond, loading } = usePost();
@@ -90,7 +90,7 @@ function Form({ resource, router }: any) {
                         // Make Payment
                         await stripe.confirmPayment({
                             elements,
-                            clientSecret,
+                            clientSecret:clientSecret.data,
                             confirmParams: {
                                 return_url: `${origin}${pathname}?info=${JSON.stringify(values)}`,
                             },

@@ -27,10 +27,10 @@ export default function Page() {
 
   const columns = [
     {
-      title: "Lead ID",
-      dataIndex: "id",
+      title: "Project",
+      dataIndex: "project",
       render(val: any) {
-        return val;
+        return val.name;
       },
     },
     {
@@ -92,7 +92,7 @@ export default function Page() {
                   EDIT
                 </Button>
               </Menu.Item>
-              <Menu.Item key="1">
+              <Menu.Item key="2">
                 <Button
                   type="link"
                   onClick={() => setDetail({ ...record, "active": true })}
@@ -100,7 +100,7 @@ export default function Page() {
                   {record.status == "active" ? "INACTIVE" : "ACTIVE"}
                 </Button>
               </Menu.Item>
-              <Menu.Item key="2">
+              <Menu.Item key="3">
                 <Button
                   type="link"
                   onClick={() => setDetail({ ...record, "delete": true })}

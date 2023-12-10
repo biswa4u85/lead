@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { MdOutlineMail } from "react-icons/md";
 import { signIn } from "next-auth/react";
+const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
 
 const Page: React.FC = (props: any) => {
   const [loading, setLoading] = useState(false)
@@ -22,12 +23,12 @@ const Page: React.FC = (props: any) => {
 
   const onPressHandle = async (values: any) => {
     setLoading(true)
-    signIn("credentials", { ...values, callbackUrl: `${"https://lead-dusky.vercel.app"}/admin` })
+    signIn("credentials", { ...values, callbackUrl: `${origin}/admin` })
   };
 
   return (
     <Formik
-      initialValues={{ email: "admin@admin.com", password: "admin123" }}
+      initialValues={{ email: "a1@demo.com", password: "Demo@123" }}
       validationSchema={validationSchema}
       onSubmit={(values) => onPressHandle(values)}
     >

@@ -1,6 +1,6 @@
-import prisma from "@/app/libs/prisma";
+import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
-import { successResponse, errorResponse } from "@/app/libs/utility";
+import { successResponse, errorResponse } from "@/libs/utility";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
         //create token data
         const tokenData = {
             id: user.id,
-            name: user.name,
+            name: `${user.firstName} ${user.lastName}`,
             email: user.email,
             role: user.role,
             image: user.image,

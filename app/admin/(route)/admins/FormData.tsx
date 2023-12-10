@@ -1,4 +1,4 @@
-import { InputBox, FileBox, Buttons } from "@/components/RenderFroms";
+import { InputBox, FileBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
@@ -10,6 +10,7 @@ const initialData = {
     lastName: "",
     email: "",
     phone: "",
+    password: "",
 }
 
 export function FormData({ initialValues, handleUpdate, loading }: any) {
@@ -21,14 +22,14 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         email: Yup.string()
             .email("Invalid email address")
             .required("Email is required"),
-        phone: Yup.string().required("Phone is required"),
+        phone: Yup.string().required("Phone is required")
     });
 
     return (
         <Formik
-            initialValues={initialValues?.edit ? { ...initialValues, firstName: initialValues?.name ?? "", lastName: initialValues?.name ?? "", } : initialData}
+            initialValues={initialValues?.edit ? { ...initialValues, password: "", } : initialData}
             validationSchema={validationSchema}
-            onSubmit={(values) => handleUpdate({ ...values, role: "admin", name:`${values?.firstName} ${values?.lastName}` })}
+            onSubmit={(values) => handleUpdate({ ...values, role: "admin" })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
@@ -61,6 +62,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                     <div className="mb-4">
                         <InputBox
                             required={true}
+                            readOnly={initialValues?.edit}
                             name="email"
                             label="Email"
                             placeholder="Enter your Email"
@@ -74,6 +76,14 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             label="Phone"
                             placeholder="Enter your Phone"
                             icon={<FaPhoneAlt />}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <PasswordBox
+                            error={errors.password}
+                            label="Password"
+                            placeholder="Enter your Password"
+                            name="password"
                         />
                     </div>
                     <div className="mb-4">

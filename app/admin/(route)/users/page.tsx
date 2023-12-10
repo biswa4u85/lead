@@ -6,7 +6,8 @@ import {
   Tag,
   Button,
   Dropdown,
-  Menu
+  Menu,
+  Avatar
 } from "antd";
 import { useFetch } from "@/contexts/useFetch";
 import { CiMenuKebab } from "react-icons/ci";
@@ -27,20 +28,18 @@ export default function Page() {
 
   const columns = [
     {
-      title: "User ID",
-      dataIndex: "id",
-      render(val: any) {
-        return val;
-      },
+      title: 'Profile',
+      dataIndex: 'image',
+      render: (text: any) => <Avatar shape="square" src={<img src={text ? text : "/images/user.png"} alt="" />} />
     },
     {
       title: "Full Name",
       dataIndex: "name",
       sorter: true,
-      render(_:any,val: any) {
+      render(_: any, val: any) {
         return (
           <span>
-            {`${val?.name}`}
+            {`${val?.firstName} ${val?.lastName}`}
           </span>
         );
       },
@@ -81,7 +80,7 @@ export default function Page() {
                   EDIT
                 </Button>
               </Menu.Item>
-              <Menu.Item key="1">
+              <Menu.Item key="2">
                 <Button
                   type="link"
                   onClick={() => setDetail({ ...record, "active": true })}
@@ -89,7 +88,7 @@ export default function Page() {
                   {record.status == "active" ? "INACTIVE" : "ACTIVE"}
                 </Button>
               </Menu.Item>
-              <Menu.Item key="2">
+              <Menu.Item key="3">
                 <Button
                   type="link"
                   onClick={() => setDetail({ ...record, "delete": true })}

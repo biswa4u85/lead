@@ -17,7 +17,11 @@ export default function Page() {
       dataIndex: "user",
       sorter: true,
       render(val: any) {
-        return val?.name;
+        return (
+          <span>
+            {`${val?.firstName} ${val?.lastName}`}
+          </span>
+        );
       },
     },
     {

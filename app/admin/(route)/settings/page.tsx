@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import { InputBox, FileBox, Buttons } from "@/components/RenderFroms";
 import { useSession } from "next-auth/react";
-import { useFetch } from "@/contexts/useFetch";
+import { useFetchSingle } from "@/contexts/useFetchSingle";
 import { usePatch } from "@/contexts/usePatch";
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -16,7 +16,7 @@ const resource = "users";
 const Settings = () => {
   const { data }: any = useSession()
   const { edit, data: respond, loading: editoading } = usePatch();
-  const { data: user, loading } = useFetch({ url: `${resource}/${data?.user?.id}`, query: JSON.stringify({}) });
+  const { data: user, loading } = useFetchSingle({ url: resource, query: { id: data?.user?.id } });
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
@@ -32,7 +32,7 @@ const Settings = () => {
   });
 
   const handleUpdate = (body: any) => {
-    edit(resource, { ...body, id: body?._id })
+    edit(resource, { ...body })
   }
   if (respond) {
     toast.success(`Profile update successfully`);
@@ -55,7 +55,7 @@ const Settings = () => {
                 </h3>
               </div>
               <Formik
-                initialValues={{ ...user, firstName: user?.firstName?.en ?? "", lastName: user?.lastName?.en ?? "" }}
+                initialValues={{ ...user }}
                 validationSchema={validationSchema}
                 onSubmit={(values) => handleUpdate(values)}
               >
@@ -87,6 +87,7 @@ const Settings = () => {
                       <div className="mb-5.5">
                         <InputBox
                           required={true}
+                          readOnly={true}
                           name="email"
                           label="Email"
                           placeholder="Enter your Email"
@@ -130,7 +131,7 @@ const Settings = () => {
                       <div className="flex items-center gap-3 mb-4">
                         <div className="rounded-full h-14 w-14">
                           <Image
-                            src={"/images/user/user-03.png"}
+                            src={values?.image ? values.image : "/images/user.png"}
                             width={55}
                             height={55}
                             alt="User"

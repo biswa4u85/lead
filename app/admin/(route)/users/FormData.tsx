@@ -30,14 +30,13 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         phone: Yup.string().required("Phone is required"),
         postalCode: Yup.string().required("Postal Code is required"),
         company: Yup.string().required("Company name required"),
-        // password: Yup.string().required("Password is required"),
     });
 
     return (
         <Formik
-            initialValues={initialValues?.edit ? { ...initialValues, firstName: initialValues?.firstName?.en ?? "", lastName: initialValues?.lastName?.en ?? "", password: "" } : initialData}
+            initialValues={initialValues?.edit ? { ...initialValues, password: "" } : initialData}
             validationSchema={validationSchema}
-            onSubmit={(values) => handleUpdate({ ...values, userType: "user" })}
+            onSubmit={(values) => handleUpdate({ ...values, role: "user" })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
@@ -70,6 +69,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                     <div className="mb-4">
                         <InputBox
                             required={true}
+                            readOnly={initialValues?.edit}
                             name="email"
                             label="Email"
                             placeholder="Enter your Email"

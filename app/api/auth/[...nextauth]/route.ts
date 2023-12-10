@@ -1,4 +1,4 @@
-import prisma from "@/app/libs/prisma";
+import prisma from "@/libs/prisma";
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
 
                 const tokenData = {
                     id: user.id,
-                    name: user.name,
+                    name: `${user.firstName} ${user.lastName}`,
                     email: user.email,
                     role: user.role,
                     image: user.image,
@@ -33,9 +33,6 @@ export const authOptions: NextAuthOptions = {
                 //create token
                 const token = await jwt.sign(tokenData, process.env.NEXTAUTH_SECRET!, { expiresIn: "1d" })
                 user['token'] = token
-                // Set cookies
-                // const cookies = new Cookies(req, res);
-                // cookies.set('myCookie', myCookieValue);
                 return user
             }
         })
@@ -50,7 +47,9 @@ export const authOptions: NextAuthOptions = {
                 user: {
                     ...session.user,
                     id: token.id,
-                    token: token.token
+                    token: token.token,
+                    role: token.role,
+                    name: token.name,
                 }
             }
         },
@@ -60,7 +59,9 @@ export const authOptions: NextAuthOptions = {
                 return {
                     ...token,
                     id: u.id,
-                    token: u.token
+                    token: u.token,
+                    role: u.role,
+                    name: `${u.firstName} ${u.lastName}`,
                 }
             }
             return token

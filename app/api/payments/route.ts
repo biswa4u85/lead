@@ -1,7 +1,7 @@
-import prisma from "@/app/libs/prisma";
+import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
-import { successResponse, errorResponse } from "@/app/libs/utility";
-import { getToken } from "@/app/libs/getToken";
+import { successResponse, errorResponse } from "@/libs/utility";
+import { getToken } from "@/libs/getToken";
 
 const resource = "payment";
 const subRes = "user";

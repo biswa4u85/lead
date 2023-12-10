@@ -2,8 +2,8 @@ import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import * as dateFn from "date-fns";
-import { getToken } from "@/app/libs/getToken";
-import { successResponse, errorResponse } from "@/app/libs/utility";
+import { getToken } from "@/libs/getToken";
+import { successResponse, errorResponse } from "@/libs/utility";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {

@@ -1,7 +1,7 @@
-import prisma from "@/app/libs/prisma";
+import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
-import { successResponse, errorResponse } from "@/app/libs/utility";
-import { getToken } from "@/app/libs/getToken";
+import { successResponse, errorResponse } from "@/libs/utility";
+import { getToken } from "@/libs/getToken";
 import bcryptjs from "bcryptjs";
 
 const resource = "user";
@@ -12,20 +12,31 @@ export async function GET(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
+        // Get Params
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
 
-        const role = request.nextUrl.searchParams.get("role") || "user"
+        const id: any = request.nextUrl.searchParams.get("id")
+        const role = request.nextUrl.searchParams.get("role")
 
-        const counts = await prisma[resource].count()
+        let filter: any = {}
+        if (id) {
+            filter['id'] = id
+        }
+        if (role) {
+            filter['role'] = role
+        }
+
+        const counts = await prisma[resource].count({ where: filter })
         const result = await prisma[resource].findMany({
-            where: { role },
+            where: filter,
             skip,
             take,
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
     } catch (error: any) {
+        console.log(error)
         errorResponse(error.message);
     }
 }
@@ -36,8 +47,6 @@ export async function POST(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        delete data.firstName
-        delete data.lastName
 
         // Hash password
         if (data.password) {
@@ -57,10 +66,19 @@ export async function PATCH(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        const { id, name, status } = data
+        let id = JSON.parse(JSON.stringify(data.id))
+        delete data.id
+        delete data.edit
+
+        // Hash password
+        if (data.password) {
+            const salt = await bcryptjs.genSalt(10)
+            data.password = await bcryptjs.hash(data.password, salt)
+        }
+
         const res = await prisma[resource].update({
             where: { id },
-            data: { name, status }
+            data
         });
         return successResponse(res);
     } catch (error: any) {
@@ -73,7 +91,7 @@ export async function DELETE(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
-        const id:any = request.nextUrl.searchParams.get("id")
+        const id: any = request.nextUrl.searchParams.get("id")
         if (!id) return errorResponse("Record Not Found");
 
         const res = await prisma[resource].delete({ where: { id } });

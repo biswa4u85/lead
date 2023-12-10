@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import Stripe from 'stripe';
-import { successResponse, errorResponse } from "@/app/libs/utility";
+import { successResponse, errorResponse } from "@/libs/utility";
 
 const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`, {
     apiVersion: '2023-10-16',
