@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import {
   Table,
@@ -8,7 +8,7 @@ import {
   Dropdown,
   Menu
 } from "antd";
-import { useFetch } from "@/contexts/useFetch";
+import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { CiMenuKebab } from "react-icons/ci";
 import { FormData } from "./FormData";
 import { CreateDataModal, EditDataModal, DeleteDataModal, StatusDataModal } from "@/components/Forms";
@@ -18,10 +18,14 @@ export default function Page() {
   const [detail, setDetail] = useState<any>(null);
 
   const [query, setQuery] = useState({ "skip": "0", "take": "10" })
-  const { data, loading } = useFetch({ url: resource, query: JSON.stringify(query) });
+  const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
+
+  useEffect(() => {
+    fetch()
+  }, [])
 
   const refreshData = () => {
-    setQuery({ "skip": "0", "take": "10" })
+    fetch()
     setDetail(null)
   }
 

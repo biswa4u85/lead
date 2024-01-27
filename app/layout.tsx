@@ -1,8 +1,9 @@
 "use client";
 import { SessionProvider } from 'next-auth/react'
 import { Flip, ToastContainer } from "react-toastify";
-import "./globals.css";
-import "./data-tables-css.css";
+import "../assets/css/font.css";
+import "../assets/css/color.css";
+import "../assets/css/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Root({

@@ -1,15 +1,19 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation'
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import {Table} from "antd";
-import { useFetch } from "@/contexts/useFetch";
+import { Table } from "antd";
+import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 const resource = "payments";
 
 export default function Page() {
   const router = useRouter()
   const [query, setQuery] = useState({ "skip": "0", "take": "10" })
-  const { data, loading } = useFetch({ url: resource, query: JSON.stringify(query) });
+  const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
+
+  useEffect(() => {
+    fetch()
+  }, [])
 
   const columns = [
     {

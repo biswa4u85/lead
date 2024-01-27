@@ -10,7 +10,7 @@ const DropdownUser = () => {
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
   const { data } = useSession()
-  
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -161,8 +161,9 @@ const DropdownUser = () => {
           </li>
         </ul>
         <button onClick={() => {
-          signOut()
-          router.push("/auth");
+          signOut({ redirect: false }).then(() => {
+            router.push("/auth");
+          });
         }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"

@@ -9,9 +9,7 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    fontFamily: {
-      opensans: ["Open Sans", "sans-serif"],
-    },
+    fontFamily: { inter: "Inter", opensans: "Open Sans", poppins: "Poppins" },
     colors: {
       current: "currentColor",
       transparent: "transparent",
@@ -48,17 +46,31 @@ module.exports = {
       success: "#219653",
       danger: "#D34053",
       warning: "#FFA70B",
-      'indigo-900':'#183B56',
-      'indigo-800':'#004AAD',
-      'indigo-700':'#024CAE',
-      'gray':'#606060',
-      'black':'#101010',
-      'black-light':'#404040',
-      'deep-black':'#363636',
-      'gray-300':'#E0E3EB',
-      'gray-600':'#909090',
-      'gray-500':'#E7E7E7',
-      'gray-400':'#F5F5F5',
+      'indigo-900': '#183B56',
+      'indigo-800': '#004AAD',
+      'indigo-700': '#024CAE',
+      'indigo-600': '#1565D8',
+      'indigo-500': '#24393E',
+      'gray': '#606060',
+      'black': '#101010',
+      'black-100': '#202020',
+      'black-light': '#404040',
+      'deep-black': '#363636',
+      'deepblack-100': '#575757',
+      // 'gray-300': '#E0E3EB',
+      'gray-800': '#444444',
+      'gray-700': '#989898',
+      'gray-600': '#909090',
+      'gray-500': '#E7E7E7',
+      'gray-400': '#F5F5F5',
+      'gray-300': '#EEEEEE',
+      'gray-200': '#D0D5DD',
+      'gray-100': '#344054',
+      'graylight-900': '#3A3541',
+      'graylight-800': '#767676',
+      'light-white':'#ffffff63',
+      'green':'#009D55'
+
     },
     screens: {
       "2xsm": "375px",
@@ -74,12 +86,13 @@ module.exports = {
         'hero': "(url:'./public/images/constuction2.png')",
       },
       boxShadow: {
-        // custom: "0 5px 20px rgba(0, 74, 173, 0.10)",
-        custom: "2 2px 4px rgba(0, 74, 173, 0.10)",
+        '3xl': "0px 0px 10px 4px #F2F6FB",
+        // custom: "2 2px 4px rgba(0, 74, 173, 0.10)",
       },
-      dropShadow:{
+      dropShadow: {
         '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
       },
+
       fontSize: {
         "title-xxl": ["44px", "55px"],
         "title-xl": ["36px", "45px"],
@@ -89,12 +102,18 @@ module.exports = {
         "title-md2": ["26px", "30px"],
         "title-sm": ["20px", "26px"],
         "title-xsm": ["18px", "24px"],
+        'xs1': '12px',
+        'xs2': '13px',
         'xs': '14px',   // Extra Small
+        '2xs': '15px',  
         'sm': '16px',  // Small
+        'sm1': '18px',
+        'sm2': '20px',
         'base': '1rem',    // Default/Base
         'lg': '24px',  // Large
+        '2lg': '32px',  // Large
         'xl': '40px',   // Extra Large
-        '6xl':'56px',
+        '6xl': '56px',
       },
       spacing: {
         4.5: "1.125rem",

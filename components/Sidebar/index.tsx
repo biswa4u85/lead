@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MdAdminPanelSettings, MdPayment, MdOutlineHomeRepairService } from "react-icons/md";
+import { MdAdminPanelSettings, MdPayment, MdOutlineHomeRepairService, MdAreaChart, MdReportProblem, MdMergeType } from "react-icons/md";
 import { FaUserFriends, FaProjectDiagram } from "react-icons/fa";
 import { BiSolidOffer } from "react-icons/bi";
 import Image from "next/image";
@@ -122,6 +122,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
 
               <li>
+                <Link href="/admin/postal-codes " className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("postal-codes") && "bg-graydark dark:bg-meta-4"}`}>
+                  <MdAreaChart size="25" /> Postal Codes
+                </Link>
+              </li>
+
+              <li>
                 <Link href="/admin/projects" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("projects") && "bg-graydark dark:bg-meta-4"}`}>
                   <FaProjectDiagram size="25" /> Projects
                 </Link>
@@ -135,7 +141,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <Link href="/admin/leads" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("leads") && "bg-graydark dark:bg-meta-4"}`}>
-                  <BiSolidOffer size="25" /> Leads
+                  <BiSolidOffer size="25" /> Projet Batiment
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/problems" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("problems") && "bg-graydark dark:bg-meta-4"}`}>
+                  <MdReportProblem size="25" /> Problems
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin/problem-types" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("problem-types") && "bg-graydark dark:bg-meta-4"}`}>
+                  <MdMergeType size="25" /> Problem Types
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/admin/depannage" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannage") && "bg-graydark dark:bg-meta-4"}`}>
+                  <BiSolidOffer size="25" /> Projet Dépannage
                 </Link>
               </li>
 

@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import {
   Table,
@@ -8,7 +8,7 @@ import {
   Dropdown,
   Menu
 } from "antd";
-import { useFetch } from "@/contexts/useFetch";
+import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { CiMenuKebab } from "react-icons/ci";
 import { FormData } from "./FormData";
 import { CreateDataDrawer, EditDataDrawer, DeleteDataModal, StatusDataModal } from "@/components/Forms";
@@ -18,10 +18,14 @@ export default function Page() {
   const [detail, setDetail] = useState<any>(null);
 
   const [query, setQuery] = useState({ "skip": "0", "take": "10" })
-  const { data, loading } = useFetch({ url: resource, query: JSON.stringify(query) });
+  const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
+
+  useEffect(() => {
+    fetch()
+  }, [])
 
   const refreshData = () => {
-    setQuery({ "skip": "0", "take": "10" })
+    fetch()
     setDetail(null)
   }
 
@@ -121,7 +125,7 @@ export default function Page() {
 
   return (
     <>
-      <Breadcrumb pageName="Leads" />
+      <Breadcrumb pageName="Projet Batiment" />
       <div className="fixed bottom-4 right-4 z-999">
         <button onClick={() => setDetail({ "add": true })} className="px-4 py-2 font-bold text-white rounded-full shadow-lg bg-primary hover:bg-opacity-90">
           ADD

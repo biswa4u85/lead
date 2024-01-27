@@ -2,15 +2,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { MdOutlineMail } from "react-icons/md";
 import { signIn } from "next-auth/react";
-const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+import { toast } from 'react-toastify';
 
 const Page: React.FC = (props: any) => {
   const [loading, setLoading] = useState(false)
+  const router = useRouter();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -23,7 +25,13 @@ const Page: React.FC = (props: any) => {
 
   const onPressHandle = async (values: any) => {
     setLoading(true)
-    signIn("credentials", { ...values, callbackUrl: `${origin}/admin` })
+    const res: any = await signIn("credentials", { ...values, redirect: false })
+    if (res.error) {
+      toast.error("Double-check that your email and password are entered correctly")
+    } else {
+      router.push("/admin");
+    }
+    // setLoading(false)
   };
 
   return (

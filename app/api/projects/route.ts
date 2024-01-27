@@ -7,10 +7,9 @@ const resource = "project";
 
 export async function GET(request: NextRequest) {
     try {
-
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
-        
+
         const counts = await prisma[resource].count()
         const result = await prisma[resource].findMany({
             skip,
@@ -58,7 +57,7 @@ export async function DELETE(request: NextRequest) {
         const session = await getToken(request);
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
-        const id:any = request.nextUrl.searchParams.get("id")
+        const id: any = request.nextUrl.searchParams.get("id")
         if (!id) return errorResponse("Record Not Found");
 
         const res = await prisma[resource].delete({ where: { id } });

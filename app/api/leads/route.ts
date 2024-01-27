@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
-            include: { address: true, project:true }
+            include: { address: true, project: true }
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
@@ -29,7 +29,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
     try {
-
         const data = await request.json();
         const { projectId, serviceId, title, description, firstName, lastName, city, email, phone, postalCode } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
