@@ -8,12 +8,12 @@ const resource = "payments";
 
 export default function Page() {
   const router = useRouter()
-  const [query, setQuery] = useState({ "skip": "0", "take": "10" })
+  const [query, setQuery] = useState({ "skip": 0, "take": 10 })
   const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
 
   useEffect(() => {
     fetch()
-  }, [])
+  }, [query])
 
   const columns = [
     {

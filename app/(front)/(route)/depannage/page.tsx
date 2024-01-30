@@ -7,66 +7,40 @@ import { InputBox, TextareaBox, SelectBox, Buttons } from "@/components/RenderFr
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
+import { AiOutlineCheckCircle, } from "react-icons/ai";
+
 
 export default function Page() {
-    const [step, setStep] = useState<any>(1);
+    const [step, setStep] = useState<any>(-1);
+    const [progress, setProgress] = useState<any>(0);
     const [values, setValues] = useState<any>({});
     const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({}) });
     const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
         return { label: item?.name, value: item?.id }
     }) : []
 
-    const { data: problems } = useFetch({ url: "problems", query: JSON.stringify({}) });
-    const { data: problemTypes } = useFetch({ url: "problemtype", query: JSON.stringify({}) });
+    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({}) });
+    const { data: services } = useFetch({ url: "depannageTypes", query: JSON.stringify({}) });
     const { create, data: respond, loading } = usePost();
 
-    const validationSchema1 = Yup.object().shape({
+    const validationSchemaInfo = Yup.object().shape({
         title: Yup.string().required("What do you need is required"),
-        zipcodeId: Yup.string().required("Zip Code is required"),
+        postalCode: Yup.string().required("Zip Code is required"),
     });
 
-    const handleUpdate1 = (value: any) => {
-        setValues(value)
-        setStep(step + 1)
-    }
-
-    const validationSchema2 = Yup.object().shape({
-        problemId: Yup.string().required("Problem is required"),
+    const validationSchemaService = Yup.object().shape({
+        service: Yup.string().required("Service is required"),
     });
 
-    const handleUpdate2 = (value: any) => {
-        setValues({ ...values, ...value })
-        setStep(step + 1)
-    }
-
-    const validationSchema3 = Yup.object().shape({
-        problemtypeId: Yup.string().required("Problem Type is required"),
+    const validationSchemaPrice = Yup.object().shape({
+        // price: Yup.string().required("Price is required"),
     });
 
-    const handleUpdate3 = (value: any) => {
-        setValues({ ...values, ...value })
-        setStep(step + 1)
-    }
-
-    const validationSchema4 = Yup.object().shape({
-        problemtypeId: Yup.string().required("Problem Type is required"),
-    });
-
-    const handleUpdate4 = (value: any) => {
-        setValues({ ...values, ...value })
-        setStep(step + 1)
-    }
-
-    const validationSchema5 = Yup.object().shape({
+    const validationSchemaDescription = Yup.object().shape({
         description: Yup.string().required("Description is required"),
     });
 
-    const handleUpdate5 = (value: any) => {
-        setValues({ ...values, ...value })
-        setStep(step + 1)
-    }
-
-    const validationSchema6 = Yup.object().shape({
+    const validationSchemaContact = Yup.object().shape({
         title: Yup.string().required("Title is required"),
         firstName: Yup.string().required("First Name is required"),
         lastName: Yup.string().required("Last Name is required"),
@@ -77,9 +51,27 @@ export default function Page() {
         phone: Yup.string().required("Phone is required"),
     });
 
-    const handleUpdate6 = (value: any) => {
-        create("leadsnew", { ...values, ...value })
+
+    const handleUpdate = (value: any) => {
+        let val = 100 / (categorys?.data?.length + 4)
+        setProgress(progress == 0 ? val : progress + val)
+        if (step == 102) {
+            create("depannages", { ...values, ...value })
+        } else {
+            if (value.service) {
+                let service = values.service ? [...values.service, value.service] : [value.service]
+                setValues({ ...values, service })
+            } else {
+                setValues({ ...values, ...value })
+            }
+            if (step == categorys?.data?.length - 1) {
+                setStep(100)
+            } else {
+                setStep(step + 1)
+            }
+        }
     }
+
 
     useEffect(() => {
         if (respond) {
@@ -94,14 +86,14 @@ export default function Page() {
             <div className="mx-5 mb-10 md:mx-64 md:mb-20">
                 {/* stepers start */}
                 <div className="relative w-full h-6 my-10 overflow-hidden bg-gray-200 rounded-md">
-                    <div className="absolute top-0 left-0 items-center h-full text-sm text-center text-white bg-indigo-600" style={{ width: `${Number(16.6 * (step - 1)).toFixed(0)}%` }}>{`${Number(16.6 * (step - 1)).toFixed(0)}%`}</div>
+                    <div className="absolute top-0 left-0 items-center h-full text-sm text-center text-white bg-indigo-600" style={{ width: `${Number(progress).toFixed(0)}%` }}>{`${Number(progress).toFixed(0)}%`}</div>
                 </div>
                 {/* stepers end */}
 
-                {(step == 1 && zipcodes) && (<Formik
-                    initialValues={{ title: '', zipcodeId: '' }}
-                    validationSchema={validationSchema1}
-                    onSubmit={(values: any) => handleUpdate1(values)}
+                {(step == -1 && zipcodes) && (<Formik
+                    initialValues={{ title: '', postalCode: '' }}
+                    validationSchema={validationSchemaInfo}
+                    onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
@@ -120,13 +112,12 @@ export default function Page() {
                                     <SelectBox
                                         required={true}
                                         options={zipcodeOptions}
-                                        name="zipcodeId"
+                                        name="postalCode"
                                         label="Your Postal Code"
                                         placeholder="Select Postal Code"
                                     />
                                 </div>
                             </div>
-
 
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
@@ -135,123 +126,110 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {(step == 2 && problems) && (<Formik
-                    initialValues={{ problemId: "" }}
-                    validationSchema={validationSchema2}
-                    onSubmit={(values: any) => handleUpdate2(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">What is your problem ?</p>
-                        </div>
-
-                            <Field name={'problemId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {problems?.data && problems.data.map((item: any, key: any) => <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                            onClick={() => {
-                                                field.onChange('problemId')(
-                                                    item.id
-                                                );
-                                            }}>
-                                            <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                        </div>)}
-                                    </div>
-                                        <div>
-                                            {form?.errors['problemId'] && form?.touched['problemId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['problemId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
-
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                {categorys?.data && categorys?.data.map((category: any, index: any) => <div key={index}>
+                    {(step == index) && (<Formik
+                        initialValues={{ service: '' }}
+                        validationSchema={validationSchemaService}
+                        onSubmit={(values: any) => handleUpdate(values)}
+                    >
+                        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+                            <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{category.name}</p>
                             </div>
-                        </>)}
-                </Formik>)}
-
-                {(step == 3 && problemTypes) && (<Formik
-                    initialValues={{ problemtypeId: "" }}
-                    validationSchema={validationSchema3}
-                    onSubmit={(values: any) => handleUpdate3(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Where does the problem come from ?</p>
-                        </div>
-
-                            <Field name={'problemtypeId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {problemTypes?.data && problemTypes.data.map((item: any, key: any) => <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                            onClick={() => {
-                                                field.onChange('problemtypeId')(
-                                                    item.id
-                                                );
-                                            }}>
-                                            <div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                <Image
-                                                    alt=""
-                                                    width="44"
-                                                    height="44"
-                                                    src={item.icon}
-                                                />
+                                <Field name={'service'}>
+                                    {({ field, form, meta }: any) => {
+                                        return <><div className="flex flex-wrap justify-normal">
+                                            {services?.data && services.data.map((item: any, key: any) => {
+                                                if (item?.depannageCategoryId == category?.id) {
+                                                    return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                                        onClick={() => {
+                                                            field.onChange('service')(
+                                                                item.id
+                                                            );
+                                                        }} >
+                                                        {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                                            <Image
+                                                                alt=""
+                                                                width="44"
+                                                                height="44"
+                                                                src={item.icon}
+                                                            />
+                                                        </div>)}
+                                                        <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
+                                                    </div>
+                                                }
+                                            })}
+                                        </div>
+                                            <div>
+                                                {form?.errors['service'] && form?.touched['service'] && (
+                                                    <div className="mt-1 text-xs-1 text-meta-1">{form.errors['service']}</div>
+                                                )}
                                             </div>
-                                            <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                        </div>)}
-                                    </div>
-                                        <div>
-                                            {form?.errors['problemtypeId'] && form?.touched['problemtypeId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['problemtypeId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
+                                        </>
+                                    }}
+                                </Field>
 
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
-                            </div>
-                        </>)}
-                </Formik>)}
+                                <div className="my-4 border-t-2 border-gray-500"></div>
+                                <div className="flex justify-center">
+                                    <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                                </div>
+                            </>)}
+                    </Formik>)}
+                </div>)}
 
-                {(step == 4) && (<Formik
-                    initialValues={{ problemtypeId: "" }}
-                    validationSchema={validationSchema4}
-                    onSubmit={(values: any) => handleUpdate4(values)}
+                {(step == 100) && (<Formik
+                    initialValues={{ price: "" }}
+                    validationSchema={validationSchemaPrice}
+                    onSubmit={(values: any) => handleUpdate(values)}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+                    {({ handleChange, handleBlur, handleSubmit }) => (
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Where does the problem come from ?</p>
+                            <p className="text-sm leading-10 md:text-lg font-inter font-Normal text-deep-black md:max-w-2xl">Where does the problem come from ?</p>
                         </div>
 
-                            <Field name={'problemtypeId'}>
+                            <Field name={'price'}>
                                 {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {problemTypes?.data && problemTypes.data.map((item: any, key: any) => <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                            onClick={() => {
-                                                field.onChange('problemtypeId')(
-                                                    item.id
-                                                );
-                                            }}>
-                                            <div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                <Image
-                                                    alt=""
-                                                    width="44"
-                                                    height="44"
-                                                    src={item.icon}
+                                    return <>
+                                        <div className="grid mx-3 md:grid-cols-2 gap-11 ">
+                                            <div className="p-2 border border-gray-500 rounded-md md:col-span-1">
+                                                <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">Electric water heater breakdown diagnosis + 1 hour of labor</p>
+                                                <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€139</p>
+                                                <div className="flex justify-between gap-8">
+                                                    <div className="flex">
+                                                        <div> <AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
+                                                        <p className="text-sm font-normal font-inter text-graylight-900">Electric water heater breakdown diagnosis + 1 hour of labor</p>
+                                                    </div>
+                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€59.00</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex justify-between pt-2">
+                                                    <div className="flex">
+                                                        <div><AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
+                                                        <p className="text-sm font-normal font-inter text-graylight-900">Up to 60 min labor</p>
+                                                    </div>
+                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€59.00</p>
+                                                    </div>
+                                                </div>
+                                                <p className="pb-5 text-sm font-normal text-indigo-800 font-inter">Pay in 3 or 4 installments without fees</p>
+                                                <InputBox
+                                                    required={true}
+                                                    name="title"
+                                                    readOnly={true}
+                                                    label="Your Postal Code *"
+                                                    placeholder={values.postalCode}
                                                 />
+                                                <button onClick={() => field.onChange('price')(100)}
+                                                    className="w-full px-4 py-2 my-5 text-sm font-normal text-indigo-800 bg-blue-500 border border-indigo-800 rounded-md font-inter">
+                                                    I Order
+                                                </button>
                                             </div>
-                                            <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                        </div>)}
-                                    </div>
+
+                                        </div>
+
                                         <div>
-                                            {form?.errors['problemtypeId'] && form?.touched['problemtypeId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['problemtypeId']}</div>
+                                            {form?.errors['price'] && form?.touched['price'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['price']}</div>
                                             )}
                                         </div>
                                     </>
@@ -265,10 +243,10 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 5 && (<Formik
+                {step == 101 && (<Formik
                     initialValues={{ description: "" }}
-                    validationSchema={validationSchema5}
-                    onSubmit={(values: any) => handleUpdate5(values)}
+                    validationSchema={validationSchemaDescription}
+                    onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
@@ -291,7 +269,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 6 && (<Formik
+                {step == 102 && (<Formik
                     initialValues={{
                         title: "",
                         firstName: "",
@@ -301,8 +279,8 @@ export default function Page() {
                         phone: "",
                         postalCode: ""
                     }}
-                    validationSchema={validationSchema6}
-                    onSubmit={(values: any) => handleUpdate6(values)}
+                    validationSchema={validationSchemaContact}
+                    onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
@@ -369,7 +347,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 7 && (<>
+                {step == 103 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
                     </div>

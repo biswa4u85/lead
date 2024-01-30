@@ -6,19 +6,18 @@ import {
   Tag,
   Button,
   Dropdown,
-  Menu,
-  Avatar
+  Menu
 } from "antd";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { CiMenuKebab } from "react-icons/ci";
-import { FormData } from "./admins/FormData";
-import { CreateDataModal, EditDataModal, DeleteDataModal, StatusDataModal } from "@/components/Forms";
-const resource = "users";
+import { FormData } from "./FormData";
+import { CreateDataDrawer, EditDataDrawer, DeleteDataModal, StatusDataModal } from "@/components/Forms";
+const resource = "batiments";
 
 export default function Page() {
   const [detail, setDetail] = useState<any>(null);
 
-  const [query, setQuery] = useState({ "role": "admin", "skip": "0", "take": "10" })
+  const [query, setQuery] = useState({ "skip": 0, "take": 10 })
   const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
 
   useEffect(() => {
@@ -32,15 +31,29 @@ export default function Page() {
 
   const columns = [
     {
-      title: 'Profile',
-      dataIndex: 'image',
-      render: (text: any) => <Avatar shape="square" src={<img src={text ? text : "/images/user.png"} alt="" />} />
+      title: "Services",
+      dataIndex: "services",
+      render(val: any) {
+        return val?.length;
+      },
     },
     {
-      title: "Full Name",
-      dataIndex: "name",
+      title: "Title",
+      dataIndex: "title",
       sorter: true,
-      render(_: any, val: any) {
+      render(val: any) {
+        return (
+          <span>
+            {`${val}`}
+          </span>
+        );
+      },
+    },
+    {
+      title: "Name",
+      dataIndex: "address",
+      sorter: true,
+      render(val: any) {
         return (
           <span>
             {`${val?.firstName} ${val?.lastName}`}
@@ -49,9 +62,16 @@ export default function Page() {
       },
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "City",
+      dataIndex: "address",
       sorter: true,
+      render(val: any) {
+        return (
+          <span>
+            {`${val?.city}`}
+          </span>
+        );
+      },
     },
     {
       title: "Status",
@@ -105,7 +125,7 @@ export default function Page() {
 
   return (
     <>
-      <Breadcrumb pageName="Admins" />
+      <Breadcrumb pageName="Batiments" />
       <div className="fixed bottom-4 right-4 z-999">
         <button onClick={() => setDetail({ "add": true })} className="px-4 py-2 font-bold text-white rounded-full shadow-lg bg-primary hover:bg-opacity-90">
           ADD
@@ -115,8 +135,8 @@ export default function Page() {
         showQuickJumper: true,
         total: data?.count ?? 0,
       }} />
-      {(detail && detail.add) && (<CreateDataModal resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
-      {(detail && detail.edit) && (<EditDataModal resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
+      {(detail && detail.add) && (<CreateDataDrawer resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
+      {(detail && detail.edit) && (<EditDataDrawer resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
       {(detail && detail.delete) && (<DeleteDataModal resource={resource} close={refreshData} data={detail} />)}
       {(detail && detail.active) && (<StatusDataModal resource={resource} close={refreshData} data={detail} />)}
     </>

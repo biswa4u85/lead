@@ -3,11 +3,10 @@ import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
 
-const resource = "zipCode";
+const resource = "batimentCategory";
 
 export async function GET(request: NextRequest) {
     try {
-
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
 
@@ -19,7 +18,7 @@ export async function GET(request: NextRequest) {
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
     } catch (error: any) {
-        console.log('error', error)
+        console.log(error)
         errorResponse(error.message);
     }
 }
@@ -43,10 +42,10 @@ export async function PATCH(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        const { id, name, code } = data
+        const { id, name, icon, description } = data
         const res = await prisma[resource].update({
             where: { id },
-            data: { name, code }
+            data: { name, icon, description }
         });
         return successResponse(res);
     } catch (error: any) {

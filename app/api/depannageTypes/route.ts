@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
 
-const resource = "zipCode";
+const resource = "depannageType";
 
 export async function GET(request: NextRequest) {
     try {
@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
+            include: { depannageCategory: { select: { name: true } } }
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
@@ -43,10 +44,10 @@ export async function PATCH(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        const { id, name, code } = data
+        const { id, name, icon, depannageCategory } = data
         const res = await prisma[resource].update({
             where: { id },
-            data: { name, code }
+            data: { name, icon, depannageCategory }
         });
         return successResponse(res);
     } catch (error: any) {

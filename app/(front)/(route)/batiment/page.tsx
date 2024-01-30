@@ -13,48 +13,22 @@ export default function Page() {
     const params = useSearchParams()
     const name = params.get('name')
     const [step, setStep] = useState<any>(1);
-    const [project, setProject] = useState<any>(null);
+    const [progress, setProgress] = useState<any>(0);
     const [values, setValues] = useState<any>({});
-    const { data: projects } = useFetch({ url: "projects", query: JSON.stringify({}) });
-    const { data: services } = useFetch({ url: "services", query: JSON.stringify({}) });
+    const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({}) });
+    const { data: services } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
     const { create, data: respond, loading } = usePost();
 
-    useEffect(() => {
-        if (name) {
-            let project = projects?.data && projects?.data.find((item: any) => item.name == name)
-            if (project) setProject(project.id)
-        }
-    }, [projects])
-
-    const validationSchema1 = Yup.object().shape({
-        projectId: Yup.string().required("Project is required"),
+    const validationSchemaService = Yup.object().shape({
+        service: Yup.string().required("Service is required"),
     });
 
-    const handleUpdate1 = (value: any) => {
-        setValues(value)
-        setStep(step + 1)
-    }
-
-    const validationSchema2 = Yup.object().shape({
-        serviceId: Yup.string().required("Service is required"),
-    });
-
-    const handleUpdate2 = (value: any) => {
-        setValues({ ...values, ...value })
-        setStep(step + 1)
-    }
-
-    const validationSchema3 = Yup.object().shape({
+    const validationSchemaInfo = Yup.object().shape({
         title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
     });
 
-    const handleUpdate3 = (value: any) => {
-        setValues({ ...values, ...value })
-        setStep(step + 1)
-    }
-
-    const validationSchema4 = Yup.object().shape({
+    const validationSchemaContact = Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
         lastName: Yup.string().required("Last Name is required"),
         city: Yup.string().required("City is required"),
@@ -65,8 +39,24 @@ export default function Page() {
         postalCode: Yup.string().required("Postal Code is required"),
     });
 
-    const handleUpdate4 = (value: any) => {
-        create("leads", { ...values, ...value })
+    const handleUpdate = (value: any) => {
+        let val = 100 / (categorys?.data?.length + 2)
+        setProgress(progress == 0 ? val : progress + val)
+        if (step == 101) {
+            create("batiments", { ...values, ...value })
+        } else {
+            if (value.service) {
+                let service = values.service ? [...values.service, value.service] : [value.service]
+                setValues({ ...values, service })
+            } else {
+                setValues({ ...values, ...value })
+            }
+            if (step == categorys?.data?.length) {
+                setStep(100)
+            } else {
+                setStep(step + 1)
+            }
+        }
     }
 
     useEffect(() => {
@@ -81,131 +71,66 @@ export default function Page() {
         <>
             <div className="mx-5 mb-10 md:mx-64 md:mb-20">
                 {/* stepers start */}
-                <div className="relative flex items-center justify-between my-10 mx-15" >
-
-                    <div className="absolute z-0 mx-3 bg-gray-300 top-4 left-4.5 h-0.5 w-180"></div>
-
-                    <div className="relative flex flex-col items-center">
-                        <div className={"flex items-center justify-center flex-shrink-0 w-8 h-8 border border-blue-500 rounded-full " + (step == 1 ? "bg-indigo-600 text-white" : 'bg-white')}>1</div>
-                        <div className="mt-2 text-center">Your project</div>
-                    </div>
-
-
-                    <div className="relative flex flex-col items-center">
-                        <div className={"flex items-center justify-center flex-shrink-0 w-8 h-8  border border-blue-500 rounded-full " + (step == 2 ? "bg-indigo-600 text-white" : 'bg-white')}>2</div>
-                        <div className="mt-2 text-center">Supply and Installation</div>
-                    </div>
-
-
-                    <div className="relative flex flex-col items-center">
-                        <div className={"flex items-center justify-center flex-shrink-0 w-8 h-8  border border-blue-500 rounded-full " + (step == 3 ? "bg-indigo-600 text-white" : 'bg-white')}>3</div>
-                        <div className="mt-2 text-center">Project Detail</div>
-                    </div>
-
-
-                    <div className="relative flex flex-col items-center">
-                        <div className={"flex items-center justify-center flex-shrink-0 w-8 h-8  border border-blue-500 rounded-full " + (step == 4 ? "bg-indigo-600 text-white" : 'bg-white')}>4</div>
-                        <div className="mt-2 text-center">Your contact details</div>
-                    </div>
+                <div className="relative w-full h-6 my-10 overflow-hidden bg-gray-200 rounded-md">
+                    <div className="absolute top-0 left-0 items-center h-full text-sm text-center text-white bg-indigo-600" style={{ width: `${Number(progress).toFixed(0)}%` }}>{`${Number(progress).toFixed(0)}%`}</div>
                 </div>
                 {/* stepers end */}
 
-                {(step == 1 && projects) && (<Formik
-                    initialValues={{ projectId: project }}
-                    validationSchema={validationSchema1}
-                    onSubmit={(values: any) => handleUpdate1(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Select the type of work you want to carry out</p>
-                        </div>
-
-                            <Field name={'projectId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {projects?.data && projects.data.map((item: any, key: any) => <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                            onClick={() => {
-                                                field.onChange('projectId')(
-                                                    item.id
-                                                );
-                                            }} >
-                                            <div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                <Image
-                                                    alt=""
-                                                    width="44"
-                                                    height="44"
-                                                    src={item.icon}
-                                                />
-                                            </div>
-                                            <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                        </div>)}
-                                    </div>
-                                        <div>
-                                            {form?.errors['projectId'] && form?.touched['projectId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['projectId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
-
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                {categorys?.data && categorys?.data.map((category: any, index: any) => <div key={index}>
+                    {(step == index + 1) && (<Formik
+                        initialValues={{ service: '' }}
+                        validationSchema={validationSchemaService}
+                        onSubmit={(values: any) => handleUpdate(values)}
+                    >
+                        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+                            <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{category.name}</p>
                             </div>
-                        </>)}
-                </Formik>)}
-
-                {(step == 2 && services) && (<Formik
-                    initialValues={{ serviceId: "" }}
-                    validationSchema={validationSchema2}
-                    onSubmit={(values: any) => handleUpdate2(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Select the type of work you want to carry out</p>
-                        </div>
-
-                            <Field name={'serviceId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {services?.data && services.data.map((item: any, key: any) => <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                            onClick={() => {
-                                                field.onChange('serviceId')(
-                                                    item.id
-                                                );
-                                            }} >
-                                            <div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                <Image
-                                                    alt=""
-                                                    width="44"
-                                                    height="44"
-                                                    src={item.icon}
-                                                />
-                                            </div>
-                                            <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                        </div>)}
-                                    </div>
-                                        <div>
-                                            {form?.errors['serviceId'] && form?.touched['serviceId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['serviceId']}</div>
-                                            )}
+                                <Field name={'service'}>
+                                    {({ field, form, meta }: any) => {
+                                        return <><div className="flex flex-wrap justify-normal">
+                                            {services?.data && services.data.map((item: any, key: any) => {
+                                                if (item?.batimentCategoryId == category?.id) {
+                                                    return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                                        onClick={() => {
+                                                            field.onChange('service')(
+                                                                item.id
+                                                            );
+                                                        }} >
+                                                        {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                                            <Image
+                                                                alt=""
+                                                                width="44"
+                                                                height="44"
+                                                                src={item.icon}
+                                                            />
+                                                        </div>)}
+                                                        <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
+                                                    </div>
+                                                }
+                                            })}
                                         </div>
-                                    </>
-                                }}
-                            </Field>
+                                            <div>
+                                                {form?.errors['service'] && form?.touched['service'] && (
+                                                    <div className="mt-1 text-xs-1 text-meta-1">{form.errors['service']}</div>
+                                                )}
+                                            </div>
+                                        </>
+                                    }}
+                                </Field>
 
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
-                            </div>
-                        </>)}
-                </Formik>)}
+                                <div className="my-4 border-t-2 border-gray-500"></div>
+                                <div className="flex justify-center">
+                                    <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                                </div>
+                            </>)}
+                    </Formik>)}
+                </div>)}
 
-                {step == 3 && (<Formik
+                {step == 100 && (<Formik
                     initialValues={{ title: "", description: "" }}
-                    validationSchema={validationSchema3}
-                    onSubmit={(values: any) => handleUpdate3(values)}
+                    validationSchema={validationSchemaInfo}
+                    onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
@@ -237,7 +162,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 4 && (<Formik
+                {step == 101 && (<Formik
                     initialValues={{
                         firstName: "",
                         lastName: "",
@@ -246,8 +171,8 @@ export default function Page() {
                         phone: "",
                         postalCode: ""
                     }}
-                    validationSchema={validationSchema4}
-                    onSubmit={(values: any) => handleUpdate4(values)}
+                    validationSchema={validationSchemaContact}
+                    onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
@@ -314,7 +239,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 5 && (<>
+                {step == 102 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
                     </div>

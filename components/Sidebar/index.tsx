@@ -128,36 +128,36 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
 
               <li>
-                <Link href="/admin/projects" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("projects") && "bg-graydark dark:bg-meta-4"}`}>
-                  <FaProjectDiagram size="25" /> Projects
+                <Link href="/admin/batimentCategorys" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("batimentCategorys") && "bg-graydark dark:bg-meta-4"}`}>
+                  <FaProjectDiagram size="25" /> Batiment Categorys
                 </Link>
               </li>
 
               <li>
-                <Link href="/admin/services" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("services") && "bg-graydark dark:bg-meta-4"}`}>
-                  <MdOutlineHomeRepairService size="25" /> Services
+                <Link href="/admin/batimentTypes" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("batimentTypes") && "bg-graydark dark:bg-meta-4"}`}>
+                  <MdOutlineHomeRepairService size="25" /> Batiment Types
                 </Link>
               </li>
 
               <li>
-                <Link href="/admin/leads" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("leads") && "bg-graydark dark:bg-meta-4"}`}>
-                  <BiSolidOffer size="25" /> Projet Batiment
+                <Link href="/admin/batiments" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("batiments") && "bg-graydark dark:bg-meta-4"}`}>
+                  <BiSolidOffer size="25" /> Batiments
                 </Link>
               </li>
               <li>
-                <Link href="/admin/problems" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("problems") && "bg-graydark dark:bg-meta-4"}`}>
-                  <MdReportProblem size="25" /> Problems
+                <Link href="/admin/depannageCategorys" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannageCategorys") && "bg-graydark dark:bg-meta-4"}`}>
+                  <MdReportProblem size="25" /> Dépannage Categorys
                 </Link>
               </li>
               <li>
-                <Link href="/admin/problem-types" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("problem-types") && "bg-graydark dark:bg-meta-4"}`}>
-                  <MdMergeType size="25" /> Problem Types
+                <Link href="/admin/depannagTypes" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannagTypes") && "bg-graydark dark:bg-meta-4"}`}>
+                  <MdMergeType size="25" /> Dépannage Types
                 </Link>
               </li>
 
               <li>
-                <Link href="/admin/depannage" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannage") && "bg-graydark dark:bg-meta-4"}`}>
-                  <BiSolidOffer size="25" /> Projet Dépannage
+                <Link href="/admin/depannages" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannages") && "bg-graydark dark:bg-meta-4"}`}>
+                  <BiSolidOffer size="25" />  Dépannage
                 </Link>
               </li>
 

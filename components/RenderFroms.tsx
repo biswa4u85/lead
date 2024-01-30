@@ -137,7 +137,7 @@ const SelectBox = (props: any) => {
               }}
               {...props}>
               <option value="">{props.placeholder}</option>
-              {props.options.map((item: any, key: any) => <option key={key} value={item.value}>{item.label}</option>)}
+              {props.options.map((item: any, key: any) => item && <option key={key} value={item.value}>{item.label}</option>)}
             </select>
             {form?.errors[props.name] && form?.touched[props.name] && (
               <div className="mt-1 text-xs-1 text-meta-1">{form.errors[props.name]}</div>

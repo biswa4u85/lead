@@ -23,7 +23,7 @@ export default function Page() {
 
   useEffect(() => {
     fetch()
-  }, [])
+  }, [query])
 
   const refreshData = () => {
     fetch()

@@ -1,18 +1,20 @@
-import { InputBox,  Buttons } from "@/components/RenderFroms";
+import { InputBox, FileBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { MdOutlineHomeRepairService } from "react-icons/md";
+import { FaProjectDiagram } from "react-icons/fa";
 
 const initialData = {
-    code: "",
+    icon: "",
     name: "",
+    description: "",
 }
 
 export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
-        code: Yup.string().required("Code is required"),
+        // icon: Yup.string().required("Image is required"),
         name: Yup.string().required("Name is required"),
+        description: Yup.string().required("Description is required"),
     });
 
     return (
@@ -24,22 +26,28 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
                     <div className="mb-4">
-                        <InputBox
-                            required={true}
-                            name="name"
-                            label="Name"
-                            placeholder="Enter Name"
-                            icon={<MdOutlineHomeRepairService />}
+                        <FileBox
+                            name="icon"
+                            label="Image"
+                            placeholder="Upload Image"
                         />
                     </div>
                     <div className="mb-4">
                         <InputBox
                             required={true}
-                            name="code"
-                            label="Code"
-                            placeholder="Enter Code"
-                            type="number"
-                            icon={<MdOutlineHomeRepairService />}
+                            name="name"
+                            label="Name"
+                            placeholder="Enter Name"
+                            icon={<FaProjectDiagram />}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <InputBox
+                            required={true}
+                            name="description"
+                            label="Description"
+                            placeholder="Enter Description"
+                            icon={<FaProjectDiagram />}
                         />
                     </div>
                     <div className="mb-4">
