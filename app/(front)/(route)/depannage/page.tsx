@@ -29,7 +29,7 @@ export default function Page() {
     });
 
     const validationSchemaService = Yup.object().shape({
-        service: Yup.string().required("Service is required"),
+        services: Yup.string().required("Service is required"),
     });
 
     const validationSchemaPrice = Yup.object().shape({
@@ -58,9 +58,9 @@ export default function Page() {
         if (step == 102) {
             create("depannages", { ...values, ...value })
         } else {
-            if (value.service) {
-                let service = values.service ? [...values.service, value.service] : [value.service]
-                setValues({ ...values, service })
+            if (value.services) {
+                let services = values.services ? [...values.services, value.services] : [value.services]
+                setValues({ ...values, services })
             } else {
                 setValues({ ...values, ...value })
             }
@@ -128,7 +128,7 @@ export default function Page() {
 
                 {categorys?.data && categorys?.data.map((category: any, index: any) => <div key={index}>
                     {(step == index) && (<Formik
-                        initialValues={{ service: '' }}
+                        initialValues={{ services: '' }}
                         validationSchema={validationSchemaService}
                         onSubmit={(values: any) => handleUpdate(values)}
                     >
@@ -136,14 +136,14 @@ export default function Page() {
                             <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
                                 <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{category.name}</p>
                             </div>
-                                <Field name={'service'}>
+                                <Field name={'services'}>
                                     {({ field, form, meta }: any) => {
                                         return <><div className="flex flex-wrap justify-normal">
                                             {services?.data && services.data.map((item: any, key: any) => {
                                                 if (item?.depannageCategoryId == category?.id) {
                                                     return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
                                                         onClick={() => {
-                                                            field.onChange('service')(
+                                                            field.onChange('services')(
                                                                 item.id
                                                             );
                                                         }} >
@@ -161,8 +161,8 @@ export default function Page() {
                                             })}
                                         </div>
                                             <div>
-                                                {form?.errors['service'] && form?.touched['service'] && (
-                                                    <div className="mt-1 text-xs-1 text-meta-1">{form.errors['service']}</div>
+                                                {form?.errors['services'] && form?.touched['services'] && (
+                                                    <div className="mt-1 text-xs-1 text-meta-1">{form.errors['services']}</div>
                                                 )}
                                             </div>
                                         </>

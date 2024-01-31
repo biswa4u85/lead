@@ -20,7 +20,7 @@ export default function Page() {
     const { create, data: respond, loading } = usePost();
 
     const validationSchemaService = Yup.object().shape({
-        service: Yup.string().required("Service is required"),
+        services: Yup.string().required("Service is required"),
     });
 
     const validationSchemaInfo = Yup.object().shape({
@@ -40,22 +40,23 @@ export default function Page() {
     });
 
     const handleUpdate = (value: any) => {
-        let val = 100 / (categorys?.data?.length + 2)
+        let val = 100 / 4
         setProgress(progress == 0 ? val : progress + val)
-        if (step == 101) {
+        if (step == 4) {
             create("batiments", { ...values, ...value })
         } else {
-            if (value.service) {
-                let service = values.service ? [...values.service, value.service] : [value.service]
-                setValues({ ...values, service })
+            if (value.services) {
+                let services = values.services ? [...values.services, value.services] : [value.services]
+                setValues({ ...values, services })
             } else {
                 setValues({ ...values, ...value })
             }
-            if (step == categorys?.data?.length) {
-                setStep(100)
-            } else {
-                setStep(step + 1)
-            }
+            setStep(step + 1)
+            // if (step == categorys?.data?.length) {
+            //     setStep(100)
+            // } else {
+            //     setStep(step + 1)
+            // }
         }
     }
 
@@ -76,58 +77,103 @@ export default function Page() {
                 </div>
                 {/* stepers end */}
 
-                {categorys?.data && categorys?.data.map((category: any, index: any) => <div key={index}>
-                    {(step == index + 1) && (<Formik
-                        initialValues={{ service: '' }}
-                        validationSchema={validationSchemaService}
-                        onSubmit={(values: any) => handleUpdate(values)}
-                    >
-                        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                            <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{category.name}</p>
-                            </div>
-                                <Field name={'service'}>
-                                    {({ field, form, meta }: any) => {
-                                        return <><div className="flex flex-wrap justify-normal">
-                                            {services?.data && services.data.map((item: any, key: any) => {
-                                                if (item?.batimentCategoryId == category?.id) {
-                                                    return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                                        onClick={() => {
-                                                            field.onChange('service')(
-                                                                item.id
-                                                            );
-                                                        }} >
-                                                        {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                            <Image
-                                                                alt=""
-                                                                width="44"
-                                                                height="44"
-                                                                src={item.icon}
-                                                            />
-                                                        </div>)}
-                                                        <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                                    </div>
-                                                }
-                                            })}
-                                        </div>
-                                            <div>
-                                                {form?.errors['service'] && form?.touched['service'] && (
-                                                    <div className="mt-1 text-xs-1 text-meta-1">{form.errors['service']}</div>
-                                                )}
+                {(step == 1) && (<Formik
+                    initialValues={{ services: '' }}
+                    validationSchema={validationSchemaService}
+                    onSubmit={(values: any) => handleUpdate(values)}
+                >
+                    {({ handleChange, handleBlur, handleSubmit }) => (
+                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{"Select the type of work you wish to carry out"}</p>
+                        </div>
+                            <Field name={'services'}>
+                                {({ field, form, meta }: any) => {
+                                    return <><div className="flex flex-wrap justify-normal">
+                                        {categorys?.data && categorys.data.map((item: any, key: any) => {
+                                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                                onClick={() => {
+                                                    field.onChange('services')(
+                                                        item.id
+                                                    );
+                                                }} >
+                                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                                    <Image
+                                                        alt=""
+                                                        width="44"
+                                                        height="44"
+                                                        src={item.icon}
+                                                    />
+                                                </div>)}
+                                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
                                             </div>
-                                        </>
-                                    }}
-                                </Field>
+                                        })}
+                                    </div>
+                                        <div>
+                                            {form?.errors['services'] && form?.touched['services'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['services']}</div>
+                                            )}
+                                        </div>
+                                    </>
+                                }}
+                            </Field>
 
-                                <div className="my-4 border-t-2 border-gray-500"></div>
-                                <div className="flex justify-center">
-                                    <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
-                                </div>
-                            </>)}
-                    </Formik>)}
-                </div>)}
+                            <div className="my-4 border-t-2 border-gray-500"></div>
+                            <div className="flex justify-center">
+                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                            </div>
+                        </>)}
+                </Formik>)}
 
-                {step == 100 && (<Formik
+                {(step == 2) && (<Formik
+                    initialValues={{ services: '' }}
+                    validationSchema={validationSchemaService}
+                    onSubmit={(values: any) => handleUpdate(values)}
+                >
+                    {({ handleChange, handleBlur, handleSubmit }) => (
+                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{"Select the type of work you wish to carry out"}</p>
+                        </div>
+                            <Field name={'services'}>
+                                {({ field, form, meta }: any) => {
+                                    return <><div className="flex flex-wrap justify-normal">
+                                        {services?.data && services.data.map((item: any, key: any) => {
+                                            if (item.batimentCategoryId == values?.services[0]) {
+                                                return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                                    onClick={() => {
+                                                        field.onChange('services')(
+                                                            item.id
+                                                        );
+                                                    }} >
+                                                    {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                                        <Image
+                                                            alt=""
+                                                            width="44"
+                                                            height="44"
+                                                            src={item.icon}
+                                                        />
+                                                    </div>)}
+                                                    <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
+                                                </div>
+                                            }
+                                        })}
+                                    </div>
+                                        <div>
+                                            {form?.errors['services'] && form?.touched['services'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['services']}</div>
+                                            )}
+                                        </div>
+                                    </>
+                                }}
+                            </Field>
+
+                            <div className="my-4 border-t-2 border-gray-500"></div>
+                            <div className="flex justify-center">
+                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                            </div>
+                        </>)}
+                </Formik>)}
+
+                {step == 3 && (<Formik
                     initialValues={{ title: "", description: "" }}
                     validationSchema={validationSchemaInfo}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -141,7 +187,7 @@ export default function Page() {
                                 <InputBox
                                     required={true}
                                     name="title"
-                                    label="First Name"
+                                    label="Title"
                                     placeholder="Enter the Title"
                                 />
                             </div>
@@ -162,7 +208,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 101 && (<Formik
+                {step == 4 && (<Formik
                     initialValues={{
                         firstName: "",
                         lastName: "",
@@ -239,7 +285,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 102 && (<>
+                {step == 5 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
                     </div>
