@@ -14,13 +14,28 @@ export default function Page() {
     const name = params.get('name')
     const [step, setStep] = useState<any>(1);
     const [progress, setProgress] = useState<any>(0);
-    const [values, setValues] = useState<any>({});
+    const [values, setValues] = useState<any>({
+        batimentCategoryId: "",
+        batimentTypeId: "",
+        title: "",
+        description: "",
+        firstName: "",
+        lastName: "",
+        city: "",
+        email: "",
+        phone: "",
+        postalCode: ""
+    });
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({}) });
     const { data: services } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
     const { create, data: respond, loading } = usePost();
 
-    const validationSchemaService = Yup.object().shape({
-        services: Yup.string().required("Service is required"),
+    const validationSchemaService1 = Yup.object().shape({
+        batimentCategoryId: Yup.string().required("Category is required"),
+    });
+
+    const validationSchemaService2 = Yup.object().shape({
+        batimentTypeId: Yup.string().required("Type is required"),
     });
 
     const validationSchemaInfo = Yup.object().shape({
@@ -39,24 +54,18 @@ export default function Page() {
         postalCode: Yup.string().required("Postal Code is required"),
     });
 
+    const handlePrevious = () => {
+        setStep(step - 1)
+    }
+
     const handleUpdate = (value: any) => {
         let val = 100 / 4
         setProgress(progress == 0 ? val : progress + val)
         if (step == 4) {
             create("batiments", { ...values, ...value })
         } else {
-            if (value.services) {
-                let services = values.services ? [...values.services, value.services] : [value.services]
-                setValues({ ...values, services })
-            } else {
-                setValues({ ...values, ...value })
-            }
+            setValues({ ...values, ...value })
             setStep(step + 1)
-            // if (step == categorys?.data?.length) {
-            //     setStep(100)
-            // } else {
-            //     setStep(step + 1)
-            // }
         }
     }
 
@@ -78,21 +87,21 @@ export default function Page() {
                 {/* stepers end */}
 
                 {(step == 1) && (<Formik
-                    initialValues={{ services: '' }}
-                    validationSchema={validationSchemaService}
+                    initialValues={values}
+                    validationSchema={validationSchemaService1}
                     onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit }) => (
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{"Select the type of work you wish to carry out"}</p>
+                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"Select the type of work you wish to carry out"}</p>
                         </div>
-                            <Field name={'services'}>
+                            <Field name={'batimentCategoryId'}>
                                 {({ field, form, meta }: any) => {
                                     return <><div className="flex flex-wrap justify-normal">
                                         {categorys?.data && categorys.data.map((item: any, key: any) => {
                                             return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
                                                 onClick={() => {
-                                                    field.onChange('services')(
+                                                    field.onChange('batimentCategoryId')(
                                                         item.id
                                                     );
                                                 }} >
@@ -109,8 +118,8 @@ export default function Page() {
                                         })}
                                     </div>
                                         <div>
-                                            {form?.errors['services'] && form?.touched['services'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['services']}</div>
+                                            {form?.errors['batimentCategoryId'] && form?.touched['batimentCategoryId'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['batimentCategoryId']}</div>
                                             )}
                                         </div>
                                     </>
@@ -125,22 +134,22 @@ export default function Page() {
                 </Formik>)}
 
                 {(step == 2) && (<Formik
-                    initialValues={{ services: '' }}
-                    validationSchema={validationSchemaService}
+                    initialValues={values}
+                    validationSchema={validationSchemaService2}
                     onSubmit={(values: any) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit }) => (
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{"Select the type of work you wish to carry out"}</p>
+                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"Sélectionnez la nature de travaux que vous souhaitez réaliser"}</p>
                         </div>
-                            <Field name={'services'}>
+                            <Field name={'batimentTypeId'}>
                                 {({ field, form, meta }: any) => {
                                     return <><div className="flex flex-wrap justify-normal">
                                         {services?.data && services.data.map((item: any, key: any) => {
-                                            if (item.batimentCategoryId == values?.services[0]) {
+                                            if (item.batimentCategoryId == values?.batimentCategoryId) {
                                                 return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
                                                     onClick={() => {
-                                                        field.onChange('services')(
+                                                        field.onChange('batimentTypeId')(
                                                             item.id
                                                         );
                                                     }} >
@@ -158,8 +167,8 @@ export default function Page() {
                                         })}
                                     </div>
                                         <div>
-                                            {form?.errors['services'] && form?.touched['services'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['services']}</div>
+                                            {form?.errors['batimentTypeId'] && form?.touched['batimentTypeId'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['batimentTypeId']}</div>
                                             )}
                                         </div>
                                     </>
@@ -168,13 +177,14 @@ export default function Page() {
 
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
                                 <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}
 
                 {step == 3 && (<Formik
-                    initialValues={{ title: "", description: "" }}
+                    initialValues={values}
                     validationSchema={validationSchemaInfo}
                     onSubmit={(values: any) => handleUpdate(values)}
                 >
@@ -203,20 +213,14 @@ export default function Page() {
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
                                 <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}
 
                 {step == 4 && (<Formik
-                    initialValues={{
-                        firstName: "",
-                        lastName: "",
-                        city: "",
-                        email: "",
-                        phone: "",
-                        postalCode: ""
-                    }}
+                    initialValues={values}
                     validationSchema={validationSchemaContact}
                     onSubmit={(values: any) => handleUpdate(values)}
                 >
@@ -274,12 +278,14 @@ export default function Page() {
                                         required={true}
                                         name="postalCode"
                                         label="Postal Code"
+                                        type="number"
                                         placeholder="Enter Postal Code"
                                     />
                                 </div>
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
                                 <Buttons loading={loading} className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Submitted"} onClick={handleSubmit} />
                             </div>
                         </>)}

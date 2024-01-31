@@ -52,25 +52,30 @@ model BatimentCategory {
   description   String
   icon          String?
   batimentTypes BatimentType[]
+  batiments     Batiment[]
 }
 
 model BatimentType {
   id                 String           @id @default(auto()) @map("_id") @db.ObjectId
-  batimentCategoryId String
   name               String
   icon               String
+  batimentCategoryId String
   batimentCategory   BatimentCategory @relation(fields: [batimentCategoryId], references: [id], onDelete: Cascade)
+  batiments          Batiment[]
 }
 
 model Batiment {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  address     BatimentAddress?
-  status      String            @default("active")
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  services    String[]
+  id                 String            @id @default(auto()) @map("_id") @db.ObjectId
+  title              String
+  description        String
+  address            BatimentAddress?
+  status             String            @default("active")
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  batimentCategoryId String
+  batimentCategory   BatimentCategory @relation(fields: [batimentCategoryId], references: [id], onDelete: Cascade)
+  batimentTypeId     String
+  batimentType       BatimentType @relation(fields: [batimentTypeId], references: [id], onDelete: Cascade)
 }
 
 model BatimentAddress {
@@ -92,25 +97,30 @@ model DepannageCategory {
   description    String
   icon           String?
   depannageTypes DepannageType[]
+  depannages     Depannage[]
 }
 
 model DepannageType {
   id                  String           @id @default(auto()) @map("_id") @db.ObjectId
-  depannageCategoryId String
   name                String
   icon                String
+  depannageCategoryId String
   depannageCategory   DepannageCategory @relation(fields: [depannageCategoryId], references: [id], onDelete: Cascade)
+  depannages          Depannage[]
 }
 
 model Depannage {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  address     DepannageAddress?
-  status      String            @default("active")
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  services    String[]
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  title               String
+  description         String
+  address             DepannageAddress?
+  status              String            @default("active")
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  depannageCategoryId String
+  depannageCategory   DepannageCategory @relation(fields: [depannageCategoryId], references: [id], onDelete: Cascade)
+  depannageTypeId     String
+  depannageType       DepannageType @relation(fields: [depannageTypeId], references: [id], onDelete: Cascade)
 }
 
 model DepannageAddress {

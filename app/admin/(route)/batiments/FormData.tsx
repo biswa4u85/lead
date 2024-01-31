@@ -1,15 +1,15 @@
 import { InputBox, TextareaBox, SelectBox, Buttons } from "@/components/RenderFroms";
-import { Formik, FieldArray } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { useFetch } from "@/contexts/useFetch";
 import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdOutlineSubtitles } from "react-icons/md";
 import { TbMapNorth } from "react-icons/tb";
 import { FaLocationDot } from "react-icons/fa6";
-import { toast } from 'react-toastify';
 
 const initialData = {
-    services: [],
+    batimentCategoryId: "",
+    batimentTypeId: "",
     title: "",
     description: "",
     firstName: "",
@@ -23,9 +23,8 @@ const initialData = {
 export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
-        services: Yup.array().of(
-            Yup.string().required("All Services is required"),
-        ),
+        batimentCategoryId: Yup.string().required("Category is required"),
+        batimentTypeId: Yup.string().required("Type is required"),
         title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
         firstName: Yup.string().required("First Name is required"),
@@ -38,48 +37,45 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         postalCode: Yup.string().required("Postal Code is required"),
     });
 
-    const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({}) });
-    const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
-        return { label: `${item?.name} ${item?.code}`, value: item?.id }
-    }) : []
+
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({}) });
-    const { data: services } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
+    const categoryOptions = categorys?.data ? categorys.data.map((item: any) => {
+        return { label: `${item?.name}`, value: item?.id }
+    }) : []
+    const { data: typess } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
 
     return (
         <Formik
             initialValues={initialValues?.edit ? { ...initialValues?.address, ...initialValues } : initialData}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-                if (values?.services?.length == categorys?.data?.length) {
-                    handleUpdate({ ...values, address: { ...values } })
-                } else {
-                    toast.error("Select all Services")
-                }
-            }}
+            onSubmit={(values) => handleUpdate({ ...values, address: { ...values } })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
-                    <FieldArray name="services">
-                        {({ push, remove }) => (
-                            <div>
-                                {categorys?.data && categorys.data.map((category: any, index: any) => (
-                                    <div className="mb-4" key={index}>
-                                        <SelectBox
-                                            required={true}
-                                            options={services?.data ? services.data.map((item: any) => {
-                                                if (item?.batimentCategoryId == category?.id) {
-                                                    return { label: item?.name, value: item?.id }
-                                                }
-                                            }) : []}
-                                            name={`services.${index}`}
-                                            label={category.name}
-                                            placeholder="Select One"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </FieldArray>
+                    <div className="mb-4">
+                        <SelectBox
+                            required={true}
+                            options={categoryOptions}
+                            name="batimentCategoryId"
+                            label="Category"
+                            placeholder="Enter Category"
+                            icon={<TbMapNorth />}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <SelectBox
+                            required={true}
+                            options={typess?.data ? typess.data.map((item: any) => {
+                                if (item.batimentCategoryId == values.batimentCategoryId) {
+                                    return { label: `${item?.name}`, value: item?.id }
+                                }
+                            }) : []}
+                            name="batimentTypeId"
+                            label="Type"
+                            placeholder="Enter Type"
+                            icon={<TbMapNorth />}
+                        />
+                    </div>
                     <div className="mb-4">
                         <InputBox
                             required={true}
@@ -144,10 +140,10 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                         />
                     </div>
                     <div className="mb-4">
-                        <SelectBox
+                        <InputBox
                             required={true}
-                            options={zipcodeOptions}
                             name="postalCode"
+                            type="number"
                             label="Postal Code"
                             placeholder="Enter Postal Code"
                             icon={<TbMapNorth />}

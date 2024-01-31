@@ -31,10 +31,17 @@ export default function Page() {
 
   const columns = [
     {
-      title: "Services",
-      dataIndex: "services",
+      title: "Category",
+      dataIndex: "depannageCategory",
       render(val: any) {
-        return val?.length;
+        return val?.name;
+      },
+    },
+    {
+      title: "Type",
+      dataIndex: "depannageType",
+      render(val: any) {
+        return val?.name;
       },
     },
     {
