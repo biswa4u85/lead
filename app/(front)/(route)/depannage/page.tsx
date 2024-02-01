@@ -77,11 +77,10 @@ export default function Page() {
             setProgress(progress + val)
             setError(null)
             if (depannageCategorys?.price) {
-                setStep(5)
+                setStep(3)
             } else {
                 setCategoryId(depannageCategorys?.id)
                 setDepannageCategorys(null)
-                setStep(step + 1)
             }
         } else {
             setError('Category is required')
@@ -90,7 +89,7 @@ export default function Page() {
 
     const handleUpdate = (value: any) => {
         setProgress(progress == 0 ? val : progress + val)
-        if (step == 7) {
+        if (step == 5) {
             create("depannages", { ...values, ...value, depannageCategoryId: depannageCategorys?.id })
         } else {
             setValues({ ...values, ...value })
@@ -186,75 +185,7 @@ export default function Page() {
                     </div>
                 </>)}
 
-                {step == 3 && (<>
-                    <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
-                    </div>
-                    <div className="flex flex-wrap justify-normal">
-                        {categorys?.data && categorys.data.map((item: any, key: any) => {
-                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${depannageCategorys?.id == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                onClick={() => {
-                                    setDepannageCategorys(item);
-                                }}>
-                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                    <Image
-                                        alt=""
-                                        width="44"
-                                        height="44"
-                                        src={item.icon}
-                                    />
-                                </div>)}
-                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                            </div>
-                        })}
-                    </div>
-                    <div>
-                        {error && (
-                            <div className="mt-1 text-xs-1 text-meta-1">{error}</div>
-                        )}
-                    </div>
-                    <div className="my-4 border-t-2 border-gray-500"></div>
-                    <div className="flex justify-center">
-                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
-                    </div>
-                </>)}
-
-                {step == 4 && (<>
-                    <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
-                    </div>
-                    <div className="flex flex-wrap justify-normal">
-                        {categorys?.data && categorys.data.map((item: any, key: any) => {
-                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${depannageCategorys?.id == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                onClick={() => {
-                                    setDepannageCategorys(item);
-                                }}>
-                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                    <Image
-                                        alt=""
-                                        width="44"
-                                        height="44"
-                                        src={item.icon}
-                                    />
-                                </div>)}
-                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                            </div>
-                        })}
-                    </div>
-                    <div>
-                        {error && (
-                            <div className="mt-1 text-xs-1 text-meta-1">{error}</div>
-                        )}
-                    </div>
-                    <div className="my-4 border-t-2 border-gray-500"></div>
-                    <div className="flex justify-center">
-                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
-                    </div>
-                </>)}
-
-                {(step == 5) && (<Formik
+                {(step == 3) && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaPrice}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -325,7 +256,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 6 && (<Formik
+                {step == 4 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaDescription}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -352,7 +283,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 7 && (<Formik
+                {step == 5 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaContact}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -423,7 +354,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 8 && (<>
+                {step == 6 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
                     </div>
