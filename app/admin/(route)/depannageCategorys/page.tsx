@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation'
 import {
   Table,
   Button,
@@ -9,20 +11,22 @@ import {
   Menu
 } from "antd";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
-import { CiMenuKebab } from "react-icons/ci";
+import { CiMenuKebab, CiSquarePlus, CiCircleChevLeft } from "react-icons/ci";
 import { FormData } from "./FormData";
 import { CreateDataModal, EditDataModal, DeleteDataModal, StatusDataModal } from "@/components/Forms";
 const resource = "depannageCategorys";
 
 export default function Page() {
+  const params = useSearchParams()
+  const id = params.get('id')
   const [detail, setDetail] = useState<any>(null);
 
   const [query, setQuery] = useState({ "skip": 0, "take": 10 })
-  const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
+  const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify({ parentId: id }) });
 
   useEffect(() => {
     fetch()
-  }, [query])
+  }, [id])
 
   const refreshData = () => {
     fetch()
@@ -56,32 +60,44 @@ export default function Page() {
       dataIndex: "address",
       key: "address",
       render: (_value: any, record: any) => (
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key="1">
-                <Button
-                  type="link"
-                  onClick={() => setDetail({ ...record, "edit": true })}
-                >
-                  EDIT
-                </Button>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Button
-                  type="link"
-                  onClick={() => setDetail({ ...record, "delete": true })}
-                >
-                  DELETE
-                </Button>
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <Button type="text" onClick={(e) => e.preventDefault()}>
-            <CiMenuKebab />
-          </Button>
-        </Dropdown>
+        <>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="1">
+                  <Button
+                    type="link"
+                    onClick={() => setDetail({ ...record, "edit": true })}
+                  >
+                    EDIT
+                  </Button>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Button
+                    type="link"
+                    onClick={() => setDetail({ ...record, "delete": true })}
+                  >
+                    DELETE
+                  </Button>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Button type="text" onClick={(e) => e.preventDefault()}>
+              <CiMenuKebab />
+            </Button>
+          </Dropdown>
+          {record.price ?
+            <Button type="link" className="p-0 m-0" onClick={() => {
+              if (typeof window !== 'undefined') window.history.back()
+            }}>
+              <CiCircleChevLeft />
+            </Button>
+            : <Link className="inline-block" href={`/admin/depannageCategorys?id=${record.id}`}>
+              <CiSquarePlus />
+            </Link>}
+
+        </>
       ),
     },
   ];
@@ -90,7 +106,7 @@ export default function Page() {
     <>
       <Breadcrumb pageName="Depannage Categorys" />
       <div className="fixed bottom-4 right-4 z-999">
-        <button onClick={() => setDetail({ "add": true })} className="px-4 py-2 font-bold text-white rounded-full shadow-lg bg-primary hover:bg-opacity-90">
+        <button onClick={() => setDetail({parentId:id, "add": true })} className="px-4 py-2 font-bold text-white rounded-full shadow-lg bg-primary hover:bg-opacity-90">
           ADD
         </button>
       </div>

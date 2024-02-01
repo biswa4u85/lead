@@ -2,13 +2,11 @@ import { InputBox, SelectBox, FileBox, Buttons } from "@/components/RenderFroms"
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { FaProjectDiagram } from "react-icons/fa";
-import { useFetch } from "@/contexts/useFetch";
 
 const initialData = {
     icon: "",
     name: "",
     description: "",
-    parentId: "",
     price: "",
 }
 
@@ -19,27 +17,16 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         description: Yup.string().required("Description is required"),
     });
 
-    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({ showAll: true }) });
-    const categoryOptions = categorys?.data ? categorys.data.map((item: any) => {
-        return { label: item?.name, value: item?.id }
-    }) : []
+    console.log(initialValues?.parentId)
 
     return (
         <Formik
             initialValues={initialValues?.edit ? { ...initialValues } : initialData}
             validationSchema={validationSchema}
-            onSubmit={(values) => handleUpdate(values)}
+            onSubmit={(values) => handleUpdate({ ...values, parentId: initialValues?.parentId })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
-                    <div className="mb-4">
-                        <SelectBox
-                            options={categoryOptions}
-                            name="parentId"
-                            label="Category"
-                            placeholder="Select Category"
-                        />
-                    </div>
                     <div className="mb-4">
                         <FileBox
                             name="icon"

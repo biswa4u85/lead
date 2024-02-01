@@ -11,11 +11,11 @@ export async function GET(request: NextRequest) {
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
         const parentId = request.nextUrl.searchParams.get("parentId")
         const showAll = request.nextUrl.searchParams.get("showAll") || false
-        let include: any = false
-        if (parentId != "0") {
-            include['parent'] = { select: { id: true, name: true }, }
-        }
         if (parentId) {
+            let include: any = {}
+            if (parentId != "0") {
+                include['parent'] = { select: { id: true, name: true } }
+            }
             const result = await prisma[resource].findMany({
                 where: {
                     parentId

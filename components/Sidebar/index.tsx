@@ -145,13 +145,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </Link>
               </li>
               <li>
-                <Link href="/admin/depannageCategorys" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannageCategorys") && "bg-graydark dark:bg-meta-4"}`}>
+                <Link href="/admin/depannageCategorys?id=0" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannageCategorys") && "bg-graydark dark:bg-meta-4"}`}>
                   <MdReportProblem size="25" /> Dépannage Categorys
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/depannagTypes" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("depannagTypes") && "bg-graydark dark:bg-meta-4"}`}>
-                  <MdMergeType size="25" /> Dépannage Types
                 </Link>
               </li>
 

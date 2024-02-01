@@ -24,6 +24,7 @@ export default function Page() {
         city: "",
         email: "",
         phone: "",
+        accept: "",
         postalCode: ""
     });
     let val = 100 / 7
@@ -41,12 +42,8 @@ export default function Page() {
         postalCode: Yup.string().required("Zip Code is required"),
     });
 
-    const validationSchemaService = Yup.object().shape({
-        depannageCategoryId: Yup.string().required("Category is required"),
-    });
-
     const validationSchemaPrice = Yup.object().shape({
-        // price: Yup.string().required("Price is required"),
+        accept: Yup.string().required("Accept Terms"),
     });
 
     const validationSchemaDescription = Yup.object().shape({
@@ -103,6 +100,7 @@ export default function Page() {
 
     useEffect(() => {
         if (respond) {
+            setProgress(100)
             toast.success(`Your request added successfully`);
             setValues({})
             setStep(step + 1)
@@ -266,7 +264,7 @@ export default function Page() {
                             <p className="text-sm leading-10 md:text-lg font-inter font-Normal text-deep-black md:max-w-2xl">Where does the problem come from ?</p>
                         </div>
 
-                            <Field name={'price'}>
+                            <Field name={'accept'}>
                                 {({ field, form, meta }: any) => {
                                     return <>
                                         <div className="grid mx-3 md:grid-cols-2 gap-11 ">
@@ -298,17 +296,21 @@ export default function Page() {
                                                     label="Your Postal Code *"
                                                     placeholder={values.postalCode}
                                                 />
-                                                <button onClick={() => field.onChange('price')(100)}
+                                                <input
+                                                    name="accept"
+                                                    style={{ display: "none" }}
+                                                    readOnly={true}
+                                                />
+                                                <button onClick={() => field.onChange('accept')(depannageCategorys.price)}
                                                     className="w-full px-4 py-2 my-5 text-sm font-normal text-indigo-800 bg-blue-500 border border-indigo-800 rounded-md font-inter">
                                                     I Order
                                                 </button>
                                             </div>
-
                                         </div>
 
                                         <div>
-                                            {form?.errors['price'] && form?.touched['price'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['price']}</div>
+                                            {form?.errors['accept'] && form?.touched['accept'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['accept']}</div>
                                             )}
                                         </div>
                                     </>
