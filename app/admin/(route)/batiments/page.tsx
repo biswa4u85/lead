@@ -141,6 +141,9 @@ export default function Page() {
       <Table className="mainTable" loading={loading} dataSource={data?.data ?? []} columns={columns} pagination={{
         showQuickJumper: true,
         total: data?.count ?? 0,
+        onChange: (page, pageSize) => {
+          setQuery({ "skip": ((page - 1) * pageSize), "take": pageSize });
+        },
       }} />
       {(detail && detail.add) && (<CreateDataDrawer resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
       {(detail && detail.edit) && (<EditDataDrawer resource={resource} close={refreshData} FormData={FormData} data={detail} />)}

@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useFetch } from "@/contexts/useFetch";
+import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { usePost } from "@/contexts/usePost";
 import { InputBox, TextareaBox, SelectBox, Buttons } from "@/components/RenderFroms";
 import { Formik, Field } from "formik";
@@ -9,13 +9,14 @@ import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import { AiOutlineCheckCircle, } from "react-icons/ai";
 
-
 export default function Page() {
     const [step, setStep] = useState<any>(1);
     const [progress, setProgress] = useState<any>(0);
+    const [categoryId, setCategoryId] = useState<any>("0");
+    const [depannageCategorys, setDepannageCategorys] = useState<any>(null);
+    const [error, setError] = useState<any>(null);
     const [values, setValues] = useState<any>({
         depannageCategoryId: "",
-        depannageTypeId: "",
         title: "",
         description: "",
         firstName: "",
@@ -25,13 +26,14 @@ export default function Page() {
         phone: "",
         postalCode: ""
     });
-    const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({}) });
-    const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
-        return { label: item?.name, value: item?.id }
-    }) : []
+    let val = 100 / 7
+    const { fetch, data: categorys } = useFetchByLoad({ url: "depannageCategorys", query: JSON.stringify({ parentId: categoryId }) });
 
-    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({}) });
-    const { data: services } = useFetch({ url: "depannageTypes", query: JSON.stringify({}) });
+    useEffect(() => {
+        fetch()
+    }, [categoryId])
+
+
     const { create, data: respond, loading } = usePost();
 
     const validationSchemaInfo = Yup.object().shape({
@@ -39,12 +41,8 @@ export default function Page() {
         postalCode: Yup.string().required("Zip Code is required"),
     });
 
-    const validationSchemaService1 = Yup.object().shape({
+    const validationSchemaService = Yup.object().shape({
         depannageCategoryId: Yup.string().required("Category is required"),
-    });
-
-    const validationSchemaService2 = Yup.object().shape({
-        depannageTypeId: Yup.string().required("Type is required"),
     });
 
     const validationSchemaPrice = Yup.object().shape({
@@ -67,20 +65,41 @@ export default function Page() {
     });
 
     const handlePrevious = () => {
-        setStep(step - 1)
+        if (step == 5 || step == 4 || step == 3) {
+            setCategoryId("0")
+            setStep(2)
+            setProgress(progress - val)
+        } else {
+            setStep(step - 1)
+            setProgress(val)
+        }
+    }
+
+    const handleNext = () => {
+        if (depannageCategorys) {
+            setProgress(progress + val)
+            setError(null)
+            if (depannageCategorys?.price) {
+                setStep(5)
+            } else {
+                setCategoryId(depannageCategorys.id)
+                setDepannageCategorys(null)
+                setStep(step + 1)
+            }
+        } else {
+            setError('Category is required')
+        }
     }
 
     const handleUpdate = (value: any) => {
-        let val = 100 / 6
         setProgress(progress == 0 ? val : progress + val)
-        if (step == 6) {
-            create("depannages", { ...values, ...value })
+        if (step == 7) {
+            create("depannages", { ...values, ...value, depannageCategoryId: depannageCategorys.id })
         } else {
             setValues({ ...values, ...value })
             setStep(step + 1)
         }
     }
-
 
     useEffect(() => {
         if (respond) {
@@ -99,7 +118,7 @@ export default function Page() {
                 </div>
                 {/* stepers end */}
 
-                {(step == 1 && zipcodes) && (<Formik
+                {step == 1 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaInfo}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -135,105 +154,109 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {(step == 2) && (<Formik
-                    initialValues={values}
-                    validationSchema={validationSchemaService1}
-                    onSubmit={(values: any) => handleUpdate(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
-                        </div>
-                            <Field name={'depannageCategoryId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {categorys?.data && categorys.data.map((item: any, key: any) => {
-                                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                                onClick={() => {
-                                                    field.onChange('depannageCategoryId')(
-                                                        item.id
-                                                    );
-                                                }} >
-                                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                    <Image
-                                                        alt=""
-                                                        width="44"
-                                                        height="44"
-                                                        src={item.icon}
-                                                    />
-                                                </div>)}
-                                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                            </div>
-                                        })}
-                                    </div>
-                                        <div>
-                                            {form?.errors['depannageCategoryId'] && form?.touched['depannageCategoryId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['depannageCategoryId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
-
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                            <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                {step == 2 && (<>
+                    <div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
+                    </div>
+                    <div className="flex flex-wrap justify-normal">
+                        {categorys?.data && categorys.data.map((item: any, key: any) => {
+                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${depannageCategorys?.id == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                onClick={() => {
+                                    setDepannageCategorys(item);
+                                }}>
+                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                    <Image
+                                        alt=""
+                                        width="44"
+                                        height="44"
+                                        src={item.icon}
+                                    />
+                                </div>)}
+                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
                             </div>
-                        </>)}
-                </Formik>)}
+                        })}
+                    </div>
+                    <div>
+                        {error && (
+                            <div className="mt-1 text-xs-1 text-meta-1">{error}</div>
+                        )}
+                    </div>
+                    <div className="my-4 border-t-2 border-gray-500"></div>
+                    <div className="flex justify-center">
+                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
+                    </div>
+                </>)}
 
-                {(step == 3) && (<Formik
-                    initialValues={values}
-                    validationSchema={validationSchemaService2}
-                    onSubmit={(values: any) => handleUpdate(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"Where does the problem come from ?"}</p>
-                        </div>
-                            <Field name={'depannageTypeId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {services?.data && services.data.map((item: any, key: any) => {
-                                            if (item.depannageCategoryId == values?.depannageCategoryId) {
-                                                return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                                    onClick={() => {
-                                                        field.onChange('depannageTypeId')(
-                                                            item.id
-                                                        );
-                                                    }} >
-                                                    {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                        <Image
-                                                            alt=""
-                                                            width="44"
-                                                            height="44"
-                                                            src={item.icon}
-                                                        />
-                                                    </div>)}
-                                                    <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                                </div>
-                                            }
-                                        })}
-                                    </div>
-                                        <div>
-                                            {form?.errors['depannageTypeId'] && form?.touched['depannageTypeId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['batimentTypeId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
-
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                {step == 3 && (<>
+                    <div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
+                    </div>
+                    <div className="flex flex-wrap justify-normal">
+                        {categorys?.data && categorys.data.map((item: any, key: any) => {
+                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${depannageCategorys?.id == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                onClick={() => {
+                                    setDepannageCategorys(item);
+                                }}>
+                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                    <Image
+                                        alt=""
+                                        width="44"
+                                        height="44"
+                                        src={item.icon}
+                                    />
+                                </div>)}
+                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
                             </div>
-                        </>)}
-                </Formik>)}
+                        })}
+                    </div>
+                    <div>
+                        {error && (
+                            <div className="mt-1 text-xs-1 text-meta-1">{error}</div>
+                        )}
+                    </div>
+                    <div className="my-4 border-t-2 border-gray-500"></div>
+                    <div className="flex justify-center">
+                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
+                    </div>
+                </>)}
 
-                {(step == 4) && (<Formik
+                {step == 4 && (<>
+                    <div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
+                    </div>
+                    <div className="flex flex-wrap justify-normal">
+                        {categorys?.data && categorys.data.map((item: any, key: any) => {
+                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${depannageCategorys?.id == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                onClick={() => {
+                                    setDepannageCategorys(item);
+                                }}>
+                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                    <Image
+                                        alt=""
+                                        width="44"
+                                        height="44"
+                                        src={item.icon}
+                                    />
+                                </div>)}
+                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
+                            </div>
+                        })}
+                    </div>
+                    <div>
+                        {error && (
+                            <div className="mt-1 text-xs-1 text-meta-1">{error}</div>
+                        )}
+                    </div>
+                    <div className="my-4 border-t-2 border-gray-500"></div>
+                    <div className="flex justify-center">
+                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
+                    </div>
+                </>)}
+
+                {(step == 5) && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaPrice}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -248,14 +271,14 @@ export default function Page() {
                                     return <>
                                         <div className="grid mx-3 md:grid-cols-2 gap-11 ">
                                             <div className="p-2 border border-gray-500 rounded-md md:col-span-1">
-                                                <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">Electric water heater breakdown diagnosis + 1 hour of labor</p>
-                                                <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€139</p>
+                                                <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">{depannageCategorys.description}</p>
+                                                <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€{depannageCategorys.price}</p>
                                                 <div className="flex justify-between gap-8">
                                                     <div className="flex">
                                                         <div> <AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
-                                                        <p className="text-sm font-normal font-inter text-graylight-900">Electric water heater breakdown diagnosis + 1 hour of labor</p>
+                                                        <p className="text-sm font-normal font-inter text-graylight-900">{depannageCategorys.description}</p>
                                                     </div>
-                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€59.00</p>
+                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€{depannageCategorys.price}</p>
                                                     </div>
                                                 </div>
 
@@ -294,13 +317,13 @@ export default function Page() {
 
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
-                            <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
                                 <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}
 
-                {step == 5 && (<Formik
+                {step == 6 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaDescription}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -321,13 +344,13 @@ export default function Page() {
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
-                            <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
                                 <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}
 
-                {step == 6 && (<Formik
+                {step == 7 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaContact}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -392,13 +415,13 @@ export default function Page() {
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
-                            <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
                                 <Buttons loading={loading} className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Submitted"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}
 
-                {step == 7 && (<>
+                {step == 8 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
                     </div>

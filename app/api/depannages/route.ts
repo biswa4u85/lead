@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
-            include: { address: true, depannageCategory: { select: { name: true } }, depannageType: { select: { name: true } } }
+            include: { address: true, depannageCategory: { select: { name: true, price:true } } }
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
@@ -30,11 +30,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
-        const { depannageCategoryId, depannageTypeId, title, description, firstName, lastName, city, email, phone, postalCode } = data
+        const { depannageCategoryId, title, description, firstName, lastName, city, email, phone, postalCode } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].create({
             data: {
-                title, description, depannageCategoryId, depannageTypeId,
+                title, description, depannageCategoryId,
                 address: {
                     create: address
                 }
@@ -57,11 +57,11 @@ export async function PATCH(request: NextRequest) {
         delete data.id
         delete data.edit
 
-        const { depannageCategoryId, depannageTypeId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
+        const { depannageCategoryId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].update({
             where: { id },
-            data: { depannageCategoryId, depannageTypeId, title, description, status, address: { update: address } },
+            data: { depannageCategoryId, title, description, status, address: { update: address } },
             include: { address: true }
         });
         return successResponse(res);

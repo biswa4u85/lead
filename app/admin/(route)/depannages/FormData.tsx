@@ -6,11 +6,9 @@ import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdOutlineSubtitles } from "react-icons/md";
 import { TbMapNorth } from "react-icons/tb";
 import { FaLocationDot } from "react-icons/fa6";
-import { toast } from 'react-toastify';
 
 const initialData = {
     depannageCategoryId: "",
-    depannageTypeId: "",
     title: "",
     description: "",
     firstName: "",
@@ -25,7 +23,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
         depannageCategoryId: Yup.string().required("Category is required"),
-        depannageTypeId: Yup.string().required("Type is required"),
         title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
         firstName: Yup.string().required("First Name is required"),
@@ -42,7 +39,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
     const categoryOptions = categorys?.data ? categorys.data.map((item: any) => {
         return { label: `${item?.name}`, value: item?.id }
     }) : []
-    const { data: typess } = useFetch({ url: "depannageTypes", query: JSON.stringify({}) });
 
     return (
         <Formik
@@ -59,20 +55,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             name="depannageCategoryId"
                             label="Category"
                             placeholder="Enter Category"
-                            icon={<TbMapNorth />}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <SelectBox
-                            required={true}
-                            options={typess?.data ? typess.data.map((item: any) => {
-                                if (item.depannageCategoryId == values.depannageCategoryId) {
-                                    return { label: `${item?.name}`, value: item?.id }
-                                }
-                            }) : []}
-                            name="depannageTypeId"
-                            label="Type"
-                            placeholder="Enter Type"
                             icon={<TbMapNorth />}
                         />
                     </div>

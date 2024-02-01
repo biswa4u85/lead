@@ -37,11 +37,6 @@ export default function Page() {
       render: (text: any) => <Avatar shape="square" src={<img src={text ? text : "/images/user.png"} alt="" />} />
     },
     {
-      title: 'Category',
-      dataIndex: 'depannageCategory',
-      render: (text: any) => text?.name
-    },
-    {
       title: "Name",
       dataIndex: "name",
       sorter: true,
@@ -52,6 +47,15 @@ export default function Page() {
           </span>
         );
       },
+    },
+    {
+      title: 'Category',
+      dataIndex: 'depannageCategory',
+      render: (text: any) => text?.name
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price'
     },
     {
       title: "Actions",

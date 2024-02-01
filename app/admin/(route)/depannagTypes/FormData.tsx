@@ -8,6 +8,8 @@ const initialData = {
     icon: "",
     name: "",
     depannageCategoryId: "",
+    description: "",
+    price: "",
 }
 
 export function FormData({ initialValues, handleUpdate, loading }: any) {
@@ -53,6 +55,25 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             name="name"
                             label="Name"
                             placeholder="Enter Name"
+                            icon={<MdOutlineHomeRepairService />}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <InputBox
+                            // required={true}
+                            name="description"
+                            label="Description"
+                            placeholder="Enter Description"
+                            icon={<MdOutlineHomeRepairService />}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <InputBox
+                            // required={true}
+                            name="price"
+                            label="Price"
+                            type="number"
+                            placeholder="Enter Price"
                             icon={<MdOutlineHomeRepairService />}
                         />
                     </div>

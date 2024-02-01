@@ -18,7 +18,7 @@ const resource = "users";
 export default function Page() {
   const [detail, setDetail] = useState<any>(null);
 
-  const [query, setQuery] = useState({ "role": "user", "skip": "0", "take": "10" })
+  const [query, setQuery] = useState({ "role": "user", "skip": 0, "take": 10 })
   const { fetch, data, loading } = useFetchByLoad({ url: resource, query: JSON.stringify(query) });
 
   useEffect(() => {
@@ -122,6 +122,9 @@ export default function Page() {
       <Table className="mainTable" loading={loading} dataSource={data?.data ?? []} columns={columns} pagination={{
         showQuickJumper: true,
         total: data?.count ?? 0,
+        onChange: (page, pageSize) => {
+          setQuery({ "role": "user", "skip": ((page - 1) * pageSize), "take": pageSize });
+        },
       }} />
       {(detail && detail.add) && (<CreateDataDrawer resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
       {(detail && detail.edit) && (<EditDataDrawer resource={resource} close={refreshData} FormData={FormData} data={detail} />)}

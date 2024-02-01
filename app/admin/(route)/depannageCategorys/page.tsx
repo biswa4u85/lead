@@ -34,19 +34,22 @@ export default function Page() {
       title: 'Icon',
       dataIndex: 'icon',
       render: (text: any) => <Avatar shape="square" src={<img src={text ? text : "/images/user.png"} alt="" />} />
-
     },
     {
       title: "Name",
       dataIndex: "name",
       sorter: true,
-      render(val: any) {
-        return (
-          <span>
-            {`${val}`}
-          </span>
-        );
-      },
+    },
+    {
+      title: "Parent",
+      dataIndex: "parent",
+      sorter: true,
+      render: (text: any) => text?.name
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      sorter: true,
     },
     {
       title: "Actions",
@@ -94,6 +97,9 @@ export default function Page() {
       <Table className="mainTable" loading={loading} dataSource={data?.data ?? []} columns={columns} pagination={{
         showQuickJumper: true,
         total: data?.count ?? 0,
+        onChange: (page, pageSize) => {
+          setQuery({ "skip": ((page - 1) * pageSize), "take": pageSize });
+        },
       }} />
       {(detail && detail.add) && (<CreateDataModal resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
       {(detail && detail.edit) && (<EditDataModal resource={resource} close={refreshData} FormData={FormData} data={detail} />)}
