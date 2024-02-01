@@ -79,7 +79,7 @@ export default function Page() {
             if (depannageCategorys?.price) {
                 setStep(5)
             } else {
-                setCategoryId(depannageCategorys.id)
+                setCategoryId(depannageCategorys?.id)
                 setDepannageCategorys(null)
                 setStep(step + 1)
             }
@@ -91,7 +91,7 @@ export default function Page() {
     const handleUpdate = (value: any) => {
         setProgress(progress == 0 ? val : progress + val)
         if (step == 7) {
-            create("depannages", { ...values, ...value, depannageCategoryId: depannageCategorys.id })
+            create("depannages", { ...values, ...value, depannageCategoryId: depannageCategorys?.id })
         } else {
             setValues({ ...values, ...value })
             setStep(step + 1)
@@ -269,14 +269,14 @@ export default function Page() {
                                     return <>
                                         <div className="grid mx-3 md:grid-cols-2 gap-11 ">
                                             <div className="p-2 border border-gray-500 rounded-md md:col-span-1">
-                                                <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">{depannageCategorys.description}</p>
-                                                <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€{depannageCategorys.price}</p>
+                                                <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">{depannageCategorys?.description}</p>
+                                                <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€{depannageCategorys?.price}</p>
                                                 <div className="flex justify-between gap-8">
                                                     <div className="flex">
                                                         <div> <AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
-                                                        <p className="text-sm font-normal font-inter text-graylight-900">{depannageCategorys.description}</p>
+                                                        <p className="text-sm font-normal font-inter text-graylight-900">{depannageCategorys?.description}</p>
                                                     </div>
-                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€{depannageCategorys.price}</p>
+                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€{depannageCategorys?.price}</p>
                                                     </div>
                                                 </div>
 
@@ -301,7 +301,7 @@ export default function Page() {
                                                     style={{ display: "none" }}
                                                     readOnly={true}
                                                 />
-                                                <button onClick={() => field.onChange('accept')(depannageCategorys.price)}
+                                                <button onClick={() => field.onChange('accept')(depannageCategorys?.price)}
                                                     className="w-full px-4 py-2 my-5 text-sm font-normal text-indigo-800 bg-blue-500 border border-indigo-800 rounded-md font-inter">
                                                     I Order
                                                 </button>
