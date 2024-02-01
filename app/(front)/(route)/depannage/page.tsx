@@ -43,7 +43,7 @@ export default function Page() {
     });
 
     const validationSchemaPrice = Yup.object().shape({
-        accept: Yup.string().required("Accept Terms"),
+        // accept: Yup.string().required("Accept Terms"),
     });
 
     const validationSchemaDescription = Yup.object().shape({
@@ -65,7 +65,7 @@ export default function Page() {
         if (step == 5 || step == 4 || step == 3) {
             setCategoryId("0")
             setStep(2)
-            setProgress(progress - val)
+            setProgress(val)
         } else {
             setStep(step - 1)
             setProgress(val)
