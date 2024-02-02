@@ -50,7 +50,7 @@ export default function Header() {
           <div className='flex'>
             <nav className="flex items-center justify-between" >
               <Link href={"/"} className="mx-5 text-indigo-900 hover:text-blue-700">Home</Link>
-              <Link href={"/batiment"} className="mx-1 text-indigo-900 hover:text-blue-700">Projet Batiment</Link>
+              <Link href={"/batiment"} className="mx-1 mr-5 text-indigo-900 hover:text-blue-700">Projet Batiment</Link>
               <Link href={"/depannage"} className="mx-1 text-indigo-900 hover:text-blue-700">Projet Dépannage</Link>
               <Link href={"/espace-pro"} className="mx-5 text-indigo-900 hover:text-blue-700">Espace pro</Link>
             </nav>

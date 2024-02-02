@@ -72,6 +72,11 @@ model Batiment {
   status             String           @default("active")
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
+  contractStart      DateTime?        @default(now())
+  contractEnd        DateTime?        @default(now())
+  profeionalId       String? 
+  signature          String? 
+  paymentId          String?
   batimentCategoryId String
   batimentCategory   BatimentCategory @relation(fields: [batimentCategoryId], references: [id], onDelete: Cascade)
   batimentTypeId     String
@@ -111,6 +116,11 @@ model Depannage {
   status              String            @default("active")
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
+  contractStart       DateTime?         @default(now())
+  contractEnd         DateTime?         @default(now())
+  profeionalId        String? 
+  signature           String? 
+  paymentId           String? 
   depannageCategoryId String
   depannageCategory   DepannageCategory @relation(fields: [depannageCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -139,6 +149,8 @@ model Payment {
   userId    String
   type      String   @default("card")
   refId     String?
+  leadType  String?
+  leadId    String?
   amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

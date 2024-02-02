@@ -90,7 +90,7 @@ function Form({ resource, router }: any) {
                         // Make Payment
                         await stripe.confirmPayment({
                             elements,
-                            clientSecret:clientSecret.data,
+                            clientSecret: clientSecret.data,
                             confirmParams: {
                                 return_url: `${origin}${pathname}?info=${JSON.stringify(values)}`,
                             },

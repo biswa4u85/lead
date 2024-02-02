@@ -34,8 +34,8 @@ export async function POST(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        const { userId, type, amount, refId } = data
-        const res = await prisma[resource].create({ data: { userId: userId, type, amount: parseInt(amount), refId } });
+        const { userId, type, amount, refId, leadType, leadId } = data
+        const res = await prisma[resource].create({ data: { userId: userId, type, amount: parseInt(amount), refId, leadType, leadId } });
 
         // Update wallet
         const user: any = await prisma[subRes].findUnique({ where: { id: userId } });
