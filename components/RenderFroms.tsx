@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Field } from "formik";
-import { Avatar } from "antd";
+import { Avatar, DatePicker } from "antd";
 import SiteApis from "@/contexts/SiteApis";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -27,6 +27,8 @@ const InputBox = (props: any) => {
             {props.label} {(form?.errors[props.name] || props.required) && (<span className="text-meta-1">{"*"}</span>)}
           </label>)}
           <div className="relative">
+            {props.pre && (<div style={{ position: "absolute", left: 5, top: 10 }}>{props.pre}</div>)}
+            {props.post && (<div style={{ position: "absolute", right: 5, top: 10 }}>{props.post}</div>)}
             <input
               value={field.value}
               onChange={(obj) => {
@@ -119,6 +121,34 @@ const TextareaBox = (props: any) => {
   );
 };
 
+const DateBox = (props: any) => {
+  return (
+    <Field name={props.name}>
+      {({ field, form, meta }: any) => {
+        return <>
+          {props.label && (<label className="mb-2.5 block font-medium text-black dark:text-white">
+            {props.label} {(form?.errors[props.name] || props.required) && (<span className="text-meta-1">{"*"}</span>)}
+          </label>)}
+          <div className="relative">
+            <DatePicker
+              onChange={(date, dateString) => {
+                field.onChange(props.name)(
+                  dateString
+                );
+              }}
+              className={"w-full py-2 pl-6 pr-10 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" + ((form?.errors[props.name] && form?.touched[props.name]) && " border-b-meta-1")}
+              {...props}
+            />
+            {form?.errors[props.name] && form?.touched[props.name] && (
+              <div className="mt-1 text-xs-1 text-meta-1">{form.errors[props.name]}</div>
+            )}
+          </div>
+        </>
+      }}
+    </Field>
+  );
+};
+
 const SelectBox = (props: any) => {
   return (
     <Field name={props.name}>
@@ -190,5 +220,6 @@ export {
   PasswordBox,
   TextareaBox,
   SelectBox,
+  DateBox,
   FileBox
 };
