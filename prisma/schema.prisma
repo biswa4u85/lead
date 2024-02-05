@@ -74,9 +74,12 @@ model Batiment {
   updatedAt          DateTime         @updatedAt
   contractStart      DateTime?        @default(now())
   contractEnd        DateTime?        @default(now())
-  profeionalId       String? 
-  signature          String? 
+  assignedDate       DateTime?        @default(now())
+  profeionalId       String?
+  signature          String?
   paymentId          String?
+  assignTo           String?
+  assignStatus       String           @default("new")
   batimentCategoryId String
   batimentCategory   BatimentCategory @relation(fields: [batimentCategoryId], references: [id], onDelete: Cascade)
   batimentTypeId     String
@@ -118,9 +121,12 @@ model Depannage {
   updatedAt           DateTime          @updatedAt
   contractStart       DateTime?         @default(now())
   contractEnd         DateTime?         @default(now())
-  profeionalId        String? 
-  signature           String? 
-  paymentId           String? 
+  assignedDate        DateTime?         @default(now())
+  profeionalId        String?
+  signature           String?
+  paymentId           String?
+  assignTo            String?
+  assignStatus        String            @default("new")
   depannageCategoryId String
   depannageCategory   DepannageCategory @relation(fields: [depannageCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -135,7 +141,7 @@ model DepannageAddress {
   email       String
   city        String
   depannageId String    @unique
-  depannage   Depannage @relation(fields: [depannageId], references: [id], onDelete: Cascade )
+  depannage   Depannage @relation(fields: [depannageId], references: [id], onDelete: Cascade)
 }
 
 model ZipCode {
@@ -144,15 +150,26 @@ model ZipCode {
   code String
 }
 
+model Invoice {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  description     String?
+  contractStart   String
+  contractEnd     String
+  signature       String
+  userId          String
+  leadId          String
+  items           Json[]
+}
+
 model Payment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String
-  type      String   @default("card")
-  refId     String?
-  leadType  String?
-  leadId    String?
-  amount    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: NoAction)
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  type        String   @default("card")
+  refId       String?
+  paymentType String
+  leadId      String?
+  amount      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: NoAction)
 }

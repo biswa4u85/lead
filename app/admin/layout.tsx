@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import Loader from "@/components/common/Loader";
-
+import { useRouter } from "next/navigation";
+import { useSession } from 'next-auth/react'
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
@@ -10,12 +11,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const { data } = useSession()
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+  useLayoutEffect(() => {
+    if (data && data?.user) {
+      if ((data?.user as any)?.role == "user") {
+        router.push("/pro");
+      }else if ((data?.user as any)?.role == "approval") {
+        router.push("/approval");
+      }else{
+        setLoading(false)
+      }
+    }
+  }, [data])
+
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">

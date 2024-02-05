@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
@@ -22,11 +22,15 @@ export default function Page() {
         content: () => printInfoRef.current
     });
 
-    useEffect(() => {
-        if (lead?.data && payment_intent) {
-            create("payments", { userId: lead?.data?.profeionalId, type: "card", amount: Number(lead?.data?.depannageCategory?.price), refId: payment_intent, leadType: type, leadId: id })
+    const makePaymentEntry = useCallback(async (leads: any) => {
+        if (leads) {
+            create("payments", { userId: leads?.profeionalId, type: "card", amount: Number(leads?.depannageCategory?.price), refId: payment_intent, paymentType: type, leadId: id })
         }
-    }, [lead, payment_intent])
+    }, []);
+
+    useEffect(() => {
+        makePaymentEntry(lead.data)
+    }, [lead.data])
 
     return (
         <>

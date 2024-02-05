@@ -35,8 +35,10 @@ function Form({ resource, router }: any) {
     const payment_intent = searchParams.get('payment_intent')
 
     useEffect(() => {
-        let body = JSON.parse(info)
-        create(resource, { ...body, refId: payment_intent })
+        if (info && payment_intent) {
+            let body = JSON.parse(info)
+            create(resource, { ...body, refId: payment_intent, paymentType: "proUser" })
+        }
     }, [info, payment_intent])
 
     const validationSchema = Yup.object().shape({
@@ -52,7 +54,7 @@ function Form({ resource, router }: any) {
 
     const { create, data: respond, loading } = usePost();
     const handleUpdate = (body: any) => {
-        create(resource, body)
+        create(resource, { ...body, paymentType: "proUser" })
     }
     if (respond) {
         toast.success(`New ${resource} add successfully`);

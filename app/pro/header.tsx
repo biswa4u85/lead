@@ -40,10 +40,10 @@ export default function Header() {
         <div className={`absolute w-full top-0 bg-black opacity-80 lg:hidden p-4 text-white ${isMobileMenuOpen ? '' : 'hidden'}`}>
           <div className="absolute right-15 top-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} /></div>
           <nav className="flex flex-col" >
-            <Link href={"/"} className="mx-2 my-1 text-white hover:text-blue-700">Home</Link>
-            <Link href={"/batiment"} className="mx-2 my-1 text-white hover:text-blue-700">Projet Batiment</Link>
-            <Link href={"/depannage"} className="mx-2 my-1 text-white hover:text-blue-700">Projet Dépannage</Link>
-            <Link href={"/espace-pro"} className="mx-2 my-1 text-white hover:text-blue-700">Espace pro</Link>
+            <Link href={"/pro"} className="mx-2 my-1 text-white hover:text-blue-700">Find Projects</Link>
+            <Link href={"/pro/estimate"} className="mx-2 my-1 text-white hover:text-blue-700">Estimate</Link>
+            <Link href={"/pro/invoice"} className="mx-2 my-1 text-white hover:text-blue-700">Invoice</Link>
+            <Link href={"/pro/balance"} className="mx-2 my-1 text-white hover:text-blue-700">Balance</Link>
             <Link href={"/auth"} className="mx-2 my-1 text-white hover:text-blue-700">Login</Link>
             <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link>
           </nav>
@@ -57,10 +57,10 @@ export default function Header() {
           /></Link>
           <div className='flex'>
             <nav className="flex items-center justify-between" >
-              <Link href={"/"} className="mx-5 text-indigo-900 hover:text-blue-700">Home</Link>
-              <Link href={"/batiment"} className="mx-1 mr-5 text-indigo-900 hover:text-blue-700">Projet Batiment</Link>
-              <Link href={"/depannage"} className="mx-1 text-indigo-900 hover:text-blue-700">Projet Dépannage</Link>
-              <Link href={"/espace-pro"} className="mx-5 text-indigo-900 hover:text-blue-700">Espace pro</Link>
+              <Link href={"/pro"} className="mx-5 text-indigo-900 hover:text-blue-700">Find Projects</Link>
+              <Link href={"/pro/estimate"} className="mx-1 mr-5 text-indigo-900 hover:text-blue-700">Estimate</Link>
+              <Link href={"/pro/invoice"} className="mx-1 text-indigo-900 hover:text-blue-700">Invoice</Link>
+              <Link href={"/pro/balance"} className="mx-5 text-indigo-900 hover:text-blue-700">Balance</Link>
             </nav>
             {data?.user?.name ? <div className="relative">
               <Link

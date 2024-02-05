@@ -34,6 +34,11 @@ export default function Page() {
       sorter: true
     },
     {
+      title: "Payment From",
+      dataIndex: "paymentType",
+      sorter: true
+    },
+    {
       title: "Amount",
       dataIndex: "amount",
       sorter: true,
