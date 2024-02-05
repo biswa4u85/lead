@@ -15,10 +15,12 @@ export async function GET(request: NextRequest) {
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
         const userId = request.nextUrl.searchParams.get("userId")
         const leadId = request.nextUrl.searchParams.get("leadId")
+        const id = request.nextUrl.searchParams.get("id")
 
         let where: any = {}
         if (userId) where['userId'] = userId
         if (leadId) where['leadId'] = userId
+        if (id) where['id'] = id
 
         const counts = await prisma[resource].count({ where })
         const result = await prisma[resource].findMany({

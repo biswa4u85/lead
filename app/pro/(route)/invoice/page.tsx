@@ -1,68 +1,112 @@
 "use client"
 import { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { useFetch } from "@/contexts/useFetch";
+import { Input, DatePicker } from "antd";
+import dayjs from 'dayjs';
 import { useSession } from 'next-auth/react'
 import Loader from "@/components/common/Loader";
 
 export default function Page() {
     const router = useRouter();
     const { data } = useSession()
-    const [tab, setTab] = useState('active')
     const [search, setSearch] = useState('')
-    const [query, setQuery] = useState({ search, userId: (data?.user as any)?.id })
-    const { data: lead, loading } = useFetch({ url: "invoices", query: JSON.stringify(query) });
+    const [from, setFrom] = useState(null)
+    const [to, setTo] = useState(null)
+    const [query, setQuery] = useState({ userId: (data?.user as any)?.id, search, from, to })
+    const { data: invoices, loading } = useFetch({ url: "invoices", query: JSON.stringify(query) });
 
     useEffect(() => {
-        // const performAction = () => {
-        //     setQuery({ search, assignStatus: tab, assignTo: (data?.user as any)?.id })
-        // };
+        const performAction = () => {
+            setQuery({ userId: (data?.user as any)?.id, search, from, to })
+        };
+        const debounceTimer = setTimeout(() => {
+            performAction();
+        }, 500);
+        return () => clearTimeout(debounceTimer);
 
-        // const debounceTimer = setTimeout(() => {
-        //     performAction();
-        // }, 500);
-        // return () => clearTimeout(debounceTimer);
-    }, [search, tab]);
+    }, [search, from, to]);
 
-    console.log(lead)
-    
+    const totalPrice = () => {
+
+    }
+
+    const calcTotal = (items: any) => {
+        let total = 0
+        for (let item of items) {
+            total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
+
+        }
+        return total
+    }
+
     return (
         <>
             <div className="container pt-5 pb-10 mx-auto">
-                <div className="grid mb-3 md:grid-cols-3">
-                    <div>
-                        <p className='text-xl font-bold text-indigo-800'>Invoice History</p>
-                    </div>
-                    <div></div>
-                    <div className="flex items-center p-1 mt-5 bg-white border border-gray-300 rounded-md ">
-                        <div className="mx-2">
-                            <AiOutlineSearch size="20" className="text-gray" />
+
+                <div className="grid grid-cols-2 my-5">
+                    <p className='text-lg font-bold text-indigo-800'>Invoice History</p>
+
+                    <div className="grid grid-cols-4">
+
+                        <div className="flex items-center p-1">
+                            <div className="mx-2">
+                                <AiOutlineSearch size="20" className="text-gray" />
+                            </div>
+                            <Input value={search} onChange={(e) => setSearch(e.target.value)} />
                         </div>
-                        <input type="text" name="search" onChange={(e) => setSearch(e.target.value)} className="flex-grow text-xs font-normal border-none font-inter text-gray focus:outline-none" placeholder="Search…" />
+
+                        <div className="flex items-center">
+                            <div className="mx-2">
+                                From
+                            </div>
+                            <DatePicker onChange={(data, dateString: any) => setFrom(dateString)} />
+                        </div>
+
+                        <div className="flex items-center">
+                            <div className="mx-2">
+                                To
+                            </div>
+                            <DatePicker onChange={(data, dateString: any) => setTo(dateString)} />
+                        </div>
+
+                        <div className="flex items-center cursor-pointer" onClick={() => {
+                            setSearch('')
+                            setFrom(null)
+                            setTo(null)
+                        }}>
+                            <div className="mx-2">
+                                <IoIosCloseCircleOutline />
+                            </div>
+                            Clear
+                        </div>
+
                     </div>
                 </div>
-                <div className="grid my-5 md:grid-cols-3">
-                    <div>
-                        <p onClick={() => setTab('active')} className={'pb-2 text-sm font-bold text-center  border-b-2 ' + (tab == "active" ? 'text-indigo-800 border-indigo-800' : ' text-black cursor-pointer ')}>Active</p>
-                    </div>
-                    <div>
-                        <p onClick={() => setTab('pending')} className={'pb-2 text-sm font-bold text-center border-b-2 ' + (tab == "pending" ? 'text-indigo-800  border-indigo-800' : ' text-black cursor-pointer ')}>Pending</p>
-                    </div>
-                    <div>
-                        <p onClick={() => setTab('refused')} className={'pb-2 text-sm font-bold text-center border-b-2 ' + (tab == "refused" ? 'text-indigo-800  border-indigo-800' : ' text-black cursor-pointer ')}>Refused</p>
-                    </div>
-                </div>
-                {/* {loading ? <Loader /> : <>{lead?.data && lead.data.map((item: any, key: any) => <div key={key} className="my-5 p-4 shadow-[0px_0px_10px_4px_#F2F6FB] rounded-md cursor-pointer" onClick={() => router.push(`/pro/estimate/${item.id}?type=${item?.batimentCategoryId ? "batiment" : "depannage"}`)}>
-                    <div className="flex flex-col md:flex-row md:justify-between">
-                        <p className='font-semibold text-indigo-800 text-sm1'>{item.title}</p>
-                        <div className='flex flex-col justify-start w-auto font-normal md:flex-row md:items-center md:gap-13 '>
-                            <p className='text-xs gray-600'>City: <span className='text-black'>{item.address.city}</span> </p>
-                            <p className='text-xs gray-600'>Appointments Date: <span className='text-black'>{new Date(item.assignedDate).toLocaleString()}</span> </p>
-                        </div>
-                    </div>
-                    <p className='pt-4 font-normal leading-7 text-deep-black text-title-xsm'>{item.description}</p>
-                </div>)}</>} */}
+
+                {loading ? <Loader /> :
+                    <table className="min-w-full bg-white border-separate border-spacing-y-3">
+                        <thead className="bg-indigo-300 rounded-full shadow-[0px_0px_10px_1px_#F2F6FB] font-inter font-semibold text-deep-black text-sm1">
+                            <tr>
+                                <th className="px-4 py-2">Invoice number</th>
+                                <th className="px-4 py-2">Start At</th>
+                                <th className="px-4 py-2">End At</th>
+                                <th className="px-4 py-2">Total price</th>
+                                <th className="px-4 py-2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="mt-5">
+                            {invoices.data && (invoices.data.map((item: any, key: any) => <tr key={key} className="rounded-md shadow-[0px_0px_5px_1px_#F2F2F2] my-2 text-center font-inter font-normal text-sm1 text-deepblack-100">
+                                <td className="px-4 py-2">#000{key + 1}</td>
+                                <td className="px-4 py-2">{new Date(item.contractStart).toLocaleDateString()}</td>
+                                <td className="px-4 py-2">{new Date(item.contractEnd).toLocaleDateString()}</td>
+                                <td className="px-4 py-2">${calcTotal(item.items)}</td>
+                                <td className="px-4 py-2"><button onClick={() => router.push(`/pro/invoice/${item.id}`)} className="px-2 pb-1 text-sm font-normal text-white bg-indigo-800 rounded-xl font-inter"><p>Details</p></button></td>
+                            </tr>))}
+                        </tbody>
+                    </table>}
             </div>
         </>
     );

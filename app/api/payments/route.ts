@@ -15,9 +15,13 @@ export async function GET(request: NextRequest) {
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
         const userId = request.nextUrl.searchParams.get("userId")
+        const search = request.nextUrl.searchParams.get("search")
+        const from = request.nextUrl.searchParams.get("from")
+        const to = request.nextUrl.searchParams.get("to")
 
         let where: any = {}
         if (userId) where['userId'] = userId
+        if (search) where['type'] = { contains: search }
 
         const counts = await prisma[resource].count({ where })
         const result = await prisma[resource].findMany({

@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      {loading ? <Loader /> : <div style={{ minHeight: "73vh" }}>{children}</div>}
+      {loading ? <Loader /> : <div style={{ minHeight: "78vh" }}>{children}</div>}
       <footer className="bg-indigo-800 ">
         <div className="container flex flex-col items-center py-4 mx-auto md:flex-row md:justify-between md:items-center md:px-20 md:py-0">
           <div className='text-xs font-normal text-white'>© 2024 PRO POS. All rights reserved</div>
