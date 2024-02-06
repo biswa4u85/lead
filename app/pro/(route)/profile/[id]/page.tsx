@@ -1,150 +1,134 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useFetch } from "@/contexts/useFetch";
+import { usePatch } from "@/contexts/usePatch";
+import { InputBox, FileBox, Buttons } from "@/components/RenderFroms";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { toast } from 'react-toastify';
+import Loader from "@/components/common/Loader";
 
-export default function Page() {
+const initialData = {
+    firstName: "",
+    lastName: "",
+    company: "",
+    postalCode: "",
+    sponsorCode: "",
+    status: "",
+    image: "",
+}
+
+export default function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
-    const { data } = useFetch({ url: "projects", query: JSON.stringify({}) });
+    const [value, setValue] = useState<any>(null)
+    const { data } = useFetch({ url: "users", query: JSON.stringify({ id: params.id }) });
+    useEffect(() => {
+        if (data.data) {
+            setValue(data.data[0])
+        }
+    }, [data.data])
+
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string().required("First Name is required"),
+        lastName: Yup.string().required("Last Name is required"),
+        company: Yup.string().required("Company is required"),
+        postalCode: Yup.string().required("Postal Code is required"),
+        sponsorCode: Yup.string().required("Sponsor Code is required"),
+        // status: Yup.string().required("Status is required"),
+        image: Yup.string().required("Image is required"),
+    });
+
+
+    const { edit, data: respond, loading } = usePatch();
+    const handleUpdate = (values: any) => {
+        edit("users", { ...values, id: params.id })
+    }
+
+    useEffect(() => {
+        if (respond) {
+            toast.success(`User update successfully`);
+            router.push(`/pro/profile`)
+        }
+    }, [respond])
+
     return (
         <>
-            <div className="container mx-auto md:px-10">
-                <p className="my-5 text-lg font-bold text-black">Information About My Company</p>
-                <div className="my-4 border-t-2 border-gray-500"></div>
-                <p className="py-2 font-semibold text-gray-600 text-title-xsm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p className="mt-5 text-lg font-bold text-black">My Contact Information</p>
-                <div className="my-4 border-t-2 border-gray-500"></div>
+            {!value ? <Loader /> :
+                <Formik
+                    initialValues={value}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => handleUpdate(values)}
+                >
+                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (<div className="container mx-auto md:px-10">
+                        <p className="my-5 text-lg font-bold text-black">Information About My Company</p>
+                        <div className="my-4 border-t-2 border-gray-500"></div>
+                        <p className="py-2 font-semibold text-gray-600 text-title-xsm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <p className="mt-5 text-lg font-bold text-black">My Contact Information</p>
+                        <div className="my-4 border-t-2 border-gray-500"></div>
 
 
 
-                {/* start form section */}
+                        {/* start form section */}
 
-                <div className='grid grid-cols-1 mb-8 font-inter gap-7 md:grid-cols-4'>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Company name</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="DOBAD" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Civility</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Choose- Name" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Email</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Name" />
-                    </div>
-
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">lace</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Nom" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Number of SIRET</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="DUBOIS" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Phone</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="+33 Phone" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Year of creation</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="First name" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">First name</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="First name" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Portable</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="+33 0780907492" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Address</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Address" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Function</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Choose" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Site internet</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Site internet" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Ville</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="PARIS 7TH DISTRICT" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Job</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Tiler" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Email:</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Company Name" />
-                    </div>
-                    <div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">Change my password</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Company Name" />
-                    </div>
-
-                </div>
-
-
-
-
-
-                {/* <div className="flex flex-wrap gap-4">
-                    <div className="p-4 bg-gray-200 w-70">
-                        <div className="flex flex-col">
-                            <label htmlFor="price" className="text-xs font-medium text-black ">First Name</label>
-                            <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Enter First Name" />
+                        <div className='grid grid-cols-1 mb-8 font-inter gap-7 md:grid-cols-4'>
+                            <div className="flex flex-col">
+                                <InputBox
+                                    required={true}
+                                    name="company"
+                                    label="Company name"
+                                    placeholder="Enter Company name"
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <InputBox
+                                    required={true}
+                                    name="firstName"
+                                    label="First name"
+                                    placeholder="Enter First name"
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <InputBox
+                                    required={true}
+                                    name="lastName"
+                                    label="Last name"
+                                    placeholder="Enter Last name"
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <InputBox
+                                    required={true}
+                                    name="postalCode"
+                                    label="Postal Code"
+                                    placeholder="Enter Postal Code"
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <InputBox
+                                    required={true}
+                                    name="sponsorCode"
+                                    label="Sponsor Code"
+                                    placeholder="Enter Sponsor Code"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="p-4 bg-gray-200 w-70">
-                        <div className="flex flex-col">
-                            <label htmlFor="price" className="text-xs font-medium text-black ">First Name</label>
-                            <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Enter First Name" />
+
+                        <p className="mt-5 text-lg font-bold text-black">Your Profile Photo</p>
+                        <div className="my-4 border-t-2 border-gray-500"></div>
+                        <FileBox
+                            required={true}
+                            name="image"
+                            label="Profile"
+                            placeholder="Upload Profile"
+                        />
+                        <p className="py-5 text-indigo-800 text-xs1">Only images in jpg, jpeg and png format are accepted with a minimum size of 112 pixels by 112 pixels.</p>
+                        <div className="flex justify-end mt-5 mb-20 md:mb-40">
+                            <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md" value="Save" loading={loading} onClick={handleSubmit} />
                         </div>
-                    </div>
-                    <div className="p-4 bg-gray-200 w-70">
-                        <div className="flex flex-col">
-                            <label htmlFor="price" className="text-xs font-medium text-black ">First Name</label>
-                            <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Enter First Name" />
-                        </div>
-                    </div>
-                    <div className="p-4 bg-gray-200 w-70">
-                        <div className="flex flex-col">
-                            <label htmlFor="price" className="text-xs font-medium text-black ">First Name</label>
-                            <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Enter First Name" />
-                        </div>
-                    </div>
-                    <div className="p-4 bg-gray-200 w-60"><div className="flex flex-col">
-                        <label htmlFor="price" className="text-xs font-medium text-black ">First Name</label>
-                        <input type="text" className="px-3 py-2 m-0 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500" placeholder="Enter First Name" />
-                    </div></div>
-                    <div className="p-4 bg-gray-200 w-60">Column 6</div>
-                </div> */}
-                {/* End form section */}
-
-                <p className="mt-5 text-lg font-bold text-black">Your Profile Photo</p>
-                <div className="my-4 border-t-2 border-gray-500"></div>
-
-                <div className="flex items-center justify-between w-full p-2 border border-gray-600 border-dashed md:w-100">
-                    <p className="text-xs">Upload your profile picture</p>
-                    <p className="text-indigo-800 text-xs1">No file chosen</p>
-                </div>
-                <p className="py-5 text-indigo-800 text-xs1">Only images in jpg, jpeg and png format are accepted with a minimum size of 112 pixels by 112 pixels.</p>
-                <div className="flex justify-end mt-5 mb-20 md:mb-40">
-                    <button className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md">
-                        Save
-                    </button>
-                </div>
-            </div >
-
-
-
-
-
+                    </div>)}
+                </Formik>}
 
             {/* start last page */}
             <div className="container mx-auto md:px-10">

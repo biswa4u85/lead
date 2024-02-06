@@ -3,12 +3,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../images/logo.svg"
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { signOut, useSession } from 'next-auth/react'
 
 export default function Header() {
+  const pathname = usePathname();
   const router = useRouter();
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
@@ -38,12 +40,12 @@ export default function Header() {
       <div className="relative">
         <div className='float-left p-5 lg:hidden md:hidden' onClick={toggleMobileMenu}><CgMenuLeft size={30} /></div>
         <div className={`absolute w-full top-0 bg-black opacity-80 lg:hidden p-4 text-white ${isMobileMenuOpen ? '' : 'hidden'}`}>
-          <div className="absolute right-15 top-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} /></div>
+          <div className="absolute right-2 top-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} /></div>
           <nav className="flex flex-col" >
-            <Link href={"/pro"} className="mx-2 my-1 text-white hover:text-blue-700">Find Projects</Link>
-            <Link href={"/pro/estimate"} className="mx-2 my-1 text-white hover:text-blue-700">Estimate</Link>
-            <Link href={"/pro/invoice"} className="mx-2 my-1 text-white hover:text-blue-700">Invoice</Link>
-            <Link href={"/pro/balance"} className="mx-2 my-1 text-white hover:text-blue-700">Balance</Link>
+            <Link href={"/pro"} className={"mx-2 my-1 text-white hover:text-blue-700"}>Find Projects</Link>
+            <Link href={"/pro/estimate"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("estimate") ? "text-primary" : "text-white")}>Estimate</Link>
+            <Link href={"/pro/invoice"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("invoice") ? "text-primary" : "text-white")}>Invoice</Link>
+            <Link href={"/pro/balance"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-white")}>Balance</Link>
             {!data?.user?.name ? <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link> :
               <button onClick={() => {
                 signOut({ redirect: false }).then(() => {
@@ -63,10 +65,10 @@ export default function Header() {
           /></Link>
           <div className='flex'>
             <nav className="flex items-center justify-between" >
-              <Link href={"/pro"} className="mx-5 text-indigo-900 hover:text-blue-700">Find Projects</Link>
-              <Link href={"/pro/estimate"} className="mx-1 mr-5 text-indigo-900 hover:text-blue-700">Estimate</Link>
-              <Link href={"/pro/invoice"} className="mx-1 text-indigo-900 hover:text-blue-700">Invoice</Link>
-              <Link href={"/pro/balance"} className="mx-5 text-indigo-900 hover:text-blue-700">Balance</Link>
+              <Link href={"/pro"} className={"mx-5 hover:text-blue-700 " + (!pathname.includes("pro/") ? "text-primary" : "text-indigo-900")}>Find Projects</Link>
+              <Link href={"/pro/estimate"} className={"mx-1 mr-5  hover:text-blue-700 " + (pathname.includes("estimate") ? "text-primary" : "text-indigo-900")}>Estimate</Link>
+              <Link href={"/pro/invoice"} className={"mx-1  hover:text-blue-700 " + (pathname.includes("invoice") ? "text-primary" : "text-indigo-900")}>Invoice</Link>
+              <Link href={"/pro/balance"} className={"mx-5  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-indigo-900")}>Balance</Link>
             </nav>
             {data?.user?.name ? <div className="relative">
               <Link

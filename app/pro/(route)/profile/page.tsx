@@ -25,8 +25,8 @@ export default function Page() {
                 <div className="flex items-center justify-center my-8">
                     <Image
                         alt=""
-                        width="670"
-                        height="150"
+                        width="150"
+                        height="100"
                         src={user.image ? user.image : abtar}
                     />
                 </div>

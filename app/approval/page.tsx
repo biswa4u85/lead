@@ -8,8 +8,6 @@ import Loader from "@/components/common/Loader";
 
 export default function Page() {
     const router = useRouter();
-    const { data } = useSession()
-    const { user } = (data as any)
     const [tab, setTab] = useState('new')
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState({ search, assignStatus: tab })
