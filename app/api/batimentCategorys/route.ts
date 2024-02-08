@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
     } catch (error: any) {
-        console.log(error)
         errorResponse(error.message);
     }
 }

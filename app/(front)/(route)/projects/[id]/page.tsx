@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import { AiOutlineDoubleRight, AiFillHome, AiOutlineRise, AiOutlineCloudUpload } from "react-icons/ai";
+import { Buttons } from "@/components/RenderFroms";
 import { SignatureBox } from "@/components/RenderElements";
 import { useReactToPrint } from "react-to-print";
 import { useFetch } from "@/contexts/useFetch";
@@ -229,15 +230,15 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.firstName} {lead?.data?.profeional?.lastName}, {lead?.data?.profeional?.company},  {lead?.data?.profeional?.postalCode}</p>
                             </div>
                         </div>
-                        <button type="submit" onClick={() => handleRefused()} className="w-full p-2 my-5 text-sm font-normal text-white rounded-md bg-danger font-poppins">
-                            Refused
-                        </button>
-                        <button type="submit" onClick={() => handleUpdate()} className="w-full p-2 my-5 text-sm font-normal text-white bg-indigo-800 rounded-md font-poppins">
-                            Pay
-                        </button>
-                        <button onClick={handlePrint} type="submit" className="w-full p-2 text-sm font-normal text-indigo-800 border border-indigo-800 rounded-md font-poppins">
-                            Downloaded
-                        </button>
+                        <Buttons type="submit" value="Refused" onLoad={loading} onClick={() => handleRefused()} className="w-full p-2 my-5 text-sm font-normal text-white rounded-md bg-danger font-poppins">
+
+                        </Buttons>
+                        <Buttons type="submit" value="Pay" onLoad={loading} onClick={() => handleUpdate()} className="w-full p-2 my-5 text-sm font-normal text-white bg-indigo-800 rounded-md font-poppins">
+
+                        </Buttons>
+                        <Buttons type="submit" value="Downloaded" onLoad={loading} onClick={handlePrint} className="w-full p-2 text-sm font-normal text-indigo-800 border border-indigo-800 rounded-md font-poppins">
+
+                        </Buttons>
                     </div>
                 </div>
             </div>

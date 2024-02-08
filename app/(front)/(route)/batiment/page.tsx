@@ -9,23 +9,34 @@ import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 
+const defaultValue = {
+    batimentCategoryId: "",
+    batimentTypeId: "",
+    title: "",
+    description: "",
+    firstName: "",
+    lastName: "",
+    city: "",
+    email: "",
+    phone: "",
+    postalCode: ""
+}
+
 export default function Page() {
     const params = useSearchParams()
     const name = params.get('name')
     const [step, setStep] = useState<any>(1);
     const [progress, setProgress] = useState<any>(0);
-    const [values, setValues] = useState<any>({
-        batimentCategoryId: "",
-        batimentTypeId: "",
-        title: "",
-        description: "",
-        firstName: "",
-        lastName: "",
-        city: "",
-        email: "",
-        phone: "",
-        postalCode: ""
-    });
+    const [values, setValues] = useState<any>(null);
+
+    useEffect(() => {
+        if (name) {
+            setValues({ ...defaultValue, batimentCategoryId: name })
+        }else{
+            setValues({ ...defaultValue })
+        }
+    }, [name])
+
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({}) });
     const { data: services } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
     const { create, data: respond, loading } = usePost();
@@ -86,7 +97,7 @@ export default function Page() {
                 </div>
                 {/* stepers end */}
 
-                {(step == 1) && (<Formik
+                {(step == 1 && values) && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaService1}
                     onSubmit={(values: any) => handleUpdate(values)}

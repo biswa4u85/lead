@@ -9,13 +9,13 @@ import { toast } from 'react-toastify';
 
 export default function Page() {
     const router = useRouter();
-    const { data } = useFetch({ url: "projects", query: JSON.stringify({}) });
+    const { data } = useFetch({ url: "home", query: JSON.stringify({}) });
     const [quote, setQuote] = useState<any>(null);
     const onQuote = (val: any) => {
         if (val) {
-            router.push(`/batiment?name=${val}`);
+            router.push(`/depannage?name=${val}`);
         } else {
-            toast.error("Please add a Projet Batiment")
+            toast.error("Please add a Area Code")
         }
     }
     return (
@@ -32,13 +32,13 @@ export default function Page() {
                                 <div className="mx-2">
                                     <AiOutlineSearch size="20" className="text-gray" />
                                 </div>
-                                <input type="text" value={quote} onChange={(obj) => setQuote(obj.target.value)} className="flex-grow text-sm font-semibold text-gray-600 border-none focus:outline-none" placeholder="what is your project" />
+                                <input type="text" value={quote} onChange={(obj) => setQuote(obj.target.value)} className="flex-grow text-sm font-semibold text-gray-600 border-none focus:outline-none" placeholder="Area Code" />
                                 <button onClick={() => onQuote(quote)} className="flex flex-row items-center justify-center px-4 py-4 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700">
-                                    Projet Batiment <AiOutlineRight className="ml-2" />
+                                    Projet Dépannage  <AiOutlineRight className="ml-2" />
                                 </button>
                             </div>
-                            <button onClick={() => router.push(`/depannage`)} className="flex flex-row items-center justify-center px-4 py-4 mt-5 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700">
-                                Projet Dépannage <AiOutlineRight className="ml-2" />
+                            <button onClick={() => router.push(`/batiment`)} className="flex flex-row items-center justify-center px-4 py-4 mt-5 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700">
+                                Projet Batiment <AiOutlineRight className="ml-2" />
                             </button>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ export default function Page() {
                                         />
                                         <div className="flex justify-between pt-2">
                                             <div>{item?.name}</div>
-                                            <div onClick={() => onQuote(item?.name)} className="text-indigo-800 underline cursor-pointer">Start</div>
+                                            <div onClick={() => router.push(`/batiment?name=${item?.id}`)} className="text-indigo-800 underline cursor-pointer">Start</div>
                                         </div>
                                     </div>
                                 }

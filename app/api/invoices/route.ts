@@ -52,8 +52,8 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
     try {
-        const session = await getToken(request);
-        if (!session) return errorResponse("You are not Not Authorized", 401);
+        // const session = await getToken(request);
+        // if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data:any = await request.json();
         let id = JSON.parse(JSON.stringify(data.id))

@@ -3,36 +3,49 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { usePost } from "@/contexts/usePost";
-import { InputBox, TextareaBox, SelectBox, Buttons } from "@/components/RenderFroms";
+import { InputBox, TextareaBox, Buttons } from "@/components/RenderFroms";
 import { Formik, Field } from "formik";
+import { useSearchParams } from 'next/navigation'
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import { AiOutlineCheckCircle, } from "react-icons/ai";
 
+const defaultValue = {
+    depannageCategoryId: "",
+    title: "",
+    description: "",
+    firstName: "",
+    lastName: "",
+    city: "",
+    email: "",
+    phone: "",
+    accept: "",
+    postalCode: ""
+}
+
 export default function Page() {
+    const params = useSearchParams()
+    const name = params.get('name')
     const [step, setStep] = useState<any>(1);
     const [progress, setProgress] = useState<any>(0);
     const [categoryId, setCategoryId] = useState<any>("0");
     const [depannageCategorys, setDepannageCategorys] = useState<any>(null);
     const [error, setError] = useState<any>(null);
-    const [values, setValues] = useState<any>({
-        depannageCategoryId: "",
-        title: "",
-        description: "",
-        firstName: "",
-        lastName: "",
-        city: "",
-        email: "",
-        phone: "",
-        accept: "",
-        postalCode: ""
-    });
+    const [values, setValues] = useState<any>(null);
     let val = 100 / 7
     const { fetch, data: categorys } = useFetchByLoad({ url: "depannageCategorys", query: JSON.stringify({ parentId: categoryId }) });
 
     useEffect(() => {
         fetch()
     }, [categoryId])
+
+    useEffect(() => {
+        if (name) {
+            setValues({ ...defaultValue, postalCode: name })
+        } else {
+            setValues({ ...defaultValue })
+        }
+    }, [name])
 
 
     const { create, data: respond, loading } = usePost();
@@ -115,7 +128,7 @@ export default function Page() {
                 </div>
                 {/* stepers end */}
 
-                {step == 1 && (<Formik
+                {(step == 1 && values) && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaInfo}
                     onSubmit={(values: any) => handleUpdate(values)}
