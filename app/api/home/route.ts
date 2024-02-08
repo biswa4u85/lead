@@ -4,7 +4,7 @@ import { successResponse, errorResponse } from "@/libs/utility";
 
 const resource = "batimentCategory";
 
-export async function GET(request: NextRequest) {
+export  async function GET(request: NextRequest) {
     try {
 
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
@@ -20,4 +20,8 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
         errorResponse(error.message);
     }
+}
+
+export async function PATCH(request: NextRequest) {
+    
 }
