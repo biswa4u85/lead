@@ -7,6 +7,7 @@ import success from "../../../images/success.png"
 import { useReactToPrint } from "react-to-print";
 import { useFetch } from "@/contexts/useFetch";
 import { usePost } from "@/contexts/usePost";
+import { usePatch } from "@/contexts/usePatch";
 
 export default function Page() {
     const router = useRouter();
@@ -18,13 +19,27 @@ export default function Page() {
     const { data: lead } = useFetch({ url: "submit", query: JSON.stringify({ type, id }) });
     const { create, data: respond, loading } = usePost();
 
+    const calcTotal = (items: any, type = 'all') => {
+        let total = 0
+        for (let item of items) {
+            if (type == 'all') {
+                total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
+            } else {
+                total += (item.qty && item.rate) ? Number(item.qty * item.rate) : 0
+            }
+        }
+        return total
+    }
+
     const handlePrint = useReactToPrint({
         content: () => printInfoRef.current
     });
 
+    const { edit } = usePatch();
     const makePaymentEntry = useCallback(async (leads: any) => {
         if (leads) {
-            create("payments", { userId: leads?.profeionalId, type: "card", amount: Number(leads?.depannageCategory?.price), refId: payment_intent, paymentType: type, leadId: id })
+            create("payments", { userId: leads?.assignTo, type: "card", amount: Number(leads?.invoice?.items ? calcTotal(leads?.invoice?.items) : 0), refId: payment_intent, paymentType: type, leadId: id })
+            edit("submit", { type, id: leads.id, assignStatus: 'active' })
         }
     }, []);
 

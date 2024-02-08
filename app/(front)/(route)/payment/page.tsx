@@ -21,6 +21,18 @@ function InnerPage({ leads }: any) {
     const id = searchParams.get('id')
     const type = searchParams.get('type')
 
+    const calcTotal = (items: any, type = 'all') => {
+        let total = 0
+        for (let item of items) {
+            if (type == 'all') {
+                total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
+            } else {
+                total += (item.qty && item.rate) ? Number(item.qty * item.rate) : 0
+            }
+        }
+        return total
+    }
+
     const handleUpdate = async () => {
         // Trigger form validation and wallet collection
         const { error: submitError } = await elements.submit();
@@ -35,7 +47,7 @@ function InnerPage({ leads }: any) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                amount: Number(leads?.depannageCategory?.price),
+                amount: Number(leads?.invoice?.items ? calcTotal(leads?.invoice?.items) : 0),
                 currency: 'usd',
                 payment_method_types: ["card"]
             }),

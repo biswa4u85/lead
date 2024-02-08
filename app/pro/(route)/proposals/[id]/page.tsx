@@ -33,7 +33,7 @@ const initialData = {
     description: "",
     contractStart: "",
     contractEnd: "",
-    signature: "",
+    proSignature: "",
     items: [{}],
 }
 
@@ -74,7 +74,7 @@ export default function Page({ params }: { params: { id: string } }) {
         description: Yup.string().required("Description is required"),
         contractStart: Yup.string().required("Start Date is required"),
         contractEnd: Yup.string().required("End Date is required"),
-        signature: Yup.string().required("Signature is required"),
+        proSignature: Yup.string().required("Signature is required"),
         // items: Yup.array().of(
         //     Yup.object().shape({
         //         price: Yup.string().required("Price is required"),
@@ -235,7 +235,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
 
                             <div className="col-span-1">
-                                <Field name="signature">
+                                <Field name="proSignature">
                                     {({ field, form, meta }: any) => {
                                         return <>
                                             <p className="font-medium font-inter text-2xs text-graylight-800">Generate signature</p>
@@ -243,7 +243,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                                 <div className="flex items-center justify-center">
                                                     <AiOutlineRise size="25" className="text-green" />
                                                     <SignatureBox setSignature={(value: any) => {
-                                                        field.onChange('signature')(value)
+                                                        field.onChange('proSignature')(value)
                                                     }} />
                                                 </div>
                                             </div>
@@ -256,7 +256,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                                 onChange={async (e: any) => {
                                                     if (e.target.files[0]) {
                                                         const base64String = await readFileAsDataURL(e.target.files[0]);
-                                                        field.onChange('signature')(base64String);
+                                                        field.onChange('proSignature')(base64String);
                                                     }
                                                 }}
                                             />
@@ -264,8 +264,8 @@ export default function Page({ params }: { params: { id: string } }) {
                                                 <AiOutlineCloudUpload size="25" className="text-indigo-800" />
                                                 <button onClick={() => fileInputRef.current.click()} className="ml-4 font-normal text-indigo-800 font-poppins text-2xs">Upload signature</button>
                                             </div>
-                                            {form?.errors['signature'] && form?.touched['signature'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['signature']}</div>
+                                            {form?.errors['proSignature'] && form?.touched['proSignature'] && (
+                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['proSignature']}</div>
                                             )}
                                         </>
                                     }}

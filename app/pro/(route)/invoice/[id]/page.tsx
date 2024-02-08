@@ -2,7 +2,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { AiOutlineDoubleRight, AiFillHome } from "react-icons/ai";
 import { useFetch } from "@/contexts/useFetch";
-import Image from "next/image";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 
 
@@ -11,7 +10,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const [leadId, setLeadId] = useState('')
     const [userId, setUserId] = useState('')
 
-    const { data: invoices } = useFetch({ url: "invoices", query: JSON.stringify({ id: params.id }) });
+    const { data: invoices } = useFetch({ url: "invoices", query: JSON.stringify({ leadId: params.id }) });
     let invoice = invoices?.data ? invoices.data[0] : {}
 
     const { fetch, data: leads } = useFetchByLoad({ url: "findProjects", query: JSON.stringify({ id: leadId }) });
@@ -21,11 +20,11 @@ export default function Page({ params }: { params: { id: string } }) {
     let user = users?.data ? users.data[0] : {}
 
     useEffect(() => {
-        if (invoice.id) {
+        if (invoice?.id) {
             setLeadId(invoice.leadId)
             setUserId(invoice.userId)
         }
-    }, [invoice.id])
+    }, [invoice])
 
     useEffect(() => {
         if (leadId) {
@@ -84,7 +83,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                         <p>{user?.email}</p>
                                         <p>{user?.phone}</p>
                                     </div>
-                                    {invoice.signature && (<img alt="" width={200} height={200} src={invoice.signature} />)}
+                                    {invoice?.signature && (<img alt="" width={200} height={200} src={invoice.signature} />)}
                                 </div>
                             </div>
                         </div>
@@ -133,7 +132,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <div className="px-2">
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
                                         <p className="font-normal font-inter text-xs1 text-graylight-800">Subtotal</p>
-                                        {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{calcTotal(invoice.items, 'total')}</span></p>)}
+                                        {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{calcTotal(invoice?.items, 'total')}</span></p>)}
                                     </div>
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
                                         <p className="font-normal font-inter text-xs1 text-graylight-800">Tax</p>
@@ -141,7 +140,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                     </div>
                                     <div className="flex items-center justify-between py-3">
                                         <p className="font-normal font-inter text-xs1 text-graylight-800">Total</p>
-                                        {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{calcTotal(invoice.items)}</span></p>)}
+                                        {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{calcTotal(invoice?.items)}</span></p>)}
                                     </div>
                                 </div>
                             </div>

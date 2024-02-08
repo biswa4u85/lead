@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
         let where: any = {}
         if (userId) where['userId'] = userId
-        if (leadId) where['leadId'] = userId
+        if (leadId) where['leadId'] = leadId
         if (id) where['id'] = id
 
         const counts = await prisma[resource].count({ where })
@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
     } catch (error: any) {
+        console.log(error)
         errorResponse(error.message);
     }
 }
@@ -45,7 +46,25 @@ export async function POST(request: NextRequest) {
 
         return successResponse(res);
     } catch (error: any) {
-        console.log(error)
+        errorResponse(error);
+    }
+}
+
+export async function PATCH(request: NextRequest) {
+    try {
+        const session = await getToken(request);
+        if (!session) return errorResponse("You are not Not Authorized", 401);
+
+        const data:any = await request.json();
+        let id = JSON.parse(JSON.stringify(data.id))
+        delete data.id
+
+        const res = await prisma[resource].update({
+            where: { id },
+            data
+        });
+        return successResponse(res);
+    } catch (error: any) {
         errorResponse(error);
     }
 }

@@ -76,7 +76,6 @@ model Batiment {
   contractEnd        DateTime?        @default(now())
   assignedDate       DateTime?        @default(now())
   profeionalId       String?
-  signature          String?
   paymentId          String?
   assignTo           String?
   assignStatus       String           @default("new")
@@ -123,7 +122,6 @@ model Depannage {
   contractEnd         DateTime?         @default(now())
   assignedDate        DateTime?         @default(now())
   profeionalId        String?
-  signature           String?
   paymentId           String?
   assignTo            String?
   assignStatus        String            @default("new")
@@ -155,7 +153,8 @@ model Invoice {
   description     String?
   contractStart   String
   contractEnd     String
-  signature       String
+  proSignature    String?
+  cusSignature    String?
   userId          String
   leadId          String
   items           Json[]

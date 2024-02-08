@@ -6,7 +6,6 @@ const subRes = "user";
 
 export async function GET(request: NextRequest) {
     try {
-
         const resource: any = String(request.nextUrl.searchParams.get("type")) || 'batiment'
         const id = request.nextUrl.searchParams.get("id")
         let include: any = { address: true }
@@ -16,20 +15,27 @@ export async function GET(request: NextRequest) {
             include['batimentCategory'] = { select: { name: true } }
             include['batimentType'] = { select: { name: true } }
         }
+        let where: any = {}
+        if (id) where['id'] = id
         const result = await (prisma[resource] as any).findUnique({
-            where: { id },
+            where,
             include
         });
+        if (!result?.assignTo) return errorResponse("Assign Not Found");
         const profeional = await prisma.user.findUnique({
-            where: { id: result?.profeionalId }
+            where: { id: result?.assignTo }
         });
+        const invoice = await prisma.invoice.findMany({
+            where: { userId: result?.assignTo, leadId: result?.id }
+        });
+        if (!invoice) return errorResponse("Invoice Not Found");
         if (!result) return errorResponse("Record Not Found");
-        return successResponse({ ...result, profeional });
+        return successResponse({ ...result, profeional, invoice: invoice[0] ?? {} });
     } catch (error: any) {
-        console.log(error)
         errorResponse(error.message);
     }
 }
+
 
 export async function PATCH(request: NextRequest) {
     try {
@@ -40,10 +46,10 @@ export async function PATCH(request: NextRequest) {
         delete data.id
         delete data.type
 
-        const { signature } = data
+        const { assignStatus } = data
         const res = await (prisma[resource] as any).update({
             where: { id },
-            data: { signature }
+            data: { assignStatus }
         });
         return successResponse(res);
     } catch (error: any) {

@@ -43,16 +43,21 @@ export default function Page({ params }: { params: { id: string } }) {
     const { edit, data: respond, loading } = usePatch();
     const handleUpdate = () => {
         if (signature) {
-            edit("submit", { type, id: params.id, signature })
+            edit("invoices", { id: lead?.data?.invoice?.id, cusSignature: signature })
         } else {
             toast.error(`Signature Required`);
         }
     }
+    const handleRefused = () => {
+        edit("submit", { type, id: params.id, assignStatus: 'refused' })
+    }
     useEffect(() => {
         if (respond) {
-            toast.success(`Signature update successfully`);
+            toast.success(`Proposal Update successfully`);
             setSignature(null);
-            router.push(`/payment?id=${params.id}&type=${type}`)
+            if (signature) {
+                router.push(`/payment?id=${params.id}&type=${type}`)
+            }
         }
     }, [respond])
 
@@ -60,6 +65,18 @@ export default function Page({ params }: { params: { id: string } }) {
         content: () => printInfoRef.current
     });
 
+
+    const calcTotal = (items: any, type = 'all') => {
+        let total = 0
+        for (let item of items) {
+            if (type == 'all') {
+                total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
+            } else {
+                total += (item.qty && item.rate) ? Number(item.qty * item.rate) : 0
+            }
+        }
+        return total
+    }
 
     return (
         <>
@@ -104,17 +121,17 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
                         </div>
                         <p className="pt-4 font-normal text-xs2 text-graylight-900">{lead?.data?.title}</p>
-                        <p className="pt-4 font-normal text-xs2 text-graylight-900">{lead?.data?.description}</p>
+                        <p className="pt-4 font-normal text-xs2 text-graylight-900">{lead?.data?.invoice?.description}</p>
 
                         <div className="flex flex-col py-4">
                             <div className="grid grid-cols-3 mb-4">
                                 <div>
                                     <p className="text-xs font-normal text-gray-700 font-inter">Contract Start</p>
-                                    <p className="text-sm font-semibold text-deep-black">{new Date(lead?.data?.contractStart).toLocaleDateString()}</p>
+                                    <p className="text-sm font-semibold text-deep-black">{new Date(lead?.data?.invoice?.contractStart).toLocaleDateString()}</p>
                                 </div>
                                 <div>
                                     <p className="text-xs font-normal text-gray-700 font-inter">Contract End</p>
-                                    <p className="text-sm font-semibold text-deep-black">{new Date(lead?.data?.contractEnd).toLocaleDateString()}</p>
+                                    <p className="text-sm font-semibold text-deep-black">{new Date(lead?.data?.invoice?.contractEnd).toLocaleDateString()}</p>
                                 </div>
                             </div>
                         </div>
@@ -130,23 +147,12 @@ export default function Page({ params }: { params: { id: string } }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {lead?.data?.batimentCategory && (<tr>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{lead?.data?.batimentCategory.name}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">23</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${lead?.data?.batimentCategory.price}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">12%</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${Number(lead?.data?.batimentCategory.price) + Number(12 * Number(lead?.data?.batimentCategory.price) / 100)}</td>
-                                </tr>)}
-                                {lead?.data?.batimentType && (<tr>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{lead?.data?.batimentType.name}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">23</td>
-                                </tr>)}
-                                {lead?.data?.depannageCategory && (<tr>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{lead?.data?.depannageCategory.name}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">23</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${lead?.data?.depannageCategory.price}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">12%</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${Number(lead?.data?.depannageCategory.price) + Number(12 * Number(lead?.data?.depannageCategory.price) / 100)}</td>
+                                {lead?.data?.invoice?.items && lead?.data?.invoice?.items.map((item: any, key: any) => <tr key={key}>
+                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.name}</td>
+                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.qty}</td>
+                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${item?.rate}</td>
+                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.tax}%</td>
+                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${(item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0}</td>
                                 </tr>)}
                             </tbody>
                         </table>
@@ -159,8 +165,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <div className="px-2">
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
                                         <p className="font-normal font-inter text-xs1 text-graylight-800">Subtotal</p>
-                                        {lead?.data?.batimentCategory && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{lead?.data?.batimentCategory.price}</span></p>)}
-                                        {lead?.data?.depannageCategory && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{lead?.data?.depannageCategory.price}</span></p>)}
+                                        <p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{lead?.data?.invoice?.items ? calcTotal(lead?.data?.invoice.items, 'total') : '0'}</span></p>
                                     </div>
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
                                         <p className="font-normal font-inter text-xs1 text-graylight-800">Tax</p>
@@ -168,8 +173,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                     </div>
                                     <div className="flex items-center justify-between py-3">
                                         <p className="font-normal font-inter text-xs1 text-graylight-800">Total</p>
-                                        {lead?.data?.batimentCategory && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{Number(lead?.data?.batimentCategory.price) + Number(12 * Number(lead?.data?.batimentCategory.price) / 100)}</span></p>)}
-                                        {lead?.data?.depannageCategory && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{Number(lead?.data?.depannageCategory.price) + Number(12 * Number(lead?.data?.depannageCategory.price) / 100)}</span></p>)}
+                                        <p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{lead?.data?.invoice?.items ? calcTotal(lead?.data?.invoice?.items) : '0'}</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -225,6 +229,9 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.firstName} {lead?.data?.profeional?.lastName}, {lead?.data?.profeional?.company},  {lead?.data?.profeional?.postalCode}</p>
                             </div>
                         </div>
+                        <button type="submit" onClick={() => handleRefused()} className="w-full p-2 my-5 text-sm font-normal text-white rounded-md bg-danger font-poppins">
+                            Refused
+                        </button>
                         <button type="submit" onClick={() => handleUpdate()} className="w-full p-2 my-5 text-sm font-normal text-white bg-indigo-800 rounded-md font-poppins">
                             Pay
                         </button>
