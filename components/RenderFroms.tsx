@@ -1,9 +1,35 @@
 import React, { useState, useRef } from "react";
 import { Field } from "formik";
-import { Avatar, DatePicker } from "antd";
+import { Avatar, DatePicker, Select, TreeSelect } from "antd";
 import SiteApis from "@/contexts/SiteApis";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
+const { SHOW_PARENT } = TreeSelect;
+
+const buildTree = (items: any, parentKey = null) => {
+  const map: any = {};
+  const roots: any = [];
+
+  // Create a mapping of id to item
+  items.forEach((item: any, index: any) => {
+    item['title'] = item.name
+    item['value'] = item.id
+    item['key'] = parentKey ? `${parentKey}-${index}` : `0-${index}`;
+    map[item.id] = { ...item, children: [] };
+  });
+
+
+  items.forEach((item: any, key: any) => {
+    if (item.parentId && map[item.parentId]) {
+      map[item.parentId].children.push(map[item.id]);
+    } else {
+      roots.push({ ...map[item.id], key: `0-${key}` });
+    }
+  });
+
+  // console.log(roots)
+  return roots;
+}
 
 const Buttons = (props: any) => {
   return (
@@ -180,6 +206,55 @@ const SelectBox = (props: any) => {
   );
 };
 
+const MultiSelectBox = (props: any) => {
+  return (
+    <Field name={props.name}>
+      {({ field, form, meta }: any) => {
+        return <>
+          {props.label && (<label className="mb-2.5 block font-medium text-black dark:text-white">
+            {props.label} {(form?.errors[props.name] || props.required) && (<span className="text-meta-1">{"*"}</span>)}
+          </label>)}
+          <div className="relative">
+            {props.tree ? <TreeSelect
+              allowClear
+              style={{
+                width: '100%',
+              }}
+              placeholder={props.placeholder ?? "Please select"}
+              value={field.value}
+              treeCheckable={true}
+              showCheckedStrategy={SHOW_PARENT}
+              onChange={(obj: any) => {
+                form.setFieldValue(props.name, obj);
+              }}
+              treeData={buildTree(props.options)}
+              {...props}
+            /> : <Select
+              mode="multiple"
+              allowClear
+              style={{
+                width: '100%',
+              }}
+              placeholder={props.placeholder ?? "Please select"}
+              defaultValue={field.value}
+              onChange={(obj: any) => {
+                form.setFieldValue(props.name, obj);
+              }}
+              options={props.options}
+              {...props}
+            />}
+
+            {form?.errors[props.name] && form?.touched[props.name] && (
+              <div className="mt-1 text-xs-1 text-meta-1">{form.errors[props.name]}</div>
+            )}
+            <span className="absolute right-4 top-4"><IoIosArrowDown /></span>
+          </div>
+        </>
+      }}
+    </Field>
+  );
+};
+
 const FileBox = (props: any) => {
   return (
     <Field name={props.name}>
@@ -220,6 +295,7 @@ export {
   PasswordBox,
   TextareaBox,
   SelectBox,
+  MultiSelectBox,
   DateBox,
   FileBox
 };

@@ -33,14 +33,14 @@ export default function Page() {
                         <p className='text-xl font-bold text-indigo-800 '>Find Project</p>
                     </div>
                     <div></div>
-                    <div className="flex items-center p-1 mt-5 bg-white border border-gray-300 rounded-md ">
+                    <div className="flex items-center p-1 mt-5 bg-white border border-gray-300 rounded-md  mr-5 md:mr-0">
                         <div className="mx-2">
                             <AiOutlineSearch size="20" className="text-gray" />
                         </div>
                         <input type="text" name="search" onChange={(e) => setSearch(e.target.value)} className="flex-grow text-xs font-normal border-none font-inter text-gray focus:outline-none" placeholder="Search…" />
                     </div>
                 </div>
-                <div className="grid my-5 md:grid-cols-2">
+                <div className="grid my-5 md:grid-cols-2 mx-5 md:mx-0">
                     <div>
                         <p onClick={() => setTab('new')} className={'pb-2 text-sm font-bold text-center  border-b-2 ' + (tab == "new" ? 'text-indigo-800 border-indigo-800' : ' text-black cursor-pointer ')}>New</p>
                     </div>

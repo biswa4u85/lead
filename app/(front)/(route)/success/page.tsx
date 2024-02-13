@@ -14,14 +14,16 @@ export default function Page() {
     const printInfoRef: any = useRef();
     const searchParams = useSearchParams()
     const id = searchParams.get('id')
-    const type = searchParams.get('type')
     const payment_intent = searchParams.get('payment_intent')
-    const { data: lead } = useFetch({ url: "submit", query: JSON.stringify({ type, id }) });
+    const { data: lead } = useFetch({ url: "submit", query: JSON.stringify({ id }) });
     const { create, data: respond, loading } = usePost();
 
     const calcTotal = (items: any, type = 'all') => {
         let total = 0
         for (let item of items) {
+            item.qty = Number(item.qty)
+            item.rate = Number(item.rate)
+            item.tax = Number(item.tax)
             if (type == 'all') {
                 total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
             } else {
@@ -38,8 +40,8 @@ export default function Page() {
     const { edit } = usePatch();
     const makePaymentEntry = useCallback(async (leads: any) => {
         if (leads) {
-            create("payments", { userId: leads?.assignTo, type: "card", amount: Number(leads?.invoice?.items ? calcTotal(leads?.invoice?.items) : 0), refId: payment_intent, paymentType: type, leadId: id })
-            edit("submit", { type, id: leads.id, assignStatus: 'active' })
+            create("payments", { userId: leads?.invoice?.userId, type: "card", amount: Number(leads?.invoice?.items ? calcTotal(leads?.invoice?.items) : 0), refId: payment_intent, paymentType: leads?.invoice?.leadType, leadId: id })
+            edit("submit", { type: leads.invoice.leadType, id: leads.id, name: leads.invoice.userId, status: "active", assignStatus: 'active', profeionalId: leads?.invoice?.userId })
         }
     }, []);
 
@@ -62,11 +64,11 @@ export default function Page() {
 
                     <div className="flex items-center justify-between pt-5">
                         <p className="text-sm font-semibold font-inter text-deepblack-100">Amount Paid :</p>
-                        <p className="font-semibold text-sm1 text-deepblack-100">${(type == "depannage" && lead?.data) ? Number(lead?.data?.depannageCategory?.price) : 0}</p>
+                        <p className="font-semibold text-sm1 text-deepblack-100">${Number(lead?.data?.invoice?.items ? calcTotal(lead?.data?.invoice?.items) : 0)}</p>
                     </div>
                     <div className="flex items-center justify-between pb-5">
                         <p className="text-sm font-semibold font-inter text-deepblack-100">Depannage Category :</p>
-                        <p className="font-semibold text-sm1 text-deepblack-100">{type == "depannage" ? lead?.data?.depannageCategory?.name : ""}</p>
+                        <p className="font-semibold text-sm1 text-deepblack-100">{lead?.data?.invoice?.leadType == "depannage" ? lead?.data?.depannageCategory?.name : ""}</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-center gap-7">

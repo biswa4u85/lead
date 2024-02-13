@@ -29,9 +29,8 @@ export default function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
     const [signature, setSignature] = useState<any>(null)
     const searchParams = useSearchParams()
-    const type = searchParams.get('type')
 
-    const { data: lead } = useFetch({ url: "submit", query: JSON.stringify({ type, id: params.id }) });
+    const { data: lead } = useFetch({ url: "submit", query: JSON.stringify({ id: params.id }) });
 
     const handleFileChange = async (e: any) => {
         const selectedFile = e.target.files[0];
@@ -50,14 +49,14 @@ export default function Page({ params }: { params: { id: string } }) {
         }
     }
     const handleRefused = () => {
-        edit("submit", { type, id: params.id, assignStatus: 'refused' })
+        edit("submit", { type: lead.data.invoice.leadType, id: lead.data.id, name: lead.data.invoice.userId, status: "refused" })
     }
     useEffect(() => {
         if (respond) {
             toast.success(`Proposal Update successfully`);
             setSignature(null);
             if (signature) {
-                router.push(`/payment?id=${params.id}&type=${type}`)
+                router.push(`/payment?id=${params.id}`)
             }
         }
     }, [respond])
@@ -105,6 +104,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                     <p>{lead?.data?.address?.email}</p>
                                     <p>{lead?.data?.address?.phone}</p>
                                 </div>
+                                {lead?.data?.invoice?.proSignature && (<img src={lead?.data?.invoice?.cusSignature} />)}
                             </div>
                             <div className="col-span-1">
                                 <div className="col-span-1 p-3 border border-gray-300 rounded">
@@ -118,6 +118,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                         <p>{lead?.data?.profeional?.email}</p>
                                         <p>{lead?.data?.profeional?.phone}</p>
                                     </div>
+                                    {lead?.data?.invoice?.proSignature && (<img src={lead?.data?.invoice?.proSignature} />)}
                                 </div>
                             </div>
                         </div>

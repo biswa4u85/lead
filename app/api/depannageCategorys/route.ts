@@ -70,7 +70,6 @@ export async function GET(request: NextRequest) {
             return successResponse(result, counts);
         }
     } catch (error: any) {
-        console.log(error)
         errorResponse(error.message);
     }
 }
@@ -101,6 +100,7 @@ export async function PATCH(request: NextRequest) {
         });
         return successResponse(res);
     } catch (error: any) {
+        console.log(error)
         errorResponse(error);
     }
 }

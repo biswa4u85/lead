@@ -10,8 +10,8 @@ export const axiosInstance: any = axios.create({
 });
 
 const showError = (error: any) => {
-    if (error?.response?.data?.message) {
-        return toast.error(error?.response?.data?.message);
+    if (error?.response?.data?.message || error?.response?.data?.error) {
+        return toast.error(error?.response?.data?.message || error?.response?.data?.error);
     }
     let messages = error?.response?.data?._server_messages ? JSON.parse(JSON.parse(error?.response?.data?._server_messages)[0]) : null
     if (messages) {

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { signOut, useSession } from 'next-auth/react'
+import language from "@/contexts/language";
 
 export default function Header() {
   const pathname = usePathname();
@@ -34,6 +35,8 @@ export default function Header() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+
 
   return (
     <>
@@ -64,10 +67,10 @@ export default function Header() {
           /></Link>
           <div className='flex'>
             <nav className="flex items-center justify-between" >
-              <Link href={"/"} className={"mx-5 text-indigo-900 hover:text-blue-700 "}>Home</Link>
-              <Link href={"/batiment"} className={"mx-1 mr-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("batiment") && ("text-primary"))}>Projet Batiment</Link>
-              <Link href={"/depannage"} className={"mx-1 text-indigo-900 hover:text-blue-700 " + (pathname.includes("depannage") && ("text-primary"))}>Projet Dépannage</Link>
-              <Link href={"/espace-pro"} className={"mx-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("espace-pro") && ("text-primary"))}>Espace pro</Link>
+              <Link href={"/"} className={"mx-5 text-indigo-900 hover:text-blue-700 "}>{language.home}</Link>
+              <Link href={"/batiment"} className={"mx-1 mr-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("batiment") && ("text-primary"))}>{language.building}</Link>
+              <Link href={"/depannage"} className={"mx-1 text-indigo-900 hover:text-blue-700 " + (pathname.includes("depannage") && ("text-primary"))}>{language.troubleShot}</Link>
+              <Link href={"/espace-pro"} className={"mx-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("espace-pro") && ("text-primary"))}>{language.professional}</Link>
             </nav>
             {data?.user?.name ? <div className="relative">
               <Link
@@ -116,11 +119,11 @@ export default function Header() {
                     router.push("/auth");
                   });
                 }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                  Log Out
+                  {language.logout}
                 </button>
               </div>
             </div> :
-              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link>}
+              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link>}
           </div>
         </div>
       </header>

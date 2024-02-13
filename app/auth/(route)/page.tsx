@@ -43,7 +43,7 @@ const Page: React.FC = (props: any) => {
       {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
         <div className="bg-white">
           <div className="flex items-center justify-center h-screen">
-            <div className="w-1/4 bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div className="w-1/1 xl:w-1/4 bg-white border rounded-sm border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="w-full p-4">
                 <Link className="mb-5.5 flex justify-center items-center" href="/">
                   <Image

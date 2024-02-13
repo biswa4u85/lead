@@ -43,7 +43,7 @@ export default function Page() {
     return (
         <>
             <div className="container pt-5 pb-10 mx-auto">
-                <div className="flex items-center justify-between px-8 py-3 bg-indigo-400 rounded-3xl">
+                <div className="md:flex items-center justify-between px-8 py-3 bg-indigo-400 rounded-3xl mt-10 mx-5 md:mx-0">
                     <div>
                         <p className='font-normal text-sm1 text-deepblack-100 font-inter'>Your balance</p>
                         <p className='font-semibold text-3lg text-deepblack-100 font-inter'>${total.toFixed(2)}</p>
@@ -54,10 +54,10 @@ export default function Page() {
                 </div>
 
 
-                <div className="grid grid-cols-2 my-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 my-5 mx-5 md:mx-0">
                     <p className='text-lg font-bold text-indigo-800'>Balance</p>
 
-                    <div className="grid grid-cols-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4">
 
                         <div className="flex items-center p-1">
                             <div className="mx-2">
@@ -95,6 +95,7 @@ export default function Page() {
                 </div>
 
                 {loading ? <Loader /> :
+                <div className="horiZontScroll">
                     <table className="min-w-full bg-white border-separate border-spacing-y-3">
                         <thead className="bg-indigo-300 rounded-full shadow-[0px_0px_10px_1px_#F2F6FB] font-inter font-semibold text-deep-black text-sm1">
                             <tr>
@@ -119,7 +120,7 @@ export default function Page() {
                                 </td>
                             </tr>))}
                         </tbody>
-                    </table>}
+                    </table></div> }
             </div>
         </>
     );

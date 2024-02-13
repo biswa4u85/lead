@@ -46,10 +46,10 @@ export default function Page() {
         <>
             <div className="container pt-5 pb-10 mx-auto">
 
-                <div className="grid grid-cols-2 my-5">
-                    <p className='text-lg font-bold text-indigo-800'>Invoice History</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-5 mt-[50px]">
+                    <p className='text-lg font-bold text-indigo-800 mx-5 md:mx-0'>Invoice History</p>
 
-                    <div className="grid grid-cols-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4">
 
                         <div className="flex items-center p-1">
                             <div className="mx-2">
@@ -87,7 +87,7 @@ export default function Page() {
                 </div>
 
                 {loading ? <Loader /> :
-                    <table className="min-w-full bg-white border-separate border-spacing-y-3">
+                    <div className="horiZontScroll"><table className="min-w-full bg-white border-separate border-spacing-y-3">
                         <thead className="bg-indigo-300 rounded-full shadow-[0px_0px_10px_1px_#F2F6FB] font-inter font-semibold text-deep-black text-sm1">
                             <tr>
                                 <th className="px-4 py-2">Invoice number</th>
@@ -106,7 +106,8 @@ export default function Page() {
                                 <td className="px-4 py-2"><button onClick={() => router.push(`/pro/invoice/${item.id}`)} className="px-2 pb-1 text-sm font-normal text-white bg-indigo-800 rounded-xl font-inter"><p>Details</p></button></td>
                             </tr>))}
                         </tbody>
-                    </table>}
+                    </table></div>
+                    }
             </div>
         </>
     );

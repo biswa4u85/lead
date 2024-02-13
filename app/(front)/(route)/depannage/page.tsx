@@ -137,7 +137,7 @@ export default function Page() {
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
                             <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Troubleshooting or small jobs, we have the solution!</p>
                         </div>
-                            <div className="grid grid-cols-2 gap-4 px-5 py-5">
+                            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 px-5 py-5">
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
@@ -212,7 +212,7 @@ export default function Page() {
                                 {({ field, form, meta }: any) => {
                                     return <>
                                         <div className="grid mx-3 md:grid-cols-2 gap-11 ">
-                                            <div className="p-2 border border-gray-500 rounded-md md:col-span-1">
+                                            <div className="p-4 border border-gray-500 rounded-md md:col-span-1">
                                                 <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">{depannageCategorys?.description}</p>
                                                 <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€{depannageCategorys?.price}</p>
                                                 <div className="flex justify-between gap-8">
@@ -306,7 +306,7 @@ export default function Page() {
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
                                 <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Complete your contact details</p>
                             </div>
-                            <div className="grid grid-cols-3 gap-4 px-5 py-5">
+                            <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 px-5 py-5">
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}

@@ -2,12 +2,20 @@ import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 
-const subRes = "user";
+const subRes: any = "invoice";
 
 export async function GET(request: NextRequest) {
     try {
-        const resource: any = String(request.nextUrl.searchParams.get("type")) || 'batiment'
         const id = request.nextUrl.searchParams.get("id")
+        const invoice = await (prisma[subRes] as any).findUnique({
+            where: { id }
+        });
+        if (!invoice) return errorResponse("Invoice Not Found");
+        if (!invoice?.userId) return errorResponse("Professional Not Found");
+        if (!invoice?.leadId) return errorResponse("Lead Not Found");
+
+        const resource: any = String(invoice.leadType)
+
         let include: any = { address: true }
         if (resource == 'depannage') {
             include['depannageCategory'] = { select: { name: true, price: true } }
@@ -16,21 +24,18 @@ export async function GET(request: NextRequest) {
             include['batimentType'] = { select: { name: true } }
         }
         let where: any = {}
-        if (id) where['id'] = id
+        if (id) where['id'] = invoice?.leadId
         const result = await (prisma[resource] as any).findUnique({
             where,
             include
         });
-        if (!result?.assignTo) return errorResponse("Assign Not Found");
         const profeional = await prisma.user.findUnique({
-            where: { id: result?.assignTo }
+            where: { id: invoice?.userId }
         });
-        const invoice = await prisma.invoice.findMany({
-            where: { userId: result?.assignTo, leadId: result?.id }
-        });
-        if (!invoice) return errorResponse("Invoice Not Found");
+        let checkStatus = result.assignTo.find((item: any) => item.name == invoice.userId)
+        if (checkStatus.status == 'refused') return errorResponse("Already Refused");
         if (!result) return errorResponse("Record Not Found");
-        return successResponse({ ...result, profeional, invoice: invoice[0] ?? {} });
+        return successResponse({ ...result, profeional, invoice });
     } catch (error: any) {
         errorResponse(error.message);
     }
@@ -42,14 +47,18 @@ export async function PATCH(request: NextRequest) {
 
         const data = await request.json();
         let id = JSON.parse(JSON.stringify(data.id))
-        let resource = JSON.parse(JSON.stringify(data.type)) || 'batiment'
         delete data.id
-        delete data.type
 
-        const { assignStatus } = data
-        const res = await (prisma[resource] as any).update({
+        const { type, assignedDate, assignStatus, profeionalId, name, status } = data
+        const lead = await (prisma[type] as any).findMany({
             where: { id },
-            data: { assignStatus }
+        })
+        let allAssigns = lead[0].assignTo
+        let index = lead[0].assignTo.findIndex((item: any) => item.name == name)
+        allAssigns[index] = { status, name }
+        const res = await (prisma[type] as any).update({
+            where: { id },
+            data: { assignedDate, assignStatus, profeionalId, assignTo: allAssigns }
         });
         return successResponse(res);
     } catch (error: any) {

@@ -19,7 +19,6 @@ function InnerPage({ leads }: any) {
     const elements: any = useElements();
     const searchParams = useSearchParams()
     const id = searchParams.get('id')
-    const type = searchParams.get('type')
 
     const calcTotal = (items: any, type = 'all') => {
         let total = 0
@@ -59,7 +58,7 @@ function InnerPage({ leads }: any) {
                 elements,
                 clientSecret: clientSecret.data,
                 confirmParams: {
-                    return_url: `${origin}/${'success'}?id=${id}&type=${type}`,
+                    return_url: `${origin}/${'success'}?id=${id}`,
                 },
             });
         } else {

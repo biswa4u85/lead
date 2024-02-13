@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import { Buttons } from "@/components/RenderFroms";
+import { Select } from 'antd';
 import { AiOutlineDoubleRight, AiFillHome } from "react-icons/ai";
 import { useFetch } from "@/contexts/useFetch";
 import { usePatch } from "@/contexts/usePatch";
@@ -13,16 +14,22 @@ export default function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
     const searchParams = useSearchParams()
     const type = searchParams.get('type')
-    const [assignTo, setAssignTo] = useState('')
+    const [assignTo, setAssignTo] = useState([])
 
     const { data: users } = useFetch({ url: "users", query: JSON.stringify({ role: "user" }) });
+    const userOptions = users?.data ? users.data.map((item: any) => {
+        return { label: `${item?.firstName} ${item?.lastName}`, value: item?.id }
+    }) : []
     const { data: leads } = useFetch({ url: "findProjects", query: JSON.stringify({ type, id: params.id }) });
     let lead = leads?.data ? leads.data[0] : {}
 
     const { edit, data: respond, loading } = usePatch();
     const handleUpdate = (assignStatus: any) => {
-        if (assignTo) {
-            edit("findProjects", { type, id: params.id, assignStatus, assignTo, assignedDate: new Date() })
+        if (assignTo.length > 0) {
+            const assignOj = assignTo.map((item: any) => {
+                return { name: item, status: 'new' }
+            })
+            edit("findProjects", { type, id: params.id, assignStatus, assignTo: assignOj, assignedDate: new Date() })
         } else {
             toast.error(`Required to Assigned anyone`);
         }
@@ -89,14 +96,17 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <p className="font-semibold text-sm1 text-deep-black">{new Date(lead?.createdAt).toLocaleString()}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <select className="relative z-20 w-full px-5 py-3 transition bg-transparent border rounded outline-none appearance-none border-stroke focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
-                                    value={assignTo}
-                                    onChange={(obj) => {
-                                        setAssignTo(obj.target.value)
-                                    }}>
-                                    <option value="">{""}</option>
-                                    {users.data && users.data.map((item: any, key: any) => item && <option key={key} value={item.id}>{item.firstName} {item.lastName}</option>)}
-                                </select>
+                                <Select
+                                    mode="multiple"
+                                    allowClear
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                    placeholder="Please select"
+                                    defaultValue={assignTo}
+                                    onChange={(obj: any) => setAssignTo(obj)}
+                                    options={userOptions}
+                                />
                             </div>
                         </div>
 

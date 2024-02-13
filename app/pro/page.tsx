@@ -9,14 +9,14 @@ import Loader from "@/components/common/Loader";
 export default function Page() {
     const router = useRouter();
     const { data } = useSession()
-    const [tab, setTab] = useState('assigned')
+    const [tab, setTab] = useState('new')
     const [search, setSearch] = useState('')
-    const [query, setQuery] = useState({ search, assignStatus: tab, assignTo: (data?.user as any)?.id })
+    const [query, setQuery] = useState({ search, status: tab, assignTo: (data?.user as any)?.id })
     const { data: lead, loading } = useFetch({ url: "findProjects", query: JSON.stringify(query) });
 
     useEffect(() => {
         const performAction = () => {
-            setQuery({ search, assignStatus: tab, assignTo: (data?.user as any)?.id })
+            setQuery({ search, status: tab, assignTo: (data?.user as any)?.id })
         };
 
         const debounceTimer = setTimeout(() => {
@@ -34,22 +34,22 @@ export default function Page() {
                         <p className='text-xl font-bold text-indigo-800 '>Find Project</p>
                     </div>
                     <div></div>
-                    <div className="flex items-center p-1 mt-5 bg-white border border-gray-300 rounded-md ">
+                    <div className="flex items-center p-1 mt-5 mr-5 bg-white border border-gray-300 rounded-md md:mr-0">
                         <div className="mx-2">
                             <AiOutlineSearch size="20" className="text-gray" />
                         </div>
                         <input type="text" name="search" onChange={(e) => setSearch(e.target.value)} className="flex-grow text-xs font-normal border-none font-inter text-gray focus:outline-none" placeholder="Search…" />
                     </div>
                 </div>
-                <div className="grid my-5 md:grid-cols-2">
+                <div className="grid mx-5 my-5 md:grid-cols-2 md:mx-0">
                     <div>
-                        <p onClick={() => setTab('assigned')} className={'pb-2 text-sm font-bold text-center  border-b-2 ' + (tab == "assigned" ? 'text-indigo-800 border-indigo-800' : ' text-black cursor-pointer ')}>New</p>
+                        <p onClick={() => setTab('new')} className={'pb-2 text-sm font-bold text-center  border-b-2 ' + (tab == "new" ? 'text-indigo-800 border-indigo-800' : ' text-black cursor-pointer ')}>New</p>
                     </div>
                     <div>
                         <p onClick={() => setTab('accepted')} className={'pb-2 text-sm font-bold text-center border-b-2 ' + (tab == "accepted" ? 'text-indigo-800  border-indigo-800' : ' text-black cursor-pointer ')}>Accepted</p>
                     </div>
                 </div>
-                {loading ? <Loader /> : <>{lead?.data && lead.data.map((item: any, key: any) => <div key={key} className="my-5 p-4 shadow-[0px_0px_10px_4px_#F2F6FB] rounded-md cursor-pointer" onClick={() => router.push(`pro/projects/${item.id}?type=${item?.batimentCategoryId ? "batiment" : "depannage"}`)}>
+                {loading ? <Loader /> : <>{lead?.data && lead.data.map((item: any, key: any) => <div key={key} className="my-5 p-4 shadow-[0px_0px_10px_4px_#F2F6FB] rounded-md cursor-pointer" onClick={() => router.push(`pro/projects/${item.id}?status=${tab}&type=${item?.batimentCategoryId ? "batiment" : "depannage"}`)}>
                     <div className="flex flex-col md:flex-row md:justify-between">
                         <p className='font-semibold text-indigo-800 text-sm1'>{item.title}</p>
                         <div className='flex flex-col justify-start w-auto font-normal md:flex-row md:items-center md:gap-13 '>

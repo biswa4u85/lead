@@ -69,7 +69,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                     <p>{lead?.address?.email}</p>
                                     <p>{lead?.address?.phone}</p>
                                 </div>
-                                {lead.signature && (<img alt="" width={200} height={200} src={lead.signature} />)}
+                                {invoice.cusSignature && (<img alt="" width={200} height={200} src={invoice.cusSignature} />)}
                             </div>
                             <div className="col-span-1">
                                 <div className="col-span-1 p-3 border border-gray-300 rounded">
@@ -83,7 +83,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                         <p>{user?.email}</p>
                                         <p>{user?.phone}</p>
                                     </div>
-                                    {invoice?.signature && (<img alt="" width={200} height={200} src={invoice.signature} />)}
+                                    {invoice?.proSignature && (<img alt="" width={200} height={200} src={invoice.proSignature} />)}
                                 </div>
                             </div>
                         </div>
@@ -102,28 +102,28 @@ export default function Page({ params }: { params: { id: string } }) {
                                 </div>
                             </div>
                         </div>
-
-                        <table className="w-full border">
-                            <thead>
-                                <tr className="font-normal text-left text-white bg-indigo-800 text-xs1 font-inter">
-                                    <th className="p-2">Items</th>
-                                    <th className="p-2">QTY/HRS</th>
-                                    <th className="p-2">Rate</th>
-                                    <th className="p-2">Tax</th>
-                                    <th className="p-2">Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {invoice?.items && invoice?.items.map((item: any, key: any) => <tr key={key}>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item.name}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item.qty}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${item.rate}</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item.tax}%</td>
-                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${Number(item.rate) + Number(item.tax * Number(item.qty) / 100)}</td>
-                                </tr>)}
-                            </tbody>
-                        </table>
-
+                        <div className="horiZontScroll">
+                            <table className="w-full border">
+                                <thead>
+                                    <tr className="font-normal text-left text-white bg-indigo-800 text-xs1 font-inter">
+                                        <th className="p-2">Items</th>
+                                        <th className="p-2">QTY/HRS</th>
+                                        <th className="p-2">Rate</th>
+                                        <th className="p-2">Tax</th>
+                                        <th className="p-2">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {invoice?.items && invoice?.items.map((item: any, key: any) => <tr key={key}>
+                                        <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item.name}</td>
+                                        <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item.qty}</td>
+                                        <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${item.rate}</td>
+                                        <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item.tax}%</td>
+                                        <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${Number(item.rate) + Number(item.tax * Number(item.qty) / 100)}</td>
+                                    </tr>)}
+                                </tbody>
+                            </table>
+                        </div>
                         <div className="grid md:grid-cols-3">
                             <div></div>
                             <div></div>

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { signOut, useSession } from 'next-auth/react'
+import language from "@/contexts/language";
 
 export default function Header() {
   const pathname = usePathname();
@@ -65,10 +66,10 @@ export default function Header() {
           /></Link>
           <div className='flex'>
             <nav className="flex items-center justify-between" >
-              <Link href={"/pro"} className={"mx-5 hover:text-blue-700 " + (!pathname.includes("pro/") ? "text-primary" : "text-indigo-900")}>Find Projects</Link>
-              <Link href={"/pro/estimate"} className={"mx-1 mr-5  hover:text-blue-700 " + (pathname.includes("estimate") ? "text-primary" : "text-indigo-900")}>Estimate</Link>
-              <Link href={"/pro/invoice"} className={"mx-1  hover:text-blue-700 " + (pathname.includes("invoice") ? "text-primary" : "text-indigo-900")}>Invoice</Link>
-              <Link href={"/pro/balance"} className={"mx-5  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-indigo-900")}>Balance</Link>
+              <Link href={"/pro"} className={"mx-5 hover:text-blue-700 " + (!pathname.includes("pro/") ? "text-primary" : "text-indigo-900")}>{language.find_projects}</Link>
+              <Link href={"/pro/estimate"} className={"mx-1 mr-5  hover:text-blue-700 " + (pathname.includes("estimate") ? "text-primary" : "text-indigo-900")}>{language.estimate}</Link>
+              <Link href={"/pro/invoice"} className={"mx-1  hover:text-blue-700 " + (pathname.includes("invoice") ? "text-primary" : "text-indigo-900")}>{language.invoice}</Link>
+              <Link href={"/pro/balance"} className={"mx-5  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-indigo-900")}>{language.balance}</Link>
             </nav>
             {data?.user?.name ? <div className="relative">
               <Link
@@ -79,11 +80,11 @@ export default function Header() {
               >
                 <span className="w-10 h-10 rounded-full">
                   <Image
-                    width={100}
-                    height={100}
+                    width={90}
+                    height={90}
                     src={data?.user?.image ? data?.user?.image : "/images/user.png"}
                     alt="User"
-                    className={data?.user?.image ? "mt-2 rounded-full" : "rounded-full"}
+                    className={data?.user?.image ? "rounded-full" : "rounded-full"}
                   />
                 </span>
                 <span className="text-indigo-900 hover:text-blue-700">
@@ -114,6 +115,7 @@ export default function Header() {
                   }`}
               >
                 <button onClick={() => {
+                  setDropdownOpen(false)
                   router.push("/pro/profile")
                 }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
                   Profile

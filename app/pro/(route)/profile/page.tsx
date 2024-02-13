@@ -26,14 +26,15 @@ export default function Page() {
                     <Image
                         alt=""
                         width="150"
-                        height="100"
+                        height="150"
+                        sizes="100vw"
                         src={user.image ? user.image : abtar}
                     />
                 </div>
                 <p className="text-lg font-bold text-black">Profile Picture</p>
                 <div className="my-4 border-t-2 border-gray-500"></div>
 
-                <div className="flex items-center justify-between">
+                <div className="md:flex items-center justify-between">
                     <div className="flex flex-col items-normal w-90">
                         <div className="flex items-center">
                             <label className="w-1/3 font-thin texl-title-sm text-gray">First Name</label>
@@ -74,9 +75,9 @@ export default function Page() {
                 </div>
 
                 <div className="flex justify-end mt-10 mb-20">
-                    <button onClick={() => router.push(`/pro/profile/${(data?.user as any)?.id}`)} type="submit" className="px-6 py-2 mx-2 font-thin text-indigo-800 border border-indigo-800 rounded text-title-xsm">
+                    {/* <button onClick={() => router.push(`/pro/profile/${(data?.user as any)?.id}`)} type="submit" className="px-6 py-2 mx-2 font-thin text-indigo-800 border border-indigo-800 rounded text-title-xsm">
                         Change my password
-                    </button>
+                    </button> */}
                     <button onClick={() => router.push(`/pro/profile/${(data?.user as any)?.id}`)} type="submit" className="px-6 py-2 mx-2 font-thin text-white bg-indigo-800 border rounded text-title-xsm">
                         Change my contact details
                     </button>

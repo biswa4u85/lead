@@ -45,8 +45,9 @@ export default function Page({ params }: { params: { id: string } }) {
     const [value, setValue] = useState<any>(null)
     const searchParams = useSearchParams()
     const type = searchParams.get('type')
+    const status = searchParams.get('status')
 
-    const { data: leads } = useFetch({ url: "findProjects", query: JSON.stringify({ type, id: params.id, assignTo: (data?.user as any)?.id }) });
+    const { data: leads } = useFetch({ url: "findProjects", query: JSON.stringify({ type, id: params.id, status, assignTo: (data?.user as any)?.id }) });
     let lead = leads?.data ? leads.data[0] : {}
 
     useEffect(() => {
@@ -75,18 +76,13 @@ export default function Page({ params }: { params: { id: string } }) {
         contractStart: Yup.string().required("Start Date is required"),
         contractEnd: Yup.string().required("End Date is required"),
         proSignature: Yup.string().required("Signature is required"),
-        // items: Yup.array().of(
-        //     Yup.object().shape({
-        //         price: Yup.string().required("Price is required"),
-        //     })
-        // ).required("Items are required"),
     });
 
 
     const { create, data: respond, loading } = usePost();
     const handleUpdate = (values: any) => {
         if (calcTotal(values.items) > 0) {
-            create("invoices", { ...values, leadId: params.id, userId: (data?.user as any)?.id })
+            create("invoices", { ...values, leadType: lead?.batimentCategory ? 'batiment' : 'depannage', leadId: params.id, userId: (data?.user as any)?.id })
         } else {
             toast.error(`Items are required`);
         }
@@ -94,7 +90,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const { edit, data: respond1, loading: loading1 } = usePatch();
     useEffect(() => {
         if (respond) {
-            edit("findProjects", { type, id: params.id, assignStatus: "pending" })
+            edit("findProjects", { type, id: params.id, name: (data?.user as any)?.id, status: "pending" })
             toast.success(`Invoice update successfully`);
             router.push(`/pro/estimate`)
         }
@@ -149,7 +145,6 @@ export default function Page({ params }: { params: { id: string } }) {
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <FieldArray
                                     name="items"

@@ -16,11 +16,14 @@ export async function GET(request: NextRequest) {
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
         const title = request.nextUrl.searchParams.get("search")
         const assignTo = request.nextUrl.searchParams.get("assignTo")
+        const status = request.nextUrl.searchParams.get("status")
         const assignStatus = request.nextUrl.searchParams.get("assignStatus")
+        const profeionalId = request.nextUrl.searchParams.get("profeionalId")
         const id = request.nextUrl.searchParams.get("id")
         let where: any = {}
         if (title) where['title'] = { contains: title }
-        if (assignTo) where['assignTo'] = assignTo
+        if (profeionalId) where['profeionalId'] = profeionalId
+        if (assignTo && status) where['assignTo'] = { has: { status, name: assignTo } }
         if (id) where['id'] = id
         if (assignStatus) where['assignStatus'] = assignStatus
 
@@ -52,10 +55,16 @@ export async function PATCH(request: NextRequest) {
         let id = JSON.parse(JSON.stringify(data.id))
         delete data.id
 
-        const { type, assignedDate, assignStatus, assignTo } = data
+        const { type, assignedDate, name, status } = data
+        const lead = await (prisma[type] as any).findMany({
+            where: { id },
+        })
+        let allAssigns = lead[0].assignTo
+        let index = lead[0].assignTo.findIndex((item: any) => item.name == name)
+        allAssigns[index] = { status, name }
         const res = await (prisma[type] as any).update({
             where: { id },
-            data: { assignedDate, assignStatus, assignTo }
+            data: { assignedDate, assignTo: allAssigns }
         });
         return successResponse(res);
     } catch (error: any) {
