@@ -2,6 +2,8 @@ import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
+import { sendEmail } from "../emails";
+import language from "@/contexts/language";
 
 const resource1 = "batiment";
 const resource2 = "depannage";
@@ -55,17 +57,38 @@ export async function PATCH(request: NextRequest) {
         let id = JSON.parse(JSON.stringify(data.id))
         delete data.id
 
-        const { type, assignedDate, name, status } = data
+        const { type, assignedDate, assignStatus, assignTo, name, status } = data
         const lead = await (prisma[type] as any).findMany({
             where: { id },
         })
-        let allAssigns = lead[0].assignTo
-        let index = lead[0].assignTo.findIndex((item: any) => item.name == name)
-        allAssigns[index] = { status, name }
+
+        let allAssigns = []
+        if (assignTo) {
+            allAssigns = assignTo
+        } else {
+            allAssigns = lead[0].assignTo
+            let index = lead[0].assignTo.findIndex((item: any) => item.name == name)
+            allAssigns[index] = { status, name }
+        }
         const res = await (prisma[type] as any).update({
             where: { id },
-            data: { assignedDate, assignTo: allAssigns }
+            data: { assignedDate, assignStatus, assignTo: allAssigns }
         });
+        if (assignTo) {
+            // Email Pro Users
+            let ids = allAssigns.map((item: any) => item.name)
+            const users: any = await prisma.user.findMany({ where: { id: { in: ids } } });
+            for (let user of users) {
+                let title = language?.professional_emails?.newLead_pro_title
+                title = title.replace('[project]', `${lead[0].title}`);
+                let body = language?.professional_emails?.newLead_pro_body
+                body = body.replace('[name]', `${user.firstName} ${user.lastName}`);
+                body = body.replace('[project]', `${lead[0].title}`);
+                sendEmail(user.email, `${user.firstName} ${user.lastName}`, title, body)
+            }
+        } else {
+
+        }
         return successResponse(res);
     } catch (error: any) {
         errorResponse(error);

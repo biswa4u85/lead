@@ -4,6 +4,7 @@ import { AiOutlineInstagram, AiOutlineTwitter, AiFillYoutube, AiOutlineDribbble 
 import Image from "next/image";
 import logowhite from "../images/logo_white.svg"
 import Header from "./header"
+import language from "@/contexts/language";
 
 export const metadata: Metadata = {
   title: "Home Page",
@@ -21,7 +22,7 @@ export default function RootLayout({
       <div style={{minHeight:"73vh"}}>{children}</div>
       <footer className="bg-indigo-800 ">
         <div className="container flex flex-col items-center py-4 mx-auto md:flex-row md:justify-between md:items-center md:px-20 md:py-0">
-          <div className='text-xs font-normal text-white'>© 2024 PRO POS. All rights reserved</div>
+          <div className='text-xs font-normal text-white'>{language.copy_write}</div>
           <Link href={"/"}><Image className='hidden md:block'
             width={256}
             height={80}

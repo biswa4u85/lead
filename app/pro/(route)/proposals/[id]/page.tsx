@@ -30,10 +30,10 @@ const readFileAsDataURL = (file: any) => {
 };
 
 const initialData = {
-    description: "",
+    // description: "",
     contractStart: "",
     contractEnd: "",
-    proSignature: "",
+    // proSignature: "",
     items: [{}],
 }
 
@@ -72,10 +72,10 @@ export default function Page({ params }: { params: { id: string } }) {
     }
 
     const validationSchema = Yup.object().shape({
-        description: Yup.string().required("Description is required"),
+        // description: Yup.string().required("Description is required"),
         contractStart: Yup.string().required("Start Date is required"),
         contractEnd: Yup.string().required("End Date is required"),
-        proSignature: Yup.string().required("Signature is required"),
+        // proSignature: Yup.string().required("Signature is required"),
     });
 
 
@@ -108,8 +108,8 @@ export default function Page({ params }: { params: { id: string } }) {
                 validationSchema={validationSchema}
                 onSubmit={(values) => handleUpdate(values)}
             >
-                {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                    <div className="container p-10 mx-auto mb-10 md:mb-10">
+                {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
+                    return <div className="container p-10 mx-auto mb-10 md:mb-10">
                         <div className="flex items-center pb-8">
                             <AiFillHome size="20" className="text-indigo-900" />
                             <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
@@ -119,12 +119,8 @@ export default function Page({ params }: { params: { id: string } }) {
                         </div>
                         <div className="grid md:grid-cols-3 gap-9">
                             <div ref={printInfoRef} className="md:col-span-2 sm:col-span-1 text-black shadow-[0px_0px_10px_4px_#F2F6FB] p-8">
-                                <TextareaBox
-                                    required={true}
-                                    name="description"
-                                    label="Description"
-                                    placeholder="Enter Description"
-                                />
+                                <h3 className="pb-6 font-medium text-indigo-800 text-2xs font-inter">{lead?.title}</h3>
+                                <p className="py-4 font-normal text-xs2 text-graylight-900">{lead?.description}</p>
                                 <div className="flex flex-col py-4">
                                     <div className="grid grid-cols-2 gap-4 mb-4">
                                         <div>
@@ -153,9 +149,10 @@ export default function Page({ params }: { params: { id: string } }) {
                                             <thead>
                                                 <tr className="font-normal text-left text-white bg-indigo-800 text-xs1 font-inter">
                                                     <th className="p-2">Items</th>
-                                                    <th className="p-2">QTY/HRS</th>
+                                                    <th className="p-2">Description</th>
+                                                    <th className="p-1">QTY/HRS</th>
                                                     <th className="p-2">Rate</th>
-                                                    <th className="p-2">Tax</th>
+                                                    <th className="p-1">Tax</th>
                                                     <th className="p-2">Subtotal</th>
                                                     <th className="p-2" colSpan={2}>Actions</th>
                                                 </tr>
@@ -165,19 +162,26 @@ export default function Page({ params }: { params: { id: string } }) {
                                                     <tr key={index}>
                                                         <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
                                                             <InputBox required={true} name={`items.${index}.name`} />
-
                                                         </td>
                                                         <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
+                                                            <TextareaBox
+                                                                required={true}
+                                                                name={`items.${index}.description`}
+                                                                label="Description"
+                                                                placeholder="Enter Description"
+                                                            />
+                                                        </td>
+                                                        <td className="p-1 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
                                                             <InputBox required={true} name={`items.${index}.qty`} type="number" />
 
                                                         </td>
                                                         <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
                                                             <InputBox required={true} pre="$" name={`items.${index}.rate`} type="number" />
                                                             {/* {errors['items'] && (
-                                                                <div className="mt-1 text-xs-1 text-meta-1">{errors['items'][index]['price']}</div>
-                                                            )} */}
+                                                            <div className="mt-1 text-xs-1 text-meta-1">{errors['items'][index]['price']}</div>
+                                                        )} */}
                                                         </td>
-                                                        <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
+                                                        <td className="p-1 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
                                                             <InputBox required={true} post="%" name={`items.${index}.tax`} type="number" />
 
                                                         </td>
@@ -230,43 +234,43 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
 
                             <div className="col-span-1">
-                                <Field name="proSignature">
-                                    {({ field, form, meta }: any) => {
-                                        return <>
-                                            <p className="font-medium font-inter text-2xs text-graylight-800">Generate signature</p>
-                                            <div className='px-3 py-2 rounded-lg border-gray-200 md:text-sm text-xs1 shadow-[0px_5px_10px_1px_#F2F6FB] my-5'>
-                                                <div className="flex items-center justify-center">
-                                                    <AiOutlineRise size="25" className="text-green" />
-                                                    <SignatureBox setSignature={(value: any) => {
-                                                        field.onChange('proSignature')(value)
-                                                    }} />
-                                                </div>
+                                {/* <Field name="proSignature">
+                                {({ field, form, meta }: any) => {
+                                    return <>
+                                        <p className="font-medium font-inter text-2xs text-graylight-800">Generate signature</p>
+                                        <div className='px-3 py-2 rounded-lg border-gray-200 md:text-sm text-xs1 shadow-[0px_5px_10px_1px_#F2F6FB] my-5'>
+                                            <div className="flex items-center justify-center">
+                                                <AiOutlineRise size="25" className="text-green" />
+                                                <SignatureBox setSignature={(value: any) => {
+                                                    field.onChange('proSignature')(value)
+                                                }} />
                                             </div>
-                                            <p className="mb-3 font-medium font-inter text-2xs text-graylight-800">Upload signature</p>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                ref={fileInputRef}
-                                                style={{ display: 'none' }}
-                                                onChange={async (e: any) => {
-                                                    if (e.target.files[0]) {
-                                                        const base64String = await readFileAsDataURL(e.target.files[0]);
-                                                        field.onChange('proSignature')(base64String);
-                                                    }
-                                                }}
-                                            />
-                                            <div className="flex items-center justify-center py-2 border-2 border-indigo-800 border-dashed">
-                                                <AiOutlineCloudUpload size="25" className="text-indigo-800" />
-                                                <button onClick={() => fileInputRef.current.click()} className="ml-4 font-normal text-indigo-800 font-poppins text-2xs">Upload signature</button>
-                                            </div>
-                                            {form?.errors['proSignature'] && form?.touched['proSignature'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['proSignature']}</div>
-                                            )}
-                                        </>
-                                    }}
-                                </Field>
+                                        </div>
+                                        <p className="mb-3 font-medium font-inter text-2xs text-graylight-800">Upload signature</p>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            ref={fileInputRef}
+                                            style={{ display: 'none' }}
+                                            onChange={async (e: any) => {
+                                                if (e.target.files[0]) {
+                                                    const base64String = await readFileAsDataURL(e.target.files[0]);
+                                                    field.onChange('proSignature')(base64String);
+                                                }
+                                            }}
+                                        />
+                                        <div className="flex items-center justify-center py-2 border-2 border-indigo-800 border-dashed">
+                                            <AiOutlineCloudUpload size="25" className="text-indigo-800" />
+                                            <button onClick={() => fileInputRef.current.click()} className="ml-4 font-normal text-indigo-800 font-poppins text-2xs">Upload signature</button>
+                                        </div>
+                                        {form?.errors['proSignature'] && form?.touched['proSignature'] && (
+                                            <div className="mt-1 text-xs-1 text-meta-1">{form.errors['proSignature']}</div>
+                                        )}
+                                    </>
+                                }}
+                            </Field> */}
 
-                                <div className="shadow-[0px_0px_10px_4px_#F2F6FB] mt-7 p-3">
+                                <div className="shadow-[0px_0px_10px_4px_#F2F6FB] mt-0 p-3">
                                     <p className="text-sm font-medium font-inter text-graylight-800">Client Details</p>
                                     <div className="flex items-center justify-between py-3">
                                         <p className="text-sm font-normal text-gray-700">Name</p>
@@ -300,7 +304,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
                         </div>
                     </div>
-                )}
+                }}
             </Formik>}</>
     );
 }

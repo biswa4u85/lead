@@ -10,6 +10,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useFetch } from "@/contexts/useFetch";
 import { toast } from 'react-toastify';
+import language from "@/contexts/language";
+
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
@@ -72,14 +74,14 @@ function InnerPage({ leads }: any) {
                 <div className="flex items-center pb-2">
                     <AiFillHome size="20" className="text-indigo-900" />
                     <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                    <p className="font-normal text-indigo-900 font-roboto text-2xs">Project Detail</p>
+                    <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.project}</p>
                     <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                    <p className="font-normal text-indigo-900 font-roboto text-2xs">Payment</p>
+                    <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.payment}</p>
 
                 </div>
                 <div className="grid md:grid-cols-3 gap-9">
                     <div className="text-black md:col-span-2 sm:col-span-1">
-                        <p className="pb-2 font-semibold border-b border-gray-700 text-sm2 font-inter text-deep-black">Select Payment Method</p>
+                        <p className="pb-2 font-semibold border-b border-gray-700 text-sm2 font-inter text-deep-black">{language.payment_method}</p>
 
                         <div className="grid gap-4 pt-6 md:grid-cols-4">
                             {/* <div className="md:col-span-1 flex flex-col justify-around items-center shadow-[0px_0px_10px_1px_#F2F6FB] rounded-sm py-6 ">
@@ -107,16 +109,16 @@ function InnerPage({ leads }: any) {
                                     height="20"
                                     src={stripeImg}
                                 />
-                                <p>Stripe</p>
+                                <p>{language.stripe}</p>
                             </div>
                         </div>
 
                         <div className="grid gap-4 pt-6 md:grid-cols-2">
                             <div>
-                                <p className="mb-5 font-semibold text-indigo-900 text-sm1 font-inter">Add your cards Details</p>
+                                <p className="mb-5 font-semibold text-indigo-900 text-sm1 font-inter">{language.cards_details}</p>
                                 <div><PaymentElement /></div>
                                 <button type="submit" onClick={() => handleUpdate()} className="w-full p-2 my-5 text-sm font-normal text-white bg-indigo-800 rounded-md font-poppins">
-                                    Pay
+                                    {language.pay}
                                 </button>
                             </div>
                         </div>
@@ -125,34 +127,34 @@ function InnerPage({ leads }: any) {
 
                     <div className="col-span-1">
                         <div className="shadow-[0px_0px_10px_4px_#F2F6FB] mt-7 p-3">
-                            <p className="text-sm font-medium font-inter text-graylight-800">Profeional details details</p>
+                            <p className="text-sm font-medium font-inter text-graylight-800">{language.profeional_details}</p>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Name</p>
+                                <p className="text-sm font-normal text-gray-700">{language.name}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{leads?.profeional?.firstName} {leads?.profeional?.lastName}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Company</p>
+                                <p className="text-sm font-normal text-gray-700">{language.company}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{leads?.profeional?.company}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Postal code</p>
+                                <p className="text-sm font-normal text-gray-700">{language.postal_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{leads?.profeional?.postalCode}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Phone</p>
+                                <p className="text-sm font-normal text-gray-700">{language.phone_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{leads?.profeional?.phone}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Email</p>
+                                <p className="text-sm font-normal text-gray-700">{language.email_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{leads?.profeional?.email}</p>
                             </div>
                             <div className="flex items-start justify-between py-3">
-                                <p className="w-1/2 text-sm font-normal text-gray-700">Address</p>
+                                <p className="w-1/2 text-sm font-normal text-gray-700">{language.address}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{leads?.profeional?.firstName} {leads?.profeional?.lastName}, {leads?.profeional?.company},  {leads?.profeional?.postalCode}</p>
                             </div>
                         </div>
                         <button type="submit" onClick={() => handleUpdate()} className="w-full p-2 my-5 text-sm font-normal text-white bg-indigo-800 rounded-md font-poppins">
-                            Pay
+                            {language.pay}
                         </button>
                     </div>
                 </div>

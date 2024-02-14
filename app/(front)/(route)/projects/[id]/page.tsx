@@ -9,6 +9,8 @@ import { useReactToPrint } from "react-to-print";
 import { useFetch } from "@/contexts/useFetch";
 import { usePatch } from "@/contexts/usePatch";
 import { toast } from 'react-toastify';
+import language from "@/contexts/language";
+
 
 const readFileAsDataURL = (file: any) => {
     return new Promise((resolve, reject) => {
@@ -84,17 +86,17 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div className="flex items-center pb-8">
                     <AiFillHome size="20" className="text-indigo-900" />
                     <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                    <p className="font-normal text-indigo-900 font-roboto text-2xs">Project Detail</p>
+                    <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.project}</p>
                     <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                    <p className="font-normal text-indigo-900 font-roboto text-2xs">Submit Proposal </p>
+                    <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.submit}</p>
                 </div>
                 <div className="grid md:grid-cols-3 gap-9">
                     <div ref={printInfoRef} className="md:col-span-2 sm:col-span-1 text-black shadow-[0px_0px_10px_4px_#F2F6FB] p-8">
-                        <h3 className="pb-6 font-medium text-2xs font-inter text-graylight-900">Description</h3>
+                        <h3 className="pb-6 font-medium text-2xs font-inter text-graylight-900">{language.description_label}</h3>
 
                         <div className="grid md:grid-cols-2 gap-9">
                             <div className="col-span-1 p-3 border border-gray-300 rounded">
-                                <p className="text-xs font-medium text-deep-black font-inter">Client Details</p>
+                                <p className="text-xs font-medium text-deep-black font-inter">{language.client_details}</p>
                                 <div className="my-3 font-normal text-gray-800 font-inter text-xs1">
                                     <p>{lead?.data?.address?.firstName} {lead?.data?.address?.lastName}</p>
                                     <p>{lead?.data?.address?.city}, {lead?.data?.address?.postalCode}</p>
@@ -108,7 +110,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
                             <div className="col-span-1">
                                 <div className="col-span-1 p-3 border border-gray-300 rounded">
-                                    <p className="text-xs font-medium text-deep-black font-inter">Professional</p>
+                                    <p className="text-xs font-medium text-deep-black font-inter">{language.Professional_text}</p>
                                     <div className="my-3 font-normal text-gray-800 font-inter text-xs1">
                                         <p>{lead?.data?.profeional?.firstName} {lead?.data?.profeional?.lastName}</p>
                                         <p>{lead?.data?.profeional?.company}, {lead?.data?.profeional?.postalCode}</p>
@@ -122,17 +124,17 @@ export default function Page({ params }: { params: { id: string } }) {
                                 </div>
                             </div>
                         </div>
-                        <p className="pt-4 font-normal text-xs2 text-graylight-900">{lead?.data?.title}</p>
-                        <p className="pt-4 font-normal text-xs2 text-graylight-900">{lead?.data?.invoice?.description}</p>
+                        <h3 className="mt-3 font-medium text-indigo-800 text-2xs font-inter">{lead?.data?.title}</h3>
+                        <p className="py-4 font-normal text-xs2 text-graylight-900">{lead?.data?.description}</p>
 
                         <div className="flex flex-col py-4">
                             <div className="grid grid-cols-3 mb-4">
                                 <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Contract Start</p>
+                                    <p className="text-xs font-normal text-gray-700 font-inter">{language.contact_start}</p>
                                     <p className="text-sm font-semibold text-deep-black">{new Date(lead?.data?.invoice?.contractStart).toLocaleDateString()}</p>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Contract End</p>
+                                    <p className="text-xs font-normal text-gray-700 font-inter">{language.contact_end}</p>
                                     <p className="text-sm font-semibold text-deep-black">{new Date(lead?.data?.invoice?.contractEnd).toLocaleDateString()}</p>
                                 </div>
                             </div>
@@ -141,16 +143,18 @@ export default function Page({ params }: { params: { id: string } }) {
                         <table className="w-full border">
                             <thead>
                                 <tr className="font-normal text-left text-white bg-indigo-800 text-xs1 font-inter">
-                                    <th className="p-2">Items</th>
-                                    <th className="p-2">QTY/HRS</th>
-                                    <th className="p-2">Rate</th>
-                                    <th className="p-2">Tax</th>
-                                    <th className="p-2">Subtotal</th>
+                                    <th className="p-2">{language.items}</th>
+                                    <th className="p-2">{language.description_label}</th>
+                                    <th className="p-2">{language.qty}</th>
+                                    <th className="p-2">{language.rate}</th>
+                                    <th className="p-2">{language.tax}</th>
+                                    <th className="p-2">{language.subtotal}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {lead?.data?.invoice?.items && lead?.data?.invoice?.items.map((item: any, key: any) => <tr key={key}>
                                     <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.name}</td>
+                                    <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.description}</td>
                                     <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.qty}</td>
                                     <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">${item?.rate}</td>
                                     <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">{item?.tax}%</td>
@@ -163,18 +167,18 @@ export default function Page({ params }: { params: { id: string } }) {
                             <div></div>
                             <div></div>
                             <div className="mt-8 border border-gray-200 rounded-sm mb-15">
-                                <p className="py-2 font-bold text-center text-white bg-indigo-800 rounded-t-sm text-xs1 font-inter">Invoice Summary</p>
+                                <p className="py-2 font-bold text-center text-white bg-indigo-800 rounded-t-sm text-xs1 font-inter">{language.invoice_summary}</p>
                                 <div className="px-2">
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Subtotal</p>
+                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.subtotal}</p>
                                         <p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{lead?.data?.invoice?.items ? calcTotal(lead?.data?.invoice.items, 'total') : '0'}</span></p>
                                     </div>
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Tax</p>
+                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.tax}</p>
                                         <p className="font-light font-inter text-xs1 text-black-100">12%</p>
                                     </div>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Total</p>
+                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.total}</p>
                                         <p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{lead?.data?.invoice?.items ? calcTotal(lead?.data?.invoice?.items) : '0'}</span></p>
                                     </div>
                                 </div>
@@ -183,14 +187,14 @@ export default function Page({ params }: { params: { id: string } }) {
                     </div>
 
                     <div className="col-span-1">
-                        <p className="font-medium font-inter text-2xs text-graylight-800">Generate signature</p>
+                        <p className="font-medium font-inter text-2xs text-graylight-800">{language.generate}</p>
                         <div className='px-3 py-2 rounded-lg border-gray-200 md:text-sm text-xs1 shadow-[0px_5px_10px_1px_#F2F6FB] my-5'>
                             <div className="flex items-center justify-center">
                                 <AiOutlineRise size="25" className="text-green" />
                                 <SignatureBox setSignature={setSignature} />
                             </div>
                         </div>
-                        <p className="mb-3 font-medium font-inter text-2xs text-graylight-800">Upload signature</p>
+                        <p className="mb-3 font-medium font-inter text-2xs text-graylight-800">{language.uplode}</p>
 
                         <input
                             type="file"
@@ -201,33 +205,33 @@ export default function Page({ params }: { params: { id: string } }) {
                         />
                         <div className="flex items-center justify-center py-2 border-2 border-indigo-800 border-dashed">
                             <AiOutlineCloudUpload size="25" className="text-indigo-800" />
-                            <button onClick={() => fileInputRef.current.click()} className="ml-4 font-normal text-indigo-800 font-poppins text-2xs">Upload signature</button>
+                            <button onClick={() => fileInputRef.current.click()} className="ml-4 font-normal text-indigo-800 font-poppins text-2xs">{language.uplode}</button>
                         </div>
 
                         <div className="shadow-[0px_0px_10px_4px_#F2F6FB] mt-7 p-3">
-                            <p className="text-sm font-medium font-inter text-graylight-800">Profeional details details</p>
+                            <p className="text-sm font-medium font-inter text-graylight-800">{language.profeional_details}</p>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Name</p>
+                                <p className="text-sm font-normal text-gray-700">{language.name}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.firstName} {lead?.data?.profeional?.lastName}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Company</p>
+                                <p className="text-sm font-normal text-gray-700">{language.company}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.company}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Postal code</p>
+                                <p className="text-sm font-normal text-gray-700">{language.postal_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.postalCode}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Phone</p>
+                                <p className="text-sm font-normal text-gray-700">{language.phone_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.phone}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Email</p>
+                                <p className="text-sm font-normal text-gray-700">{language.email_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.email}</p>
                             </div>
                             <div className="flex items-start justify-between py-3">
-                                <p className="w-1/2 text-sm font-normal text-gray-700">Address</p>
+                                <p className="w-1/2 text-sm font-normal text-gray-700">{language.address}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.data?.profeional?.firstName} {lead?.data?.profeional?.lastName}, {lead?.data?.profeional?.company},  {lead?.data?.profeional?.postalCode}</p>
                             </div>
                         </div>

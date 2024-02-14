@@ -31,6 +31,14 @@ model User {
   payments      Payment[]
 }
 
+model Otp {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  otp               Int
+  phoneEmail        String @unique
+  resendCount       Int @default(0)
+  updatedAt         DateTime  @updatedAt
+}
+
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String

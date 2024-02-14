@@ -58,13 +58,11 @@ const InputBox = (props: any) => {
             <input
               value={field.value}
               onChange={(obj) => {
-                field.onChange(props.name)(
-                  obj.target.value
-                );
+                form.setFieldValue(props.name, obj.target.value);
               }}
               type="text"
               placeholder={props.placeholder}
-              className={"w-full py-2 pl-6 pr-10 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" + ((form?.errors[props.name] && form?.touched[props.name]) && " border-b-meta-1")}
+              className={"w-full p-2 pl-3 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" + ((form?.errors[props.name] && form?.touched[props.name]) && " border-b-meta-1")}
               {...props}
             />
             {form?.errors[props.name] && form?.touched[props.name] && (
@@ -91,9 +89,7 @@ const PasswordBox = (props: any) => {
             <input
               value={field.value}
               onChange={(obj) => {
-                field.onChange(props.name)(
-                  obj.target.value
-                );
+                form.setFieldValue(props.name, obj.target.value);               
               }}
               type={show ? "text" : "password"}
               placeholder={props.placeholder}
@@ -128,9 +124,7 @@ const TextareaBox = (props: any) => {
               rows={6}
               value={field.value}
               onChange={(obj) => {
-                field.onChange(props.name)(
-                  obj.target.value
-                );
+                form.setFieldValue(props.name, obj.target.value);                
               }}
               type="text"
               placeholder={props.placeholder}
@@ -157,10 +151,8 @@ const DateBox = (props: any) => {
           </label>)}
           <div className="relative">
             <DatePicker
-              onChange={(date, dateString) => {
-                field.onChange(props.name)(
-                  dateString
-                );
+              onChange={(date, obj) => {
+                form.setFieldValue(props.name, obj);
               }}
               className={"w-full py-2 pl-6 pr-10 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" + ((form?.errors[props.name] && form?.touched[props.name]) && " border-b-meta-1")}
               {...props}
@@ -187,9 +179,7 @@ const SelectBox = (props: any) => {
             <select className="relative z-20 w-full px-5 py-3 transition bg-transparent border rounded outline-none appearance-none border-stroke focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
               value={field.value}
               onChange={(obj) => {
-                field.onChange(props.name)(
-                  obj.target.value
-                );
+                form.setFieldValue(props.name, obj.target.value);
               }}
               {...props}>
               <option value="">{props.placeholder}</option>
@@ -263,7 +253,7 @@ const FileBox = (props: any) => {
         const handleFileChange = async (event: any) => {
           const response: any = await SiteApis.fileUploadApi("files", event.target.files[0]);
           if (!response?.error) {
-            field.onChange(props.name)(response?.url);
+            form.setFieldValue(props.name, response?.url);
           }
         };
 

@@ -32,7 +32,7 @@ export default function Page() {
                                 <div className="mx-2">
                                     <AiOutlineSearch size="20" className="text-gray" />
                                 </div>
-                                <input type="text" value={quote} onChange={(obj) => setQuote(obj.target.value)} className="flex-grow text-sm font-semibold text-gray-600 border-none focus:outline-none" placeholder="Area Code" />
+                                <input type="text" value={quote} onChange={(obj) => setQuote(obj.target.value)} className="flex-grow text-sm font-semibold text-gray-600 border-none focus:outline-none" placeholder={language.area_code} />
                                 <button onClick={() => onQuote(quote)} className="flex flex-row items-center justify-center px-4 py-4 text-xs2 xl:text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700 -ml-24 xl:-ml-0">
                                 {language.trouble_btn}  <AiOutlineRight className="ml-2" />
                                 </button>
@@ -104,7 +104,7 @@ export default function Page() {
                                         />
                                         <div className="flex justify-between pt-2">
                                             <div>{item?.name}</div>
-                                            <div onClick={() => router.push(`/batiment?name=${item?.id}`)} className="text-indigo-800 underline cursor-pointer">Start</div>
+                                            <div onClick={() => router.push(`/batiment?name=${item?.id}`)} className="text-indigo-800 underline cursor-pointer">{language.start}</div>
                                         </div>
                                     </div>
                                 }

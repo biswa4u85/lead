@@ -8,6 +8,8 @@ import { useReactToPrint } from "react-to-print";
 import { useFetch } from "@/contexts/useFetch";
 import { usePost } from "@/contexts/usePost";
 import { usePatch } from "@/contexts/usePatch";
+import language from "@/contexts/language";
+
 
 export default function Page() {
     const router = useRouter();
@@ -59,24 +61,24 @@ export default function Page() {
                             src={success}
                             className="rounded-full "
                         /></div>
-                    <p className="pt-5 font-semibold text-center text-indigo-900 text-sm2 font-inter">Payment Successfully</p>
-                    <p className="pb-5 font-normal text-center border-b border-gray-700 font-inter text-deepblack-100 font-xs">Payment ID :{payment_intent}</p>
+                    <p className="pt-5 font-semibold text-center text-indigo-900 text-sm2 font-inter">{language.payment_sucessful}</p>
+                    <p className="pb-5 font-normal text-center border-b border-gray-700 font-inter text-deepblack-100 font-xs">{language.payment_id} :{payment_intent}</p>
 
                     <div className="flex items-center justify-between pt-5">
-                        <p className="text-sm font-semibold font-inter text-deepblack-100">Amount Paid :</p>
+                        <p className="text-sm font-semibold font-inter text-deepblack-100">{language.amount} :</p>
                         <p className="font-semibold text-sm1 text-deepblack-100">${Number(lead?.data?.invoice?.items ? calcTotal(lead?.data?.invoice?.items) : 0)}</p>
                     </div>
                     <div className="flex items-center justify-between pb-5">
-                        <p className="text-sm font-semibold font-inter text-deepblack-100">Depannage Category :</p>
+                        <p className="text-sm font-semibold font-inter text-deepblack-100">{language.Category} :</p>
                         <p className="font-semibold text-sm1 text-deepblack-100">{lead?.data?.invoice?.leadType == "depannage" ? lead?.data?.depannageCategory?.name : ""}</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-center gap-7">
                     <button onClick={handlePrint} type="submit" className="px-5 py-2 my-5 text-sm font-medium text-white bg-indigo-500 rounded-md font-inter">
-                        Download
+                    {language.download}
                     </button>
                     <button onClick={() => router.push(`/`)} type="submit" className="p-2 px-5 py-2 my-5 text-sm font-medium border border-indigo-500 rounded-md text-graylight-900 font-inter">
-                        Cancel
+                    {language.cancel}
                     </button>
                 </div>
             </div>

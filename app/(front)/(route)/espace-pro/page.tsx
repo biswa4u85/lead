@@ -5,12 +5,13 @@ import laburimg from "../../../images/laburimg.png"
 import constuction from "../../../images/constuction.png"
 import constuction2 from "../../../images/constuction2.png"
 import { Metadata } from "next";
+import language from "@/contexts/language";
+
 
 export const metadata: Metadata = {
     title: "Professionnel",
     description: "Create Professionnel",
 };
-
 
 export default function Page() {
     return (
@@ -18,11 +19,11 @@ export default function Page() {
             <div className="bg-custom-blue">
                 <div className="container flex flex-col mx-auto md:flex-row md:justify-between md:items-center">
                     <div className="flex-none md:w-1/2">
-                        <p className="py-5 font-medium leading-tight text-black whitespace-pre-wrap text-title-xl2 md:text-6xl mx-5 md:mx-0">Increase your business productivity and performance with our <span className="font-bold text-indigo-800 border-b" >services</span>
+                        <p className="py-5 font-medium leading-tight text-black whitespace-pre-wrap text-title-xl2 md:text-6xl mx-5 md:mx-0">{language.productivity}<span className="font-bold text-indigo-800 border-b" >{language.services}</span>
                         </p>
                         <button className="flex items-center justify-between flex-initial px-4 py-4 my-6 text-xs font-semibold text-white bg-indigo-800 rounded-md w-60 hover:bg-blue-700 ml-5 md:ml-0">
                             <Link href={"/espace-pro-detail"} className="flex items-center justify-between">
-                                What do you need ?
+                              {language.need_request}
                                 <AiOutlineRight className="mt-1" />
                             </Link>
                         </button>
@@ -106,7 +107,6 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-
 
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3 py-14">

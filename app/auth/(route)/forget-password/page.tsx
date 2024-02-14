@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePost } from "@/contexts/usePost";
 import { InputBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
+import logo from "../../../images/logo.svg"
 import * as Yup from "yup";
 import { MdOutlineMail } from "react-icons/md";
 import { toast } from 'react-toastify';
@@ -45,14 +46,14 @@ const Page: React.FC = () => {
                 <Link className="mb-5.5 flex justify-center items-center" href="/">
                   <Image
                     className="hidden dark:block"
-                    src={"/images/logo.png"}
+                    src={logo}
                     alt="Logo"
                     width={176}
                     height={32}
                   />
                   <Image
                     className="dark:hidden"
-                    src={"/images/logo.png"}
+                    src={logo}
                     alt="Logo"
                     width={176}
                     height={32}

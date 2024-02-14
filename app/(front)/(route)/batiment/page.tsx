@@ -8,6 +8,8 @@ import { InputBox, TextareaBox, Buttons } from "@/components/RenderFroms";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
+import language from "@/contexts/language";
+
 
 const defaultValue = {
     batimentCategoryId: "",
@@ -32,7 +34,7 @@ export default function Page() {
     useEffect(() => {
         if (name) {
             setValues({ ...defaultValue, batimentCategoryId: name })
-        }else{
+        } else {
             setValues({ ...defaultValue })
         }
     }, [name])
@@ -202,24 +204,23 @@ export default function Page() {
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Describe your project to us</p>
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.describe}</p>
                             </div>
                             <div className="px-5 mb-2">
                                 <InputBox
                                     required={true}
                                     name="title"
-                                    label="Title"
-                                    placeholder="Enter the Title"
+                                    label={language.title_label}
+                                    placeholder={language.title_placeholder}
                                 />
                             </div>
                             <div className="px-5">
                                 <TextareaBox
                                     required={true}
                                     name="description"
-                                    label="Description"
+                                    label={language.description_label}
                                     className="w-full p-2 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500"
-                                    placeholder="Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in
-                            order to install a parquet floor already in my possession"
+                                    placeholder={language.description_placeholder}
                                 />
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
@@ -238,23 +239,24 @@ export default function Page() {
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Complete your contact details</p>
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.complete_details}</p>
                             </div>
                             <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 px-5 py-5">
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="firstName"
-                                        label="First Name"
-                                        placeholder="Enter your First Name"
+                                        label={language.firstName_label}
+                                        placeholder={language.firstName_placeholder}
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="lastName"
-                                        label="Last Name"
-                                        placeholder="Enter your Last Name"
+                                        label={language.lastName_label}
+                                        placeholder={language.lastName_placeholder}
+                                        
 
                                     />
                                 </div>
@@ -262,17 +264,17 @@ export default function Page() {
                                     <InputBox
                                         required={true}
                                         name="city"
-                                        label="City"
-                                        placeholder="Enter City"
-
+                                        label={language.city_label}
+                                        placeholder={language.city_placeholder}
+                                        
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="email"
-                                        label="Email"
-                                        placeholder="Enter your Email"
+                                        label={language.email_label}
+                                        placeholder={language.email_placeholder}
 
                                     />
                                 </div>
@@ -280,17 +282,18 @@ export default function Page() {
                                     <InputBox
                                         required={true}
                                         name="phone"
-                                        label="Phone"
-                                        placeholder="Enter your Phone"
+                                        label={language.phone_label}
+                                        placeholder={language.phone_placeholder}
+                                        
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="postalCode"
-                                        label="Postal Code"
+                                        label={language.postal_label}
+                                        placeholder={language.postal_placeholder}
                                         type="number"
-                                        placeholder="Enter Postal Code"
                                     />
                                 </div>
                             </div>
@@ -304,9 +307,9 @@ export default function Page() {
 
                 {step == 5 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
-                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.thank_proposal}</p>
                     </div>
-                    <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">Thank you for submitting your proposal. A confirmation email will be sent. We will review your proposal and will get back to you within the next few days.</p>
+                    <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">{language.confirmation_email}</p>
                 </>)}
             </div>
         </>

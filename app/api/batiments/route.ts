@@ -2,8 +2,11 @@ import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
+import { sendEmail } from "../emails";
+import language from "@/contexts/language";
 
 const resource = "batiment";
+const assignresource = "user";
 
 export async function GET(request: NextRequest) {
     try {
@@ -40,10 +43,50 @@ export async function POST(request: NextRequest) {
                 }
             }
         });
+        autoAssignTo(res)
         return successResponse(res);
     } catch (error: any) {
-        console.log(error)
         errorResponse(error.message);
+    }
+}
+
+async function autoAssignTo(data: any) {
+    let where: any = {}
+    if (data.batimentCategoryId) {
+        where['category'] = { has: data.batimentCategoryId }
+    }
+    if (data.batimentTypeId) {
+        where['service'] = { has: data.batimentTypeId }
+    }
+    const users: any = await prisma[assignresource].findMany({ where });
+    const allAssigns = users.map((item: any) => {
+        return { name: item.id, status: "new" }
+    });
+    await prisma[resource].update({
+        where: { id: data.id },
+        data: { assignTo: allAssigns }
+    });
+
+    // Email Admin
+    const admin: any = await prisma[assignresource].findMany({ where: { role: "admin" } });
+    if (admin && admin[0]) {
+        let title = language?.professional_emails?.newLead_admin_title
+        let body = language?.professional_emails?.newLead_admin_body
+        body = body.replace('[name]', `${data.firstName} ${data.lastName}`);
+        body = body.replace('[email]', `${data.email}`);
+        body = body.replace('[phone]', `${data.phone}`);
+        body = body.replace('[title]', `${data.title}`);
+        body = body.replace('[message]', `${data.description}`);
+        sendEmail(admin[0].email, `${admin[0].firstName} ${admin[0].lastName}`, title, body)
+    }
+
+    // Email Pro Users
+    for (let user of users) {
+        let title = language?.professional_emails?.newLead_pro_title
+        let body = language?.professional_emails?.newLead_pro_body
+        body = body.replace('[name]', `${user.firstName} ${user.lastName}`);
+        body = body.replace('[project]', `${data.title}`);
+        sendEmail(user.email, `${user.firstName} ${user.lastName}`, title, body)
     }
 }
 

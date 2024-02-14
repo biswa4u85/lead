@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import logo from "../../images/logo.svg"
 import { MdOutlineMail } from "react-icons/md";
 import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
@@ -48,14 +49,14 @@ const Page: React.FC = (props: any) => {
                 <Link className="mb-5.5 flex justify-center items-center" href="/">
                   <Image
                     className="hidden dark:block"
-                    src={"/images/logo.png"}
+                    src={logo}
                     alt="Logo"
                     width={176}
                     height={32}
                   />
                   <Image
                     className="dark:hidden"
-                    src={"/images/logo.png"}
+                    src={logo}
                     alt="Logo"
                     width={176}
                     height={32}

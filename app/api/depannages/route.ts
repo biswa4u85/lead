@@ -4,6 +4,7 @@ import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
 
 const resource = "depannage";
+const assignresource = "user";
 
 export async function GET(request: NextRequest) {
     try {
@@ -18,7 +19,7 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
-            include: { address: true, depannageCategory: { select: { name: true, price:true } } }
+            include: { address: true, depannageCategory: { select: { name: true, price: true } } }
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
@@ -40,11 +41,21 @@ export async function POST(request: NextRequest) {
                 }
             }
         });
+        autoAssignTo(res)
         return successResponse(res);
     } catch (error: any) {
-        console.log(error)
         errorResponse(error.message);
     }
+}
+
+async function autoAssignTo(data: any) {
+    let where: any = {}
+    if (data.depannageCategoryId) {
+        where['category_new'] = data.depannageCategoryId
+    }
+    const users: any = await prisma[assignresource].findMany({ where });
+    console.log(users)
+    console.log(data)
 }
 
 export async function PATCH(request: NextRequest) {

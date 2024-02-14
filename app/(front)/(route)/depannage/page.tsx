@@ -9,6 +9,8 @@ import { useSearchParams } from 'next/navigation'
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import { AiOutlineCheckCircle, } from "react-icons/ai";
+import language from "@/contexts/language";
+
 
 const defaultValue = {
     depannageCategoryId: "",
@@ -135,24 +137,24 @@ export default function Page() {
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Troubleshooting or small jobs, we have the solution!</p>
+                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.solution}</p>
                         </div>
                             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 px-5 py-5">
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="title"
-                                        label="What do you need"
-                                        placeholder="Enter What do you need"
+                                        label={language.need_label}
+                                        placeholder={language.need_placeholder}
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="postalCode"
-                                        label="Postal Code"
+                                        label={language.postal_label}
                                         type="number"
-                                        placeholder="Enter Postal Code"
+                                        placeholder={language.postal_placeholder}
                                     />
                                 </div>
                             </div>
@@ -205,7 +207,7 @@ export default function Page() {
                 >
                     {({ handleChange, handleBlur, handleSubmit }) => (
                         <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-inter font-Normal text-deep-black md:max-w-2xl">Where does the problem come from ?</p>
+                            <p className="text-sm leading-10 md:text-lg font-inter font-Normal text-deep-black md:max-w-2xl">{language.problem}</p>
                         </div>
 
                             <Field name={'accept'}>
@@ -224,20 +226,19 @@ export default function Page() {
                                                     </div>
                                                 </div>
 
-                                                <div className="flex justify-between pt-2">
+                                                {/* <div className="flex justify-between pt-2">
                                                     <div className="flex">
                                                         <div><AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
                                                         <p className="text-sm font-normal font-inter text-graylight-900">Up to 60 min labor</p>
                                                     </div>
-                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€59.00</p>
-                                                    </div>
-                                                </div>
-                                                <p className="pb-5 text-sm font-normal text-indigo-800 font-inter">Pay in 3 or 4 installments without fees</p>
+                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€59.00</p></div>
+                                                </div> */}
+                                                <p className="pb-5 mt-3 text-sm font-normal text-indigo-800 font-inter">{language.installments}</p>
                                                 <InputBox
                                                     required={true}
                                                     name="title"
                                                     readOnly={true}
-                                                    label="Your Postal Code *"
+                                                    label={language.postalcode_label}
                                                     placeholder={values.postalCode}
                                                 />
                                                 <input
@@ -247,7 +248,7 @@ export default function Page() {
                                                 />
                                                 <button onClick={() => field.onChange('accept')(depannageCategorys?.price)}
                                                     className="w-full px-4 py-2 my-5 text-sm font-normal text-indigo-800 bg-blue-500 border border-indigo-800 rounded-md font-inter">
-                                                    I Order
+                                                    {language.order}
                                                 </button>
                                             </div>
                                         </div>
@@ -277,15 +278,14 @@ export default function Page() {
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Describe your project to us</p>
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.describe}</p>
                             </div>
                             <div className="px-5">
                                 <TextareaBox
                                     required={true}
                                     name="description"
                                     className="w-full p-2 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500"
-                                    placeholder="Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in
-                            order to install a parquet floor already in my possession"
+                                    placeholder={language.project_detail}
                                 />
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
@@ -304,31 +304,31 @@ export default function Page() {
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Complete your contact details</p>
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.complete_details}</p>
                             </div>
                             <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 px-5 py-5">
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="title"
-                                        label="Title"
-                                        placeholder="Enter the Title"
+                                        label={language.title_label}
+                                        placeholder={language.title_placeholder}
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="firstName"
-                                        label="First Name"
-                                        placeholder="Enter your First Name"
+                                        label={language.firstName_label}
+                                        placeholder={language.firstName_placeholder}
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
                                         name="lastName"
-                                        label="Last Name"
-                                        placeholder="Enter your Last Name"
+                                        label={language.lastName_label}
+                                        placeholder={language.lastName_placeholder}
 
                                     />
                                 </div>
@@ -336,8 +336,8 @@ export default function Page() {
                                     <InputBox
                                         required={true}
                                         name="city"
-                                        label="City"
-                                        placeholder="Enter City"
+                                        label={language.city_label}
+                                        placeholder={language.city_placeholder}
 
                                     />
                                 </div>
@@ -345,8 +345,8 @@ export default function Page() {
                                     <InputBox
                                         required={true}
                                         name="email"
-                                        label="Email"
-                                        placeholder="Enter your Email"
+                                        label={language.email_label}
+                                        placeholder={language.email_placeholder}
 
                                     />
                                 </div>
@@ -354,8 +354,8 @@ export default function Page() {
                                     <InputBox
                                         required={true}
                                         name="phone"
-                                        label="Phone"
-                                        placeholder="Enter your Phone"
+                                        label={language.phone_label}
+                                        placeholder={language.phone_placeholder}
                                     />
                                 </div>
                             </div>
@@ -369,9 +369,9 @@ export default function Page() {
 
                 {step == 6 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
-                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Thank you for submitting a proposal!</p>
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.thank_proposal}</p>
                     </div>
-                    <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">Thank you for submitting your proposal. A confirmation email will be sent. We will review your proposal and will get back to you within the next few days.</p>
+                    <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">{language.confirmation_email}</p>
                 </>)}
             </div>
         </>

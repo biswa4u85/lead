@@ -6,6 +6,8 @@ import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
+import language from "@/contexts/language";
+
 
 export default function Page() {
     const [step, setStep] = useState<any>(1);
@@ -50,7 +52,7 @@ export default function Page() {
     });
 
     const handleUpdate4 = (value: any) => {
-        create("auth/signup", { ...values, ...value })
+        create("auth/signup", { ...values, ...value, role: "user" })
     }
 
     useEffect(() => {
@@ -98,21 +100,21 @@ export default function Page() {
                         >
                             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                 <>
-                                    <p className="text-lg font-bold text-center text-black">Your Job</p>
-                                    <p className="my-4 font-semibold text-center text-black text-title-sm">Your Main Activity</p>
+                                    <p className="text-lg font-bold text-center text-black">{language.job}</p>
+                                    <p className="my-4 font-semibold text-center text-black text-title-sm">{language.activity}</p>
                                     <div className="mb-3">
                                         <InputBox
                                             required={true}
                                             name="postalCode"
-                                            label="Your Postal Code"
-                                            placeholder="Enter Your Postal Code"
+                                            label={language.postalcode_label}
+                                            placeholder={language.postal_placeholder}
                                         />
                                     </div>
                                     <InputBox
                                         required={true}
                                         name="company"
-                                        label="Name of your Company"
-                                        placeholder="Enter Your Company"
+                                        label={language.company_label}
+                                        placeholder={language.company_place}
                                     />
                                     <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Next"} onClick={handleSubmit} />
                                 </>)}
@@ -125,29 +127,29 @@ export default function Page() {
                         >
                             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                 <>
-                                    <p className="mb-5 text-lg font-bold text-center text-black">Your contact details</p>
+                                    <p className="mb-5 text-lg font-bold text-center text-black">{language.contact_details}</p>
                                     <div className="mb-3">
                                         <InputBox
                                             required={true}
                                             name="firstName"
-                                            label="First name"
-                                            placeholder="Enter Your First name"
+                                            label={language.firstName_label}
+                                            placeholder={language.firstName_placeholder}
                                         />
                                     </div>
                                     <div className="mb-3">
                                         <InputBox
                                             required={true}
                                             name="lastName"
-                                            label="Last name"
-                                            placeholder="Enter Your Last name"
+                                            label={language.lastName_label}
+                                            placeholder={language.lastName_placeholder}
                                         />
                                     </div>
                                     <div className="mb-3">
                                         <InputBox
                                             required={true}
                                             name="phone"
-                                            label="Phone number"
-                                            placeholder="Enter Your Phone number"
+                                            label={language.phonenum_label}
+                                            placeholder={language.phonenum_placeholder}
                                         />
                                     </div>
                                     <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Next"} onClick={handleSubmit} />
@@ -166,28 +168,28 @@ export default function Page() {
                                         <InputBox
                                             required={true}
                                             name="email"
-                                            label="Email"
-                                            placeholder="Enter Your Email"
+                                            label={language.email_label}
+                                            placeholder={language.email_placeholder}
                                         />
                                     </div>
                                     <div className="mb-3">
                                         <PasswordBox
                                             required={true}
                                             name="password"
-                                            label="Password"
-                                            placeholder="Enter Password"
+                                            label={language.password}
+                                            placeholder={language.password_placeholder}
                                         />
                                     </div>
                                     <div className="mb-3">
                                         <PasswordBox
                                             required={true}
                                             name="cPassword"
-                                            label="Confirm Password"
-                                            placeholder="Enter Confirm Password"
+                                            label={language.confirm_password}
+                                            placeholder={language.confirm_password_placeholder}
                                         />
                                     </div>
-                                    <p className="text-black">At least six numeric character</p>
-                                    <p className="text-black">At least one special character</p>
+                                    <p className="text-black">{language.numeric_character}</p>
+                                    <p className="text-black">{language.special_character}</p>
                                     <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Next"} onClick={handleSubmit} />
                                 </>)}
                         </Formik>)}
@@ -201,26 +203,26 @@ export default function Page() {
                                 {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                     <>
                                         <div className="w-full mx-auto">
-                                            <p className="my-5 text-lg font-bold text-center text-black ">Sponsorship</p>
-                                            <p className="text-sm text-black">Sponsor code</p>
+                                            <p className="my-5 text-lg font-bold text-center text-black ">{language.sponsorship}</p>
+                                            <p className="text-sm text-black">{language.sponsor_code}</p>
                                             <div className="flex items-center mx-auto mt-5 bg-white border border-gray-300 rounded-full ">
                                                 <div className="mx-2">
                                                     <AiOutlineSearch size="20" className="text-gray" />
                                                 </div>
                                                 <input type="text" className="flex-grow text-sm font-semibold text-black border-none focus:outline-none" placeholder="Sponsor code" />
                                                 <button className="flex flex-row items-center justify-center px-20 py-3 text-xs font-semibold text-white bg-indigo-800 rounded-full hover:bg-blue-700">
-                                                    APPLY
+                                                    {language.apply}
                                                 </button>
                                             </div>
-                                            <p className="py-5 text-sm font-bold text-deep-black">Terms and Conditions</p>
+                                            <p className="py-5 text-sm font-bold text-deep-black">{language.terms}</p>
                                             <ul className="text-sm list-disc list-inside text-gray">
-                                                <li className="py-1">I acknowledge having read the General Conditions of Use</li>
-                                                <li className="py-1">I agree to receive communications electronically about product or service offers from Habitatpresto</li>
-                                                <li className="py-1">I agree to receive communications electronically about product or service offers from Partners</li>
+                                                <li className="py-1">{language.conditions_1}</li>
+                                                <li className="py-1">{language.conditions_2}</li>
+                                                <li className="py-1">{language.conditions_3}</li>
                                             </ul>
-                                            <p className="py-5 text-sm font-bold text-deep-black">Additional Information</p>
-                                            <p className="py-1">The information collected on this form is intended for HabitatPresto for the purposes of processing your orders, managing your customer account, monitoring the quality of our services and commercial prospecting. They are subject to computer processing intended for customer service and the marketing department of HabitatPresto.</p>
-                                            <p className="py-1">To know and exercise your rights relating to the use of your data, please consult our Charter on the protection of personal data or contact us at the following address: DPO@habitatpresto.com To validate</p>
+                                            <p className="py-5 text-sm font-bold text-deep-black">{language.additional}</p>
+                                            <p className="py-1">{language.additional_1}</p>
+                                            <p className="py-1">{language.additional_2}</p>
                                             <label>
                                                 <input
                                                     type="checkbox"
@@ -229,7 +231,7 @@ export default function Page() {
                                                     checked={values.terms}
                                                     onChange={handleChange}
                                                 />
-                                                I agree to the Terms and Conditions
+                                                {language.agree_terms}
                                             </label>
                                             {/* {errors.terms ? (
                                                 <div style={{ color: 'red' }}>{errors.terms}</div>
@@ -241,9 +243,9 @@ export default function Page() {
 
                         {step == 5 && (<>
                             <div className="mb-3 border-b-2 border-indigo-800">
-                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">Sign up Successfully!</p>
+                                <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.successfully}</p>
                             </div>
-                            <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">You are Sign up Successfully. We will contact you very soon!</p>
+                            <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">{language.sign_up}</p>
                         </>)}
 
                     </div>
