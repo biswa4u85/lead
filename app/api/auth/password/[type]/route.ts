@@ -29,9 +29,9 @@ export async function POST(request: NextRequest) {
 
                 const res = await prisma[subResource].create({ data: { otp: newOtp, phoneEmail: email } });
 
-                let title = language?.professional_emails?.forget_title
-                let body = language?.professional_emails?.forget_body
-                const bodyWithName = body.replace('[password]', `${newOtp}`);
+                // let title = language?.professional_emails?.forget_title
+                // let body = language?.professional_emails?.forget_body
+                // const bodyWithName = body.replace('[password]', `${newOtp}`);
                 // sendEmail(res.email, title, bodyWithName)
 
                 return successResponse({ message: `OTP sent successfully`, success: true });

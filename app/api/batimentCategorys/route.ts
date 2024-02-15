@@ -2,6 +2,8 @@ import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
+import language from "@/contexts/language";
+import { sendEmail } from "../emails";
 
 const resource = "batimentCategory";
 
@@ -29,6 +31,17 @@ export async function POST(request: NextRequest) {
 
         const data = await request.json();
         const res = await prisma[resource].create({ data });
+
+        // Send Email to Users
+        const users: any = await prisma.user.findMany({ where: { role: "user" } });
+        for (let user of users) {
+            let title = language?.professional_emails?.validation_title
+            let body = language?.professional_emails?.validation_body
+            body = body.replace('[name]', `${user.firstName} ${user.lastName}`);
+            body = body.replace('[url]', `${process.env.SITE_URL}/`);
+            sendEmail(user.email, `${user.firstName} ${user.lastName}`, title, body)
+        }
+
         return successResponse(res);
     } catch (error: any) {
         errorResponse(error);

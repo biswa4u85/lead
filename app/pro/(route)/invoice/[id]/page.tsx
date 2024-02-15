@@ -10,7 +10,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const [leadId, setLeadId] = useState('')
     const [userId, setUserId] = useState('')
 
-    const { data: invoices } = useFetch({ url: "invoices", query: JSON.stringify({ leadId: params.id }) });
+    const { data: invoices } = useFetch({ url: "invoices", query: JSON.stringify({ id: params.id }) });
     let invoice = invoices?.data ? invoices.data[0] : {}
 
     const { fetch, data: leads } = useFetchByLoad({ url: "findProjects", query: JSON.stringify({ id: leadId }) });
@@ -37,6 +37,9 @@ export default function Page({ params }: { params: { id: string } }) {
     const calcTotal = (items: any, type = 'all') => {
         let total = 0
         for (let item of items) {
+            item.qty = Number(item.qty)
+            item.rate = Number(item.rate)
+            item.tax = Number(item.tax ?? 1)
             if (type == 'all') {
                 total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
             } else {
@@ -69,7 +72,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                     <p>{lead?.address?.email}</p>
                                     <p>{lead?.address?.phone}</p>
                                 </div>
-                                {invoice.cusSignature && (<img alt="" width={200} height={200} src={invoice.cusSignature} />)}
+                                {invoice?.cusSignature && (<img alt="" width={200} height={200} src={invoice.cusSignature} />)}
                             </div>
                             <div className="col-span-1">
                                 <div className="col-span-1 p-3 border border-gray-300 rounded">

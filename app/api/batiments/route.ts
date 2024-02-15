@@ -2,7 +2,7 @@ import prisma from "@/libs/prisma";
 import { NextRequest } from "next/server";
 import { successResponse, errorResponse } from "@/libs/utility";
 import { getToken } from "@/libs/getToken";
-import { sendEmail } from "../emails";
+import { sendEmail, sendSms } from "../emails";
 import language from "@/contexts/language";
 
 const resource = "batiment";
@@ -43,20 +43,20 @@ export async function POST(request: NextRequest) {
                 }
             }
         });
-        autoAssignTo(res)
+        autoAssignTo(res, address)
         return successResponse(res);
     } catch (error: any) {
         errorResponse(error.message);
     }
 }
 
-async function autoAssignTo(data: any) {
+async function autoAssignTo(data: any, address: any) {
     let where: any = {}
-    if (data.batimentCategoryId) {
-        where['category'] = { has: data.batimentCategoryId }
-    }
-    if (data.batimentTypeId) {
-        where['service'] = { has: data.batimentTypeId }
+    if (data.batimentCategoryId && data.batimentTypeId) {
+        where['OR'] = [
+            { category: { has: data.batimentCategoryId } },
+            { service: { has: data.batimentTypeId } }
+        ]
     }
     const users: any = await prisma[assignresource].findMany({ where });
     const allAssigns = users.map((item: any) => {
@@ -67,26 +67,31 @@ async function autoAssignTo(data: any) {
         data: { assignTo: allAssigns }
     });
 
-    // Email Admin
+    // Email to Admin
     const admin: any = await prisma[assignresource].findMany({ where: { role: "admin" } });
     if (admin && admin[0]) {
-        let title = language?.professional_emails?.newLead_admin_title
-        let body = language?.professional_emails?.newLead_admin_body
-        body = body.replace('[name]', `${data.firstName} ${data.lastName}`);
-        body = body.replace('[email]', `${data.email}`);
-        body = body.replace('[phone]', `${data.phone}`);
+        let title = language?.admin_emails?.new_lead_title
+        let body = language?.admin_emails?.new_lead_body
+        body = body.replace('[name_cus]', `${address.firstName} ${address.lastName}`);
+        body = body.replace('[email_cus]', `${address.email}`);
+        body = body.replace('[phone_cus]', `${address.phone}`);
         body = body.replace('[title]', `${data.title}`);
         body = body.replace('[message]', `${data.description}`);
         sendEmail(admin[0].email, `${admin[0].firstName} ${admin[0].lastName}`, title, body)
     }
 
-    // Email Pro Users
+    // Email to Customer
+    let title = language?.customer_emails?.receipt_title
+    let body = language?.customer_emails?.receipt_body
+    body = body.replace('[name]', `${address.firstName} ${address.lastName}`);
+    sendEmail(address.email, `${address.firstName} ${address.lastName}`, title, body)
+
+    // SMS to Pros
     for (let user of users) {
-        let title = language?.professional_emails?.newLead_pro_title
-        let body = language?.professional_emails?.newLead_pro_body
-        body = body.replace('[name]', `${user.firstName} ${user.lastName}`);
+        let body = language?.professional_sms?.project_allocation_body
         body = body.replace('[project]', `${data.title}`);
-        sendEmail(user.email, `${user.firstName} ${user.lastName}`, title, body)
+        body = body.replace('[url]', `${data.title}`);
+        sendSms(user.phone, body)
     }
 }
 

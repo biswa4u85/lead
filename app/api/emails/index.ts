@@ -56,10 +56,11 @@ export async function sendEmail(email: any, name: any, title: any, body: any) {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'api-key': language.apiKey,
+      'api-key': process.env.EMAIL_KEY,
     },
     data: data
   };
+
   axios.request(config)
     .then((response) => {
       // console.log(JSON.stringify(response.data));
@@ -67,4 +68,9 @@ export async function sendEmail(email: any, name: any, title: any, body: any) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+export async function sendSms(phone: any, body: any) {
+  console.log(phone)
+  console.log(body)
 }

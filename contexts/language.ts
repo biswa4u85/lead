@@ -3,7 +3,6 @@ export default
     {
         // Home
         logo: "https://lead-dusky.vercel.app/_next/static/media/logo.afc16c4c.svg",
-        apiKey: "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",
         home: "Home",
         building: "Building Project",
         troubleShot: "Troubleshooting Project",
@@ -143,9 +142,10 @@ export default
         download: "Download",
         cancel: "Cancel",
 
-        // Emails
+        // Emails and SMS
         professional_emails: {
 
+            // Welcome email, when Sign Up
             welcome_title: "Bienvenue sur  Dépannage travaux!",
             welcome_body: `Bonjour [name],
             <br /><br />
@@ -157,26 +157,173 @@ export default
             L'équipe de Dépannage Travaux
             `,
 
-            forget_title: "Réinitialisation de votre mot de passe",
-            forget_body: `Bonjour [name],
+            // Validate email address
+            validate_title: "Confirmez votre adresse e-mail pour terminer votre inscription",
+            validate_body: `Bonjour [name],
             <br /><br />
-            Vous avez demandé à réinitialiser votre mot de passe. 
-            Veuillez cliquer sur le lien ci-dessous pour choisir un nouveau mot de passe :
-            [Réinitialiser mon mot de passe] ​​[password].
+            Merci de vous être inscrit(e) sur Dépannage Travaux . 
+            Veuillez cliquer sur le lien ci-dessous pour valider votre adresse e-mail et finaliser votre inscription : 
+           ( Please click on the link below to validate your e-mail address and finalise your registration:)
+           <br /><br />
+           [url]
+           <br /><br />
+           Cordialement,
+           L'équipe de Dépannage Travaux           
+            `,
+
+            // Email when the administrator publishes a project
+            validation_title: "Nouveau projet disponible sur Dépannage Travaux",
+            validation_body: `Bonjour [name],
+            <br /><br />
+            Un nouveau projet a été publié sur Dépannage Travaux. 
+            Ne manquez pas cette opportunité et postulez dès maintenant !
+            <br /><br />
+            [url]
             <br /><br />
             Cordialement,
             L'équipe de Dépannage Travaux
             `,
 
-            // New Lead
-            newLead_admin_title: "Nouveau lead sur Dépannage Travaux",
-            newLead_admin_body: `Cher(e) administrateur/administratrice,
+            // Email notification when the customer accepts and pays the quote
+            accept_order_title: "Acceptation du devis pour le projet [project]",
+            accept_order_body: `Bonjour [name],
             <br /><br />
-            Un visiteur a rempli un formulaire de lead sur Dépannage Travaux. Voici les détails du lead
+            Nous sommes heureux de vous informer que votre devis pour le projet [project] a été accepté par le client. 
             <br /><br />
-            Nom : [name]
-            Email : [email]
-            Téléphone :[phone]
+            Le paiement a été effectué avec succès. Félicitations !
+            <br /><br />
+            [url]
+            <br /><br />
+            Cordialement,
+            L'équipe de dépannage Travaux
+            `,
+
+            // Email with copy of invoice
+            invoice_title: "Facture pour le projet [project]",
+            invoice_body: `Bonjour [name],
+            <br /><br />
+            Veuillez trouver ci-joint la facture pour le projet [project] . 
+            Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.
+            <br /><br />
+            [url]
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux.
+            `,
+
+            // Email when the administrator declares that the money has been paid into the professional's account
+            clear_invoice_title: "Paiement effectué pour le projet [project]",
+            clear_invoice_body: `Bonjour [name],
+            <br /><br />
+            Nous vous informons que le paiement pour le projet [project] a été effectué et que l'argent a été transféré sur votre compte. 
+            Si vous avez des questions, n'hésitez pas à nous contacter.
+            <br /><br />
+            [url]
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux            
+            `,
+
+            // Forgot your password
+            forgot_title: "Réinitialisation de votre mot de passe",
+            forgot_body: `Bonjour [name],
+            <br /><br />
+            Vous avez demandé à réinitialiser votre mot de passe. 
+            Veuillez cliquer sur le lien ci-dessous pour choisir un nouveau mot de passe
+            <br /><br />
+            [url]
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
+
+        },
+        professional_sms: {
+            // Notification is always on the same basis as project allocation. by category and by city.
+            project_allocation_body: `Bonjour, 
+            nous avons un projet  [project] à vous proposer près de [Ville]. 
+            [url] 
+            L'équipe de Dépannage Travaux
+            `
+        },
+        customer_emails: {
+
+            // Notification of receipt of application
+            receipt_title: "Confirmation de réception de votre demande",
+            receipt_body: `Bonjour [name],
+            <br /><br />
+            Nous avons bien reçu votre demande et nous sommes actuellement en train de la traiter. Nous vous tiendrons informé(e) de l'avancement de votre demande dans les plus brefs délais.
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
+
+            // Notification of acceptance of the request by the professional
+            accept_title: "Acceptation de votre demande par [name_pro]",
+            accept_body: `Bonjour [name],
+            <br /><br />
+            Nous avons le plaisir de vous informer que votre demande a été acceptée par [name_pro]. 
+            <br /><br />
+            Vous serez bientôt contacté(e) par celui-ci pour discuter des détails et procéder à la suite de la démarche.
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
+
+            // Notification that the estimate has been sent by the professional
+            estimate_title: "Devis pour votre projet",
+            estimate_body: `Bonjour [name],
+            <br /><br />
+            [name_pro] vous a envoyé un devis pour votre projet. Vous pouvez le consulter en suivant ce lien : [url].
+            <br /><br />
+            Si vous avez des questions ou des modifications à apporter, n'hésitez pas à contacter directement [name_pro].
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
+
+            // Notification of signature of quotation and payment
+            signature_title: "Confirmation de signature et de paiement du devis",
+            signature_body: `Bonjour [name],
+            <br /><br />
+            Nous vous confirmons que votre devis pour [project] a été signé et le paiement a été effectué avec succès.
+            <br /><br />
+            Vous trouverez en pièce jointe une copie du devis signé à titre de confirmation.
+            <br /><br />
+            N'hésitez pas à nous contacter si vous avez des questions ou besoin d'assistance supplémentaire.
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
+
+        },
+        admin_emails: {
+
+            // New professional registration
+            registration_title: "Nouvelle inscription professionnelle sur Dépannage Travaux",
+            registration_body: `Cher(e) administrateur,
+            <br /><br />
+            Un nouveau professionnel s'est inscrit sur Dépannage Travaux. Voici les détails de son inscription :
+            <br /><br />
+            Nom : [name_pro]
+            Email : [email_pro]
+            Téléphone : [phone_pro]
+            <br /><br />
+            Veuillez prendre les mesures nécessaires pour valider son inscription et lui accorder l'accès à la plateforme.
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
+
+            // Lead form filled in by a visitor
+            new_lead_title: "Nouveau lead sur Dépannage Travaux",
+            new_lead_body: `Cher(e) administrateur/administratrice,
+            <br /><br />
+            Un visiteur a rempli un formulaire de lead sur Dépannage Travaux. Voici les détails du lead :
+            <br /><br />
+            Nom : [name_cus]
+            Email : [email_cus]
+            Téléphone :[phone_cus]
             Title : [title]
             Message : [message]
             <br /><br />
@@ -186,32 +333,41 @@ export default
             L'équipe de Dépannage Travaux
             `,
 
-            // New Lead Assign To Pros
-            newLead_pro_title: "Projet accepté : [project]",
-            newLead_pro_body: `Cher(e) administrateur/administratrice,
+            // Acceptance of the project by the professional
+            accept_pro_title: "Projet accepté : [project]",
+            accept_pro_body: `Cher(e) administrateur/administratrice,
             <br /><br />
-            Le professionnel [name] a accepté le projet [project] que vous lui avez attribué.
-            <br /><br />
-            Vous pouvez maintenant poursuivre le processus avec le client.
-            <br /><br />
-            Cordialement,
-            L'équipe de Dépannage Travaux            
-            `,
-
-            // Pro Acceptance Lead
-            newLead_pro_acc_title: "Projet accepté : [project]",
-            newLead_pro_acc_body: `Cher(e) administrateur/administratrice,
-            <br /><br />
-            Le professionnel [name] a accepté le projet [project] que vous lui avez attribué.
+            Le professionnel [name_pro] a accepté le projet [project] que vous lui avez attribué.
             <br /><br />
             Vous pouvez maintenant poursuivre le processus avec le client.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux            
+            L'équipe de Dépannage Travaux
             `,
 
-        }
+            // The professional sends the customer a quote
+            quote_pro_title: "Devis envoyé pour le projet : [project]",
+            quote_pro_body: `Cher(e) administrateur/administratrice,
+            <br /><br />
+            Le professionnel [name_pro] a envoyé un devis pour le projet [project]. Voici les détails du devis :
+            <br /><br />
+            Montant : [amount]
+            <br /><br />
+            Veuillez vérifier les détails du devis et prendre les mesures nécessaires pour le valider ou le modifier si nécessaire.
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
 
+            // Customer signs and countries the quote
+            quote_cus_title: "Devis signé et payé pour le projet : [project]",
+            quote_cus_body: `Cher(e) administrateur/administratrice,
+            <br /><br />
+            Le client a signé et payé le devis pour le projet [project]. Le processus peut maintenant passer à l'étape suivante.
+            <br /><br />
+            Cordialement,
+            L'équipe de Dépannage Travaux
+            `,
 
-
+        },
     }

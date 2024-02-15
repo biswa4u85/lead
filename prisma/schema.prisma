@@ -87,6 +87,7 @@ model Batiment {
   contractEnd        DateTime?        @default(now())
   assignedDate       DateTime?        @default(now())
   profeionalId       String?
+  amount             String?
   paymentId          String?
   assignTo           Json[]
   assignStatus       String           @default("new")
@@ -133,6 +134,7 @@ model Depannage {
   contractEnd         DateTime?         @default(now())
   assignedDate        DateTime?         @default(now())
   profeionalId        String?
+  amount              String?
   paymentId           String?
   assignTo            Json[]
   assignStatus        String            @default("new")

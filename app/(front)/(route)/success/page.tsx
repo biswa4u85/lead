@@ -25,7 +25,7 @@ export default function Page() {
         for (let item of items) {
             item.qty = Number(item.qty)
             item.rate = Number(item.rate)
-            item.tax = Number(item.tax)
+            item.tax = Number(item.tax ?? 1)
             if (type == 'all') {
                 total += (item.qty && item.rate) ? Number(item.qty * item.rate) + Number(item.tax ?? 1 * Number(item.qty * item.rate) / 100) : 0
             } else {

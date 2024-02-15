@@ -90,11 +90,16 @@ export default function Page({ params }: { params: { id: string } }) {
     const { edit, data: respond1, loading: loading1 } = usePatch();
     useEffect(() => {
         if (respond) {
-            edit("findProjects", { type, id: params.id, name: (data?.user as any)?.id, status: "pending" })
+            edit("findProjects", { type, id: params.id, name: (data?.user as any)?.id, status: "pending", invoiceId: (respond as any)?.data.id, amount: String(calcTotal((respond as any)?.data.items ? (respond as any)?.data.items : [])) })
+        }
+    }, [respond])
+
+    useEffect(() => {
+        if (respond1) {
             toast.success(`Invoice update successfully`);
             router.push(`/pro/estimate`)
         }
-    }, [respond])
+    }, [respond1])
 
     const handlePrint = useReactToPrint({
         content: () => printInfoRef.current
@@ -165,7 +170,7 @@ export default function Page({ params }: { params: { id: string } }) {
                                                         </td>
                                                         <td className="p-2 text-xs font-normal border border-gray-200 text-graylight-900 font-inter">
                                                             <TextareaBox
-                                                                required={true}
+                                                                // required={true}
                                                                 name={`items.${index}.description`}
                                                                 label="Description"
                                                                 placeholder="Enter Description"
