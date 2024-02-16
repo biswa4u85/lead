@@ -14,7 +14,7 @@ const initialData = {
     phone: "",
     postalCode: "",
     company: "",
-    password: "",
+    newPassword: "",
     sponsorCode: "",
 }
 
@@ -34,7 +34,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     return (
         <Formik
-            initialValues={initialValues?.edit ? { ...initialValues, password: "" } : initialData}
+            initialValues={initialValues?.edit ? { ...initialValues, newPassword: "" } : initialData}
             validationSchema={validationSchema}
             onSubmit={(values) => handleUpdate({ ...values, role: "user" })}
         >
@@ -113,7 +113,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                     </div>
                     <div className="mb-4">
                         <PasswordBox
-                            name="password"
+                            name="newPassword"
                             label="Password"
                             placeholder="Enter Password"
                             icon={<RiLockPasswordFill />}

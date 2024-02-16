@@ -1,4 +1,4 @@
-import { InputBox, FileBox, Buttons } from "@/components/RenderFroms";
+import { InputBox, FileBox, Buttons, TogelBox } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { FaProjectDiagram } from "react-icons/fa";
@@ -7,6 +7,7 @@ const initialData = {
     icon: "",
     name: "",
     description: "",
+    isParent: false,
 }
 
 export function FormData({ initialValues, handleUpdate, loading }: any) {
@@ -21,7 +22,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         <Formik
             initialValues={initialValues?.edit ? { ...initialValues } : initialData}
             validationSchema={validationSchema}
-            onSubmit={(values) => handleUpdate(values)}
+            onSubmit={(values) => handleUpdate({ ...values, parentId: initialValues?.parentId })}
         >
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
@@ -47,6 +48,14 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             name="description"
                             label="Description"
                             placeholder="Enter Description"
+                            icon={<FaProjectDiagram />}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <TogelBox
+                            name="isParent"
+                            label="Is Parent"
+                            placeholder="Is Parent"
                             icon={<FaProjectDiagram />}
                         />
                     </div>

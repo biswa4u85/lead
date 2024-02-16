@@ -38,13 +38,6 @@ export default function Page() {
       },
     },
     {
-      title: "Type",
-      dataIndex: "batimentType",
-      render(val: any) {
-        return val?.name;
-      },
-    },
-    {
       title: "Title",
       dataIndex: "title",
       sorter: true,

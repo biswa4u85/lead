@@ -17,8 +17,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         description: Yup.string().required("Description is required"),
     });
 
-    console.log(initialValues?.parentId)
-
     return (
         <Formik
             initialValues={initialValues?.edit ? { ...initialValues } : initialData}

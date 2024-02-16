@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from 'react';
 import { AiOutlineDoubleRight, AiFillHome } from "react-icons/ai";
 import { useFetch } from "@/contexts/useFetch";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
+import language from "@/contexts/language";
+
 
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -55,14 +57,14 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div className="flex items-center pb-8">
                     <AiFillHome size="20" className="text-indigo-900" />
                     <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                    <p className="font-normal text-indigo-900 font-roboto text-2xs">Project Detail</p>
+                    <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.project}</p>
                 </div>
                 <div className="grid md:grid-cols-1 gap-9">
                     <div ref={printInfoRef} className="text-black shadow-[0px_0px_10px_4px_#F2F6FB] p-8">
 
                         <div className="grid md:grid-cols-2 gap-9">
                             <div className="col-span-1 p-3 border border-gray-300 rounded">
-                                <p className="text-xs font-medium text-deep-black font-inter">Client Details</p>
+                                <p className="text-xs font-medium text-deep-black font-inter">{language.client_details}</p>
                                 <div className="my-3 font-normal text-gray-800 font-inter text-xs1">
                                     <p>{lead?.address?.firstName} {lead?.address?.lastName}</p>
                                     <p>{lead?.address?.city}, {lead?.address?.postalCode}</p>
@@ -76,7 +78,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
                             <div className="col-span-1">
                                 <div className="col-span-1 p-3 border border-gray-300 rounded">
-                                    <p className="text-xs font-medium text-deep-black font-inter">Professional</p>
+                                    <p className="text-xs font-medium text-deep-black font-inter">{language.Professional_text}</p>
                                     <div className="my-3 font-normal text-gray-800 font-inter text-xs1">
                                         <p>{user?.firstName} {user?.lastName}</p>
                                         <p>{user?.company}, {user?.postalCode}</p>
@@ -90,17 +92,17 @@ export default function Page({ params }: { params: { id: string } }) {
                                 </div>
                             </div>
                         </div>
-                        <p className="pt-4 font-normal text-xs2 text-graylight-900">Description</p>
+                        <p className="pt-4 font-normal text-xs2 text-graylight-900">{language.description_label}</p>
                         <p className="pt-4 font-normal text-xs2 text-graylight-900">{invoice?.description}</p>
 
                         <div className="flex flex-col py-4">
                             <div className="grid grid-cols-3 mb-4">
                                 <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Contract Start</p>
+                                    <p className="text-xs font-normal text-gray-700 font-inter">{language.contact_start}</p>
                                     <p className="text-sm font-semibold text-deep-black">{new Date(invoice?.contractStart).toLocaleDateString()}</p>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Contract End</p>
+                                    <p className="text-xs font-normal text-gray-700 font-inter">{language.contact_end}</p>
                                     <p className="text-sm font-semibold text-deep-black">{new Date(invoice?.contractEnd).toLocaleDateString()}</p>
                                 </div>
                             </div>
@@ -109,11 +111,11 @@ export default function Page({ params }: { params: { id: string } }) {
                             <table className="w-full border">
                                 <thead>
                                     <tr className="font-normal text-left text-white bg-indigo-800 text-xs1 font-inter">
-                                        <th className="p-2">Items</th>
-                                        <th className="p-2">QTY/HRS</th>
-                                        <th className="p-2">Rate</th>
-                                        <th className="p-2">Tax</th>
-                                        <th className="p-2">Subtotal</th>
+                                        <th className="p-2">{language.items}</th>
+                                        <th className="p-2">{language.qty}</th>
+                                        <th className="p-2">{language.rate}</th>
+                                        <th className="p-2">{language.tax}</th>
+                                        <th className="p-2">{language.subtotal}{language.contact_end}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,18 +133,18 @@ export default function Page({ params }: { params: { id: string } }) {
                             <div></div>
                             <div></div>
                             <div className="mt-8 border border-gray-200 rounded-sm mb-15">
-                                <p className="py-2 font-bold text-center text-white bg-indigo-800 rounded-t-sm text-xs1 font-inter">Invoice Summary</p>
+                                <p className="py-2 font-bold text-center text-white bg-indigo-800 rounded-t-sm text-xs1 font-inter">{language.invoice_summary}</p>
                                 <div className="px-2">
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Subtotal</p>
+                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.subtotal}</p>
                                         {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{calcTotal(invoice?.items, 'total')}</span></p>)}
                                     </div>
                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Tax</p>
+                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.tax}</p>
                                         {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">{invoice?.items[0].tax}%</p>)}
                                     </div>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Total</p>
+                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.total}</p>
                                         {invoice?.items && (<p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{calcTotal(invoice?.items)}</span></p>)}
                                     </div>
                                 </div>

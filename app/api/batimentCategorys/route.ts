@@ -11,14 +11,66 @@ export async function GET(request: NextRequest) {
     try {
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
-
-        const counts = await prisma[resource].count()
-        const result = await prisma[resource].findMany({
-            skip,
-            take,
-        });
-        if (!result) return errorResponse("Record Not Found");
-        return successResponse(result, counts);
+        const parentId = request.nextUrl.searchParams.get("parentId")
+        const showAll = request.nextUrl.searchParams.get("showAll") || false
+        if (parentId) {
+            let include: any = {}
+            if (parentId != "0") {
+                include['parent'] = { select: { id: true, name: true } }
+            }
+            const result = await prisma[resource].findMany({
+                where: {
+                    parentId
+                },
+                include
+            });
+            if (!result) return errorResponse("Record Not Found");
+            return successResponse(result);
+        } else if (showAll) {
+            const result = await prisma[resource].findMany({
+                skip,
+                take
+            });
+            if (!result) return errorResponse("Record Not Found");
+            return successResponse(result);
+        } else if (skip == 0) {
+            const counts = await prisma[resource].count()
+            const findRootCategories = await prisma[resource].findMany({
+                where: {
+                    parentId: "0"
+                }
+            });
+            const result = await prisma[resource].findMany({
+                where: {
+                    parentId: {
+                        not: "0",
+                    },
+                },
+                skip,
+                take: 10 - findRootCategories.length,
+                include: {
+                    parent: { select: { id: true, name: true }, }
+                }
+            });
+            if (!result) return errorResponse("Record Not Found");
+            return successResponse([...findRootCategories, ...result], counts);
+        } else {
+            const counts = await prisma[resource].count()
+            const result = await prisma[resource].findMany({
+                where: {
+                    parentId: {
+                        not: "0",
+                    },
+                },
+                skip,
+                take,
+                include: {
+                    parent: { select: { id: true, name: true }, }
+                }
+            });
+            if (!result) return errorResponse("Record Not Found");
+            return successResponse(result, counts);
+        }
     } catch (error: any) {
         errorResponse(error.message);
     }
@@ -54,10 +106,10 @@ export async function PATCH(request: NextRequest) {
         if (!session) return errorResponse("You are not Not Authorized", 401);
 
         const data = await request.json();
-        const { id, name, icon, description } = data
+        const { id, name, icon, description, parentId, isParent } = data
         const res = await prisma[resource].update({
             where: { id },
-            data: { name, icon, description }
+            data: { name, icon, description, parentId, isParent }
         });
         return successResponse(res);
     } catch (error: any) {

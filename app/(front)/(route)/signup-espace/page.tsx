@@ -116,7 +116,7 @@ export default function Page() {
                                         label={language.company_label}
                                         placeholder={language.company_place}
                                     />
-                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Next"} onClick={handleSubmit} />
+                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
                                 </>)}
                         </Formik>)}
 
@@ -152,7 +152,7 @@ export default function Page() {
                                             placeholder={language.phonenum_placeholder}
                                         />
                                     </div>
-                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Next"} onClick={handleSubmit} />
+                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
                                 </>)}
                         </Formik>)}
 
@@ -163,7 +163,7 @@ export default function Page() {
                         >
                             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                 <>
-                                    <p className="mb-5 text-lg font-bold text-center text-black">Your account</p>
+                                    <p className="mb-5 text-lg font-bold text-center text-black">Votre compte</p>
                                     <div className="mb-3">
                                         <InputBox
                                             required={true}
@@ -190,7 +190,7 @@ export default function Page() {
                                     </div>
                                     <p className="text-black">{language.numeric_character}</p>
                                     <p className="text-black">{language.special_character}</p>
-                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Next"} onClick={handleSubmit} />
+                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
                                 </>)}
                         </Formik>)}
 
@@ -203,9 +203,9 @@ export default function Page() {
                                 {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                     <>
                                         <div className="w-full mx-auto">
-                                            <p className="my-5 text-lg font-bold text-center text-black ">{language.sponsorship}</p>
-                                            <p className="text-sm text-black">{language.sponsor_code}</p>
-                                            <div className="flex items-center mx-auto mt-5 bg-white border border-gray-300 rounded-full ">
+                                            {/* <p className="my-5 text-lg font-bold text-center text-black ">{language.sponsorship}</p>
+                                            <p className="text-sm text-black">{language.sponsor_code}</p> */}
+                                            {/* <div className="flex items-center mx-auto mt-5 bg-white border border-gray-300 rounded-full ">
                                                 <div className="mx-2">
                                                     <AiOutlineSearch size="20" className="text-gray" />
                                                 </div>
@@ -213,7 +213,8 @@ export default function Page() {
                                                 <button className="flex flex-row items-center justify-center px-20 py-3 text-xs font-semibold text-white bg-indigo-800 rounded-full hover:bg-blue-700">
                                                     {language.apply}
                                                 </button>
-                                            </div>
+                                            </div> */}
+                                            <p className="mb-5 text-lg font-bold text-center text-black">cette partie est à supprimer</p>
                                             <p className="py-5 text-sm font-bold text-deep-black">{language.terms}</p>
                                             <ul className="text-sm list-disc list-inside text-gray">
                                                 <li className="py-1">{language.conditions_1}</li>
@@ -237,7 +238,7 @@ export default function Page() {
                                                 <div style={{ color: 'red' }}>{errors.terms}</div>
                                             ) : null} */}
                                         </div>
-                                        <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Submitted"} onClick={handleSubmit} />
+                                        <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Valider"} onClick={handleSubmit} />
                                     </>)}
                             </Formik>)}
 

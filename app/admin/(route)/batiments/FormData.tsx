@@ -9,7 +9,6 @@ import { FaLocationDot } from "react-icons/fa6";
 
 const initialData = {
     batimentCategoryId: "",
-    batimentTypeId: "",
     title: "",
     description: "",
     firstName: "",
@@ -24,7 +23,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
         batimentCategoryId: Yup.string().required("Category is required"),
-        batimentTypeId: Yup.string().required("Type is required"),
         title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
         firstName: Yup.string().required("First Name is required"),
@@ -37,12 +35,10 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         postalCode: Yup.string().required("Postal Code is required"),
     });
 
-
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({}) });
     const categoryOptions = categorys?.data ? categorys.data.map((item: any) => {
         return { label: `${item?.name}`, value: item?.id }
     }) : []
-    const { data: typess } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
 
     return (
         <Formik
@@ -59,20 +55,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             name="batimentCategoryId"
                             label="Category"
                             placeholder="Enter Category"
-                            icon={<TbMapNorth />}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <SelectBox
-                            required={true}
-                            options={typess?.data ? typess.data.map((item: any) => {
-                                if (item.batimentCategoryId == values.batimentCategoryId) {
-                                    return { label: `${item?.name}`, value: item?.id }
-                                }
-                            }) : []}
-                            name="batimentTypeId"
-                            label="Type"
-                            placeholder="Enter Type"
                             icon={<TbMapNorth />}
                         />
                     </div>

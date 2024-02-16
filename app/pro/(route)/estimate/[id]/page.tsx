@@ -8,6 +8,8 @@ import { useFetch } from "@/contexts/useFetch";
 import { usePatch } from "@/contexts/usePatch";
 import { useSession } from 'next-auth/react'
 import { toast } from 'react-toastify';
+import language from "@/contexts/language";
+
 
 export default function Page({ params }: { params: { id: string } }) {
     const { data } = useSession()
@@ -29,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div className="flex items-center pb-8">
                     <AiFillHome size="20" className="text-indigo-900" />
                     <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                    <p className="font-normal text-indigo-900 font-roboto text-2xs">Project Detail</p>
+                    <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.project}</p>
                 </div>
                 <div className="grid md:grid-cols-3 gap-9">
                     <div ref={printInfoRef} className="md:col-span-2 sm:col-span-1 text-black shadow-[0px_0px_10px_4px_#F2F6FB] p-8">
@@ -38,12 +40,8 @@ export default function Page({ params }: { params: { id: string } }) {
                         {lead.batimentCategory && (<div className="flex flex-col py-4">
                             <div className="grid grid-cols-2 mb-2">
                                 <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Select the type of work you want to carry out</p>
+                                    <p className="text-xs font-normal text-gray-700 font-inter">{language.carry_out}</p>
                                     <p className="text-sm font-semibold text-deep-black">{lead?.batimentCategory?.name}</p>
-                                </div>
-                                <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Select the type of work you want to carry out</p>
-                                    <p className="text-sm font-semibold text-deep-black">{lead?.batimentType?.name}</p>
                                 </div>
                             </div>
                         </div>)}
@@ -51,7 +49,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         {lead.depannageCategory && (<div className="flex flex-col py-4">
                             <div className="grid grid-cols-2 mb-2">
                                 <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Select the type of work you want to carry out</p>
+                                    <p className="text-xs font-normal text-gray-700 font-inter">{language.carry_out}</p>
                                     <p className="text-sm font-semibold text-deep-black">{lead?.depannageCategory?.name}</p>
                                 </div>
                             </div>
@@ -63,39 +61,39 @@ export default function Page({ params }: { params: { id: string } }) {
 
                         <div className="shadow-[0px_0px_10px_4px_#F2F6FB] p-3 mb-5">
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Posted</p>
+                                <p className="text-sm font-normal text-gray-700">{language.posted}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{new Date(lead.createdAt).toLocaleString()}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Assigned</p>
+                                <p className="text-sm font-normal text-gray-700">{language.assigned}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{new Date(lead.createdAt).toLocaleString()}</p>
                             </div>
                         </div>
 
                         <div className="shadow-[0px_0px_10px_4px_#F2F6FB] p-3">
-                            <p className="text-sm font-medium font-inter text-graylight-800">Client details</p>
+                            <p className="text-sm font-medium font-inter text-graylight-800">{language.client_details}</p>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Name</p>
+                                <p className="text-sm font-normal text-gray-700">{language.name}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.firstName} {lead?.address?.lastName}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">City</p>
+                                <p className="text-sm font-normal text-gray-700">{language.city_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.city}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Postal code</p>
+                                <p className="text-sm font-normal text-gray-700">{language.postal_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.postalCode}</p>
                             </div>
                             {lead.assignStatus == "accepted" && (<div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Phone</p>
+                                <p className="text-sm font-normal text-gray-700">{language.phone_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.phone}</p>
                             </div>)}
                             {lead.assignStatus == "accepted" && (<div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Email</p>
+                                <p className="text-sm font-normal text-gray-700">{language.email_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.email}</p>
                             </div>)}
                             {lead.assignStatus == "accepted" && (<div className="flex items-center justify-between py-3">
-                                <p className="text-sm font-normal text-gray-700">Address</p>
+                                <p className="text-sm font-normal text-gray-700">{language.address}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.firstName} {lead?.address?.lastName}, {lead?.address?.company},  {lead?.address?.postalCode}</p>
                             </div>)}
                         </div>

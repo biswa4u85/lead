@@ -13,6 +13,8 @@ import { usePost } from "@/contexts/usePost";
 import { useFetch } from "@/contexts/useFetch";
 import { usePatch } from "@/contexts/usePatch";
 import { useSession } from 'next-auth/react'
+import language from "@/contexts/language";
+
 
 import { toast } from 'react-toastify';
 
@@ -52,7 +54,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
     useEffect(() => {
         if (lead?.batimentCategory) {
-            setValue({ ...initialData, items: [{ name: lead?.batimentCategory?.name, qty: 1 }, { name: lead?.batimentType?.name, qty: 1 }] })
+            setValue({ ...initialData, items: [{ name: lead?.batimentCategory?.name, qty: 1 }] })
         }
         if (lead?.depannageCategory) {
             setValue({ ...initialData, items: [{ name: lead?.depannageCategory?.name, qty: 1, rate: lead?.depannageCategory?.price }] })
@@ -118,9 +120,9 @@ export default function Page({ params }: { params: { id: string } }) {
                         <div className="flex items-center pb-8">
                             <AiFillHome size="20" className="text-indigo-900" />
                             <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                            <p className="font-normal text-indigo-900 font-roboto text-2xs">Project Detail</p>
+                            <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.project}</p>
                             <AiOutlineDoubleRight size="12" className="mx-3 text-indigo-900" />
-                            <p className="font-normal text-indigo-900 font-roboto text-2xs">Submit Proposal </p>
+                            <p className="font-normal text-indigo-900 font-roboto text-2xs">{language.submit}</p>
                         </div>
                         <div className="grid md:grid-cols-3 gap-9">
                             <div ref={printInfoRef} className="md:col-span-2 sm:col-span-1 text-black shadow-[0px_0px_10px_4px_#F2F6FB] p-8">
@@ -132,16 +134,16 @@ export default function Page({ params }: { params: { id: string } }) {
                                             <DateBox
                                                 required={true}
                                                 name="contractStart"
-                                                label="Contract Start"
-                                                placeholder="Enter Contract Start"
+                                                label={language.contact_start}
+                                                placeholder={language.contract_placeholder}
                                             />
                                         </div>
                                         <div>
                                             <DateBox
                                                 required={true}
                                                 name="contractEnd"
-                                                label="Contract End"
-                                                placeholder="Enter Contract End"
+                                                label={language.contact_end}
+                                                placeholder={language.contractend_placeholder}
                                             />
                                         </div>
                                     </div>
@@ -153,13 +155,13 @@ export default function Page({ params }: { params: { id: string } }) {
                                         <table className="w-full border">
                                             <thead>
                                                 <tr className="font-normal text-left text-white bg-indigo-800 text-xs1 font-inter">
-                                                    <th className="p-2">Items</th>
-                                                    <th className="p-2">Description</th>
-                                                    <th className="p-1">QTY/HRS</th>
-                                                    <th className="p-2">Rate</th>
-                                                    <th className="p-1">Tax</th>
-                                                    <th className="p-2">Subtotal</th>
-                                                    <th className="p-2" colSpan={2}>Actions</th>
+                                                    <th className="p-2">{language.items}</th>
+                                                    <th className="p-2">{language.description_label}</th>
+                                                    <th className="p-1">{language.qty}</th>
+                                                    <th className="p-2">{language.rate}</th>
+                                                    <th className="p-1">{language.tax}</th>
+                                                    <th className="p-2">{language.subtotal}</th>
+                                                    <th className="p-2" colSpan={2}>{language.actions}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -214,18 +216,18 @@ export default function Page({ params }: { params: { id: string } }) {
                                             <div></div>
                                             <div></div>
                                             <div className="mt-8 border border-gray-200 rounded-sm mb-15">
-                                                <p className="py-2 font-bold text-center text-white bg-indigo-800 rounded-t-sm text-xs1 font-inter">Invoice Summary</p>
+                                                <p className="py-2 font-bold text-center text-white bg-indigo-800 rounded-t-sm text-xs1 font-inter">{language.invoice_summary}</p>
                                                 <div className="px-2">
                                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Subtotal</p>
+                                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.subtotal}</p>
                                                         <p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{values.items ? calcTotal(values.items, 'total') : '0'}</span></p>
                                                     </div>
                                                     <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Tax</p>
+                                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.tax}</p>
                                                         <p className="font-light font-inter text-xs1 text-black-100">{values.items[0] ? values.items[0].tax : '0'}%</p>
                                                     </div>
                                                     <div className="flex items-center justify-between py-3">
-                                                        <p className="font-normal font-inter text-xs1 text-graylight-800">Total</p>
+                                                        <p className="font-normal font-inter text-xs1 text-graylight-800">{language.total}</p>
                                                         <p className="font-light font-inter text-xs1 text-black-100">USD <span className="font-medium ">{values.items ? calcTotal(values.items) : '0'}</span></p>
                                                     </div>
                                                 </div>
@@ -276,35 +278,35 @@ export default function Page({ params }: { params: { id: string } }) {
                             </Field> */}
 
                                 <div className="shadow-[0px_0px_10px_4px_#F2F6FB] mt-0 p-3">
-                                    <p className="text-sm font-medium font-inter text-graylight-800">Client Details</p>
+                                    <p className="text-sm font-medium font-inter text-graylight-800">{language.client_details}</p>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="text-sm font-normal text-gray-700">Name</p>
+                                        <p className="text-sm font-normal text-gray-700">{language.name}</p>
                                         <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.firstName} {lead?.address?.lastName}</p>
                                     </div>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="text-sm font-normal text-gray-700">City</p>
+                                        <p className="text-sm font-normal text-gray-700">{language.city_label}</p>
                                         <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.city}</p>
                                     </div>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="text-sm font-normal text-gray-700">Postal code</p>
+                                        <p className="text-sm font-normal text-gray-700">{language.postal_label}</p>
                                         <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.postalCode}</p>
                                     </div>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="text-sm font-normal text-gray-700">Phone</p>
+                                        <p className="text-sm font-normal text-gray-700">{language.phone_label}</p>
                                         <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.phone}</p>
                                     </div>
                                     <div className="flex items-center justify-between py-3">
-                                        <p className="text-sm font-normal text-gray-700">Email</p>
+                                        <p className="text-sm font-normal text-gray-700">{language.email_label}</p>
                                         <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.email}</p>
                                     </div>
                                     <div className="flex items-start justify-between py-3">
-                                        <p className="w-1/2 text-sm font-normal text-gray-700">Address</p>
+                                        <p className="w-1/2 text-sm font-normal text-gray-700">{language.address}</p>
                                         <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.firstName} {lead?.address?.lastName}, {lead?.address?.city},  {lead?.address?.postalCode}</p>
                                     </div>
                                 </div>
                                 <Buttons className="w-full p-2 my-5 text-sm font-normal text-white bg-indigo-800 rounded-md font-poppins" value={"Send it to customer"} loading={loading} onClick={handleSubmit} />
                                 <button onClick={handlePrint} type="submit" className="w-full p-2 text-sm font-normal text-indigo-800 border border-indigo-800 rounded-md font-poppins">
-                                    Downloaded
+                                {language.downloaded}
                                 </button>
                             </div>
                         </div>

@@ -8,6 +8,8 @@ import { Input, DatePicker } from "antd";
 import dayjs from 'dayjs';
 import { useSession } from 'next-auth/react'
 import Loader from "@/components/common/Loader";
+import language from "@/contexts/language";
+
 
 export default function Page() {
     const router = useRouter();
@@ -47,7 +49,7 @@ export default function Page() {
             <div className="container pt-5 pb-10 mx-auto">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 mb-5 mt-[50px]">
-                    <p className='text-lg font-bold text-indigo-800 mx-5 md:mx-0'>Invoice History</p>
+                    <p className='text-lg font-bold text-indigo-800 mx-5 md:mx-0'>{language.invoice_history}</p>
 
                     <div className="grid grid-cols-2 md:grid-cols-4">
 
@@ -60,14 +62,14 @@ export default function Page() {
 
                         <div className="flex items-center">
                             <div className="mx-2">
-                                From
+                                {language.from}
                             </div>
                             <DatePicker onChange={(data, dateString: any) => setFrom(dateString)} />
                         </div>
 
                         <div className="flex items-center">
                             <div className="mx-2">
-                                To
+                                {language.to}
                             </div>
                             <DatePicker onChange={(data, dateString: any) => setTo(dateString)} />
                         </div>
@@ -80,7 +82,7 @@ export default function Page() {
                             <div className="mx-2">
                                 <IoIosCloseCircleOutline />
                             </div>
-                            Clear
+                            {language.clear}
                         </div>
 
                     </div>
@@ -90,11 +92,11 @@ export default function Page() {
                     <div className="horiZontScroll"><table className="min-w-full bg-white border-separate border-spacing-y-3">
                         <thead className="bg-indigo-300 rounded-full shadow-[0px_0px_10px_1px_#F2F6FB] font-inter font-semibold text-deep-black text-sm1">
                             <tr>
-                                <th className="px-4 py-2">Invoice number</th>
-                                <th className="px-4 py-2">Start At</th>
-                                <th className="px-4 py-2">End At</th>
-                                <th className="px-4 py-2">Total price</th>
-                                <th className="px-4 py-2">Action</th>
+                                <th className="px-4 py-2">{language.invoice_num}</th>
+                                <th className="px-4 py-2">{language.start_at}</th>
+                                <th className="px-4 py-2">{language.end_at}</th>
+                                <th className="px-4 py-2">{language.total_price}</th>
+                                <th className="px-4 py-2">{language.action}</th>
                             </tr>
                         </thead>
                         <tbody className="mt-5">
@@ -103,7 +105,7 @@ export default function Page() {
                                 <td className="px-4 py-2">{new Date(item.contractStart).toLocaleDateString()}</td>
                                 <td className="px-4 py-2">{new Date(item.contractEnd).toLocaleDateString()}</td>
                                 <td className="px-4 py-2">${calcTotal(item.items)}</td>
-                                <td className="px-4 py-2"><button onClick={() => router.push(`/pro/invoice/${item.id}`)} className="px-2 pb-1 text-sm font-normal text-white bg-indigo-800 rounded-xl font-inter"><p>Details</p></button></td>
+                                <td className="px-4 py-2"><button onClick={() => router.push(`/pro/invoice/${item.id}`)} className="px-2 pb-1 text-sm font-normal text-white bg-indigo-800 rounded-xl font-inter"><p>{language.details}</p></button></td>
                             </tr>))}
                         </tbody>
                     </table></div>

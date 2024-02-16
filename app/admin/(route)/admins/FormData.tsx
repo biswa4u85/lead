@@ -10,7 +10,7 @@ const initialData = {
     lastName: "",
     email: "",
     phone: "",
-    password: "",
+    newPassword: "",
 }
 
 export function FormData({ initialValues, handleUpdate, loading }: any) {
@@ -27,7 +27,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     return (
         <Formik
-            initialValues={initialValues?.edit ? { ...initialValues, password: "", } : initialData}
+            initialValues={initialValues?.edit ? { ...initialValues, newPassword: "" } : initialData}
             validationSchema={validationSchema}
             onSubmit={(values) => handleUpdate({ ...values, role: "admin" })}
         >
@@ -80,10 +80,9 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                     </div>
                     <div className="mb-4">
                         <PasswordBox
-                            error={errors.password}
                             label="Password"
                             placeholder="Enter your Password"
-                            name="password"
+                            name="newPassword"
                         />
                     </div>
                     <div className="mb-4">

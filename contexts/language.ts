@@ -14,12 +14,12 @@ export default
         invoice: "Invoice",
         balance: "Balance",
 
-        banner_title: "Renovate with confidence withTravaux Renovo.",
-        banner_sub_title: "Connecting building experts and demanding clients.",
+        banner_title: "Dépannez et rénovez en toute sérénité avec",
+        banner_sub_title: "Dépannage - Travaux",
         area_code: "Area Code",
-        trouble_btn: "Troubleshotting Project",
-        build_btn: "Building Project",
-        how_works: "How it works",
+        trouble_btn: "Besoin de dépannage",
+        build_btn: "Envie de rénover",
+        how_works: "Pourquoi choisir  Dépannage - Travaux ?",
         step1: "Step 1",
         step2: "Step 2",
         step3: "Step 3",
@@ -47,18 +47,18 @@ export default
         title_placeholder: "Enter the Title",
         description_label: "Description",
         description_placeholder: "Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in order to install a parquet floor already in my possession",
-        firstName_label: "First Name",
-        firstName_placeholder: "Enter your First Name",
-        lastName_label: "Last Name",
-        lastName_placeholder: "Enter your Last Name",
+        firstName_label: "Prénom",
+        firstName_placeholder: "Saisissez votre prénom",
+        lastName_label: "Nom",
+        lastName_placeholder: "Saisissez votre nom",
         city_label: "City",
         city_placeholder: "Enter City",
-        email_label: "Email",
-        email_placeholder: "Enter your Email",
-        phone_label: "Phone",
+        email_label: "E-mail",
+        email_placeholder: "Saisissez votre adresse mail",
+        phone_label: "Numéro Téléphone",
         phone_placeholder: "Enter your Phone",
         postal_label: "Postal Code",
-        postal_placeholder: "Enter your Postal Code",
+        postal_placeholder: "Code Postal",
 
         // depannage
 
@@ -67,7 +67,7 @@ export default
         need_placeholder: "Enter What do you need",
         problem: "Where does the problem come from ?",
         installments: "Pay in 3 or 4 installments without fees",
-        postalcode_label: "Your Postal Code *",
+        postalcode_label: "Votre Code Postal",
         order: "I Order",
         project_detail: "Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in order to install a parquet floor already in my possession",
 
@@ -106,30 +106,30 @@ export default
         total: "Total",
         generate: "Generate signature",
         uplode: "Upload signature",
-        job: "Your Job",
-        activity: "Your Main Activity",
-        company_label: "Name of your Company",
-        company_place: "Enter Your Company",
-        contact_details: "Your contact details",
-        phonenum_label: "Phone number",
-        phonenum_placeholder: "Enter your Phone number",
-        password: "Password",
-        password_placeholder: "Enter Password",
-        confirm_password: "Confirm Password",
-        confirm_password_placeholder: "Enter Confirm Password",
-        numeric_character: "At least six numeric character",
-        special_character: "At least one special character",
+        job: "Votre travail",
+        activity: "Votre activité principale",
+        company_label: "Nom de l'entreprise",
+        company_place: "Nom de la societe",
+        contact_details: "Vos coordonnées",
+        phonenum_label: "Numéro de téléphone",
+        phonenum_placeholder: "Saisissez votre numéro de téléphone",
+        password: "Mot de passe",
+        password_placeholder: "Saisissez votre mot de passe",
+        confirm_password: "Confirmer le mot de passe",
+        confirm_password_placeholder: "Saisir le mot de passe de confirmation",
+        numeric_character: "Au moins six caractères numériques",
+        special_character: "Au moins un caractère spécial",
         sponsorship: "Sponsorship",
         sponsor_code: "Sponsor code",
         apply: "APPLY",
-        terms: "Terms and Conditions",
-        conditions_1: "I acknowledge having read the General Conditions of Use",
-        conditions_2: "I agree to receive communications electronically about product or service offers from Habitatpresto",
-        conditions_3: "I agree to receive communications electronically about product or service offers from Partners",
-        additional: "Additional Information",
-        additional_1: "The information collected on this form is intended for HabitatPresto for the purposes of processing your orders, managing your customer account, monitoring the quality of our services and commercial prospecting. They are subject to computer processing intended for customer service and the marketing department of HabitatPresto.",
-        additional_2: "To know and exercise your rights relating to the use of your data, please consult our Charter on the protection of personal data or contact us at the following address: DPO@habitatpresto.com To validate",
-        agree_terms: "I agree to the Terms and Conditions",
+        terms: "Conditions générales d'utilisation",
+        conditions_1: "Je reconnais avoir pris connaissance des conditions générales d'utilisation",
+        conditions_2: "J'accepte de recevoir des communications électroniques sur les offres de produits ou de services de Dépannage - Travaux",
+        conditions_3: "J'accepte de recevoir des communications électroniques sur les offres de produits ou de services des partenaires",
+        additional: "Informations complémentaires",
+        additional_1: "Les informations recueillies sur ce formulaire sont destinées à Dépannage-Travaux aux fins de traitement de vos commandes, de gestion de votre compte client, de suivi de la qualité de nos services et de prospection commerciale. Elles font l'objet d'un traitement informatique destiné au service client et au service marketing de Dépannage-Travaux.",
+        additional_2: "Pour connaître et exercer vos droits relatifs à l'utilisation de vos données, veuillez consulter notre Charte sur la protection des données personnelles ou nous contacter à l'adresse suivante :  Pour valider cette partie est à supprimer Valider Les informations recueillies sur ce formulaire sont destinées à Dépannage-Travaux aux fins de traitement de vos commandes, de gestion de votre compte client, de suivi de la qualité de nos services et de prospection commerciale. Elles font l'objet d'un traitement informatique destiné au service client et au service marketing de Dépannage-Travaux. Pour connaître et exercer vos droits relatifs à l'utilisation de vos données, veuillez consulter notre Charte sur la protection des données personnelles ou nous contacter à l'adresse suivante :  Pour valider",
+        agree_terms: "J'accepte les conditions générales d'utilisation",
         successfully: "Sign up Successfully!",
         sign_up: "You are Sign up Successfully. We will contact you very soon!",
 
@@ -141,6 +141,100 @@ export default
         Category: "Depannage Category",
         download: "Download",
         cancel: "Cancel",
+
+        // forget-passward
+
+        back: "Back to Login",
+
+        // pro
+
+        find_project: "Find Project",
+        search: "Search…",
+        new: "New",
+        accepted: "Accepted",
+        appointments: "Appointments Date",
+        log_out: "Log Out",
+        profile: "Profile",
+
+        // balance
+
+        your_balance: "Your balance",
+        withdraw: "Withdraw",
+        from: "From",
+        to: "To",
+        clear: "Clear",
+        invoice_num: "Invoice number",
+        type: "Type",
+        payment_form: "Payment From",
+        date: "Date",
+        total_price: "Total price",
+        status: "Status",
+        paid: "paid",
+        details: "Details",
+
+        // estimate
+
+        carry_out: "Select the type of work you want to carry out",
+        posted: "Posted",
+        assigned: "Assigned",
+        active: "Active",
+        pending: "Pending",
+        refused: "Refused",
+
+        // invoice
+        invoice_history: "Invoice History",
+        start_at: "Start At",
+        end_at: "End At",
+        action: "Action",
+
+        // profile
+        add: "Add",
+        profile_picture: "Photo de Profil",
+        photo: "Inclure une photo de votre visage, une image dans une situation professionnelle ou votre logo afin d'instaurer un climat de confiance, à la fois avec les individus et pour l'image de votre marque.",
+        creation: "Date of creation",
+        wallet: "Wallet",
+        change_contact: "Change my contact details",
+        company_details: "Information About My Company",
+        company_paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        information: "My Contact Information",
+        company_name: "Company name",
+        company_placeholder: "Enter Company name",
+        first_placeholder: "Enter First name",
+        last_placeholder: "Enter Last name",
+        postalcode_placeholder: "Enter Postal Code",
+        Sponsor_placeholder: "Enter Sponsor Code",
+        profile_photo: "Your Profile Photo",
+        format_text: "Only images in jpg, jpeg and png format are accepted with a minimum size of 112 pixels by 112 pixels.",
+        catagorys: "My Catagorys",
+        catagorys_label: "Categorys",
+        catagorys_placeholder: "Please select Categorys",
+        services_placeholder: "Please select Services",
+        Depannage_label: "Depannage Categorys",
+        description: "DESCRIPTION OF MY BUSINESS",
+        edit_details: "Edit Details",
+        document: "MY OFFICIAL DOCUMENTS",
+        insurance_text: "You must have certain insurance and documents to certify the legality of your business and its skills. Individuals are sensitive to it.",
+        kbis: "KBIS",
+        missing_doc: "Missing document",
+        assurance: "Assurance",
+        guarantee: "Ten-year guarantee",
+        quality: "MY QUALITY LABELS",
+
+        // proposal
+
+        contract_placeholder: "Enter Contract Start",
+        contractend_placeholder: "Enter Contract End",
+        actions: "Actions",
+        downloaded: "Downloaded",
+
+
+
+
+
+
+
+
+
 
         // Emails and SMS
         professional_emails: {

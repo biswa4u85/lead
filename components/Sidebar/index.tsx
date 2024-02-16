@@ -129,14 +129,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
 
               <li>
-                <Link href="/admin/batimentCategorys" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("batimentCategorys") && "bg-graydark dark:bg-meta-4"}`}>
+                <Link href="/admin/batimentCategorys?id=0" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("batimentCategorys") && "bg-graydark dark:bg-meta-4"}`}>
                   <FaProjectDiagram size="25" /> Batiment Categorys
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/admin/batimentTypes" className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes("batimentTypes") && "bg-graydark dark:bg-meta-4"}`}>
-                  <MdOutlineHomeRepairService size="25" /> Batiment Types
                 </Link>
               </li>
 

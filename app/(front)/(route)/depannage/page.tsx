@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 import { AiOutlineCheckCircle, } from "react-icons/ai";
 import language from "@/contexts/language";
 
-
 const defaultValue = {
     depannageCategoryId: "",
     title: "",
@@ -130,43 +129,8 @@ export default function Page() {
                 </div>
                 {/* stepers end */}
 
-                {(step == 1 && values) && (<Formik
-                    initialValues={values}
-                    validationSchema={validationSchemaInfo}
-                    onSubmit={(values: any) => handleUpdate(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.solution}</p>
-                        </div>
-                            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 px-5 py-5">
-                                <div className="flex flex-col">
-                                    <InputBox
-                                        required={true}
-                                        name="title"
-                                        label={language.need_label}
-                                        placeholder={language.need_placeholder}
-                                    />
-                                </div>
-                                <div className="flex flex-col">
-                                    <InputBox
-                                        required={true}
-                                        name="postalCode"
-                                        label={language.postal_label}
-                                        type="number"
-                                        placeholder={language.postal_placeholder}
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Let’s Go"} onClick={handleSubmit} />
-                            </div>
-                        </>)}
-                </Formik>)}
-
-                {step == 2 && (<>
+                {step == 1 && (<>
                     <div className="mx-3 mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
                     </div>
@@ -200,7 +164,7 @@ export default function Page() {
                     </div>
                 </>)}
 
-                {(step == 3) && (<Formik
+                {(step == 2) && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaPrice}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -270,7 +234,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 4 && (<Formik
+                {step == 3 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaDescription}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -296,7 +260,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 5 && (<Formik
+                {step == 4 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaContact}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -367,7 +331,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 6 && (<>
+                {step == 5 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.thank_proposal}</p>
                     </div>

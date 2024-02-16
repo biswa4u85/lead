@@ -24,21 +24,23 @@ export default function Page() {
             <div className="bg-custom-blue">
                 <div className="container flex flex-col mx-auto md:flex-row md:justify-between md:items-center">
                     <div>
-                        <p className="md:text-6xl text-[31px] py-5 text-indigo-800 font-medium mx-5 xl:mx-0">{language.banner_title}
-                        </p>
-                        <p className="text-sm font-semibold md:text-lg text-black-light mx-5 xl:mx-0">{language.banner_sub_title}</p>
-                        <div className="flex flex-col items-center md:flex-row md:justify-center  mx-5 xl:mx-0">
-                            <div className="flex items-center p-1 mx-auto mt-5 bg-white border border-gray-300 rounded-full">
+
+                        <p className="md:text-6xl text-[16px] text-indigo-800 font-medium mx-5 xl:mx-0 w-150">{language.banner_title}</p>
+                        <p className="md:text-6xl text-[18px] text-indigo-800 font-bold mx-5 xl:mx-0 w-150">{language.banner_sub_title}</p>
+                        <p className="text-sm font-semibold md:text-lg text-black-light mx-5 xl:mx-0">Plateforme de rénovation et dépannage</p>
+
+                        <div className="flex flex-col items-center md:flex-row md:justify-center mx-5 xl:mx-0 mb-10">
+                            {/* <div className="flex items-center p-1 mx-auto mt-5 mb-10 bg-white border border-gray-300 rounded-full">
                                 <div className="mx-2">
                                     <AiOutlineSearch size="20" className="text-gray" />
                                 </div>
                                 <input type="text" value={quote} onChange={(obj) => setQuote(obj.target.value)} className="flex-grow text-sm font-semibold text-gray-600 border-none focus:outline-none" placeholder={language.area_code} />
-                                <button onClick={() => onQuote(quote)} className="flex flex-row items-center justify-center px-4 py-4 text-xs2 xl:text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700 -ml-24 xl:-ml-0">
-                                {language.trouble_btn}  <AiOutlineRight className="ml-2" />
-                                </button>
-                            </div>
+                            </div> */}
+                            <button onClick={() => router.push(`/depannage`)} className="flex flex-row items-center justify-center px-4 py-4 mt-5 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700 mr-10">
+                                {language.trouble_btn} <AiOutlineRight className="ml-2" />
+                            </button>
                             <button onClick={() => router.push(`/batiment`)} className="flex flex-row items-center justify-center px-4 py-4 mt-5 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700">
-                            {language.build_btn} <AiOutlineRight className="ml-2" />
+                                {language.build_btn} <AiOutlineRight className="ml-2" />
                             </button>
                         </div>
                     </div>

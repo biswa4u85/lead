@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { useFetch } from "@/contexts/useFetch";
 import { usePost } from "@/contexts/usePost";
 import { useSearchParams } from 'next/navigation'
@@ -13,7 +14,6 @@ import language from "@/contexts/language";
 
 const defaultValue = {
     batimentCategoryId: "",
-    batimentTypeId: "",
     title: "",
     description: "",
     firstName: "",
@@ -29,7 +29,16 @@ export default function Page() {
     const name = params.get('name')
     const [step, setStep] = useState<any>(1);
     const [progress, setProgress] = useState<any>(0);
+    const [categoryId, setCategoryId] = useState<any>("0");
+    const [batimentCategorys, setBatimentCategorys] = useState<any>(null);
+    const [error, setError] = useState<any>(null);
     const [values, setValues] = useState<any>(null);
+    let val = 100 / 7
+    const { fetch, data: categorys } = useFetchByLoad({ url: "batimentCategorys", query: JSON.stringify({ parentId: categoryId }) });
+
+    useEffect(() => {
+        fetch()
+    }, [categoryId])
 
     useEffect(() => {
         if (name) {
@@ -39,16 +48,10 @@ export default function Page() {
         }
     }, [name])
 
-    const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({}) });
-    const { data: services } = useFetch({ url: "batimentTypes", query: JSON.stringify({}) });
     const { create, data: respond, loading } = usePost();
 
     const validationSchemaService1 = Yup.object().shape({
         batimentCategoryId: Yup.string().required("Category is required"),
-    });
-
-    const validationSchemaService2 = Yup.object().shape({
-        batimentTypeId: Yup.string().required("Type is required"),
     });
 
     const validationSchemaInfo = Yup.object().shape({
@@ -74,7 +77,7 @@ export default function Page() {
     const handleUpdate = (value: any) => {
         let val = 100 / 4
         setProgress(progress == 0 ? val : progress + val)
-        if (step == 4) {
+        if (step == 3) {
             create("batiments", { ...values, ...value })
         } else {
             setValues({ ...values, ...value })
@@ -146,57 +149,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {(step == 2) && (<Formik
-                    initialValues={values}
-                    validationSchema={validationSchemaService2}
-                    onSubmit={(values: any) => handleUpdate(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"Sélectionnez la nature de travaux que vous souhaitez réaliser"}</p>
-                        </div>
-                            <Field name={'batimentTypeId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {services?.data && services.data.map((item: any, key: any) => {
-                                            if (item.batimentCategoryId == values?.batimentCategoryId) {
-                                                return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                                    onClick={() => {
-                                                        field.onChange('batimentTypeId')(
-                                                            item.id
-                                                        );
-                                                    }} >
-                                                    {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                        <Image
-                                                            alt=""
-                                                            width="44"
-                                                            height="44"
-                                                            src={item.icon}
-                                                        />
-                                                    </div>)}
-                                                    <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                                </div>
-                                            }
-                                        })}
-                                    </div>
-                                        <div>
-                                            {form?.errors['batimentTypeId'] && form?.touched['batimentTypeId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['batimentTypeId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
-
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
-                            </div>
-                        </>)}
-                </Formik>)}
-
-                {step == 3 && (<Formik
+                {step == 2 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaInfo}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -231,7 +184,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 4 && (<Formik
+                {step == 2 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaContact}
                     onSubmit={(values: any) => handleUpdate(values)}
@@ -256,7 +209,7 @@ export default function Page() {
                                         name="lastName"
                                         label={language.lastName_label}
                                         placeholder={language.lastName_placeholder}
-                                        
+
 
                                     />
                                 </div>
@@ -266,7 +219,7 @@ export default function Page() {
                                         name="city"
                                         label={language.city_label}
                                         placeholder={language.city_placeholder}
-                                        
+
                                     />
                                 </div>
                                 <div className="flex flex-col">
@@ -284,7 +237,7 @@ export default function Page() {
                                         name="phone"
                                         label={language.phone_label}
                                         placeholder={language.phone_placeholder}
-                                        
+
                                     />
                                 </div>
                                 <div className="flex flex-col">
@@ -305,7 +258,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 5 && (<>
+                {step == 4 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
                         <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.thank_proposal}</p>
                     </div>

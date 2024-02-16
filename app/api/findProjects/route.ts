@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
             skip,
             take,
             where,
-            include: { address: true, batimentCategory: { select: { name: true } }, batimentType: { select: { name: true } } }
+            include: { address: true, batimentCategory: { select: { name: true } } }
         });
         const result2 = await prisma[resource2].findMany({
             skip,

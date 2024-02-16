@@ -59,10 +59,6 @@ export default function Page({ params }: { params: { id: string } }) {
                                     <p className="text-xs font-normal text-gray-700 font-inter">Select the type of work you want to carry out</p>
                                     <p className="text-sm font-semibold text-deep-black">{lead?.batimentCategory?.name}</p>
                                 </div>
-                                <div>
-                                    <p className="text-xs font-normal text-gray-700 font-inter">Select the type of work you want to carry out</p>
-                                    <p className="text-sm font-semibold text-deep-black">{lead?.batimentType?.name}</p>
-                                </div>
                             </div>
                         </div>)}
 

@@ -49,10 +49,13 @@ export async function POST(request: NextRequest) {
         const data = await request.json();
 
         // Hash password
-        if (data.password) {
+        delete data.password
+        if (data.newPassword && data.newPassword != '') {
             const salt = await bcryptjs.genSalt(10)
-            data.password = await bcryptjs.hash(data.password, salt)
+            data.password = await bcryptjs.hash(data.newPassword, salt)
         }
+        delete data.newPassword
+
         const res = await prisma[resource].create({ data });
         return successResponse(res);
     } catch (error: any) {
@@ -70,11 +73,15 @@ export async function PATCH(request: NextRequest) {
         delete data.id
         delete data.edit
 
+
         // Hash password
-        if (data.password) {
+        delete data.password
+        if (data.newPassword && data.newPassword != '') {
             const salt = await bcryptjs.genSalt(10)
-            data.password = await bcryptjs.hash(data.password, salt)
+            data.password = await bcryptjs.hash(data.newPassword, salt)
         }
+        delete data.newPassword
+        delete data.conPassword
 
         const res = await prisma[resource].update({
             where: { id },
@@ -82,6 +89,7 @@ export async function PATCH(request: NextRequest) {
         });
         return successResponse(res);
     } catch (error: any) {
+        console.log(error)
         errorResponse(error);
     }
 }

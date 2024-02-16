@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
             include['depannageCategory'] = { select: { name: true, price: true } }
         } else {
             include['batimentCategory'] = { select: { name: true } }
-            include['batimentType'] = { select: { name: true } }
         }
         let where: any = {}
         if (id) where['id'] = invoice?.leadId

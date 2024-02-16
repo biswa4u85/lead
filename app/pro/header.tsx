@@ -10,6 +10,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { signOut, useSession } from 'next-auth/react'
 import language from "@/contexts/language";
 
+
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
@@ -43,17 +44,17 @@ export default function Header() {
         <div className={`absolute w-full top-0 bg-black opacity-80 lg:hidden p-4 text-white ${isMobileMenuOpen ? '' : 'hidden'}`}>
           <div className="absolute right-2 top-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} /></div>
           <nav className="flex flex-col" >
-            <Link href={"/pro"} className={"mx-2 my-1 text-white hover:text-blue-700"}>Find Projects</Link>
-            <Link href={"/pro/estimate"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("estimate") ? "text-primary" : "text-white")}>Estimate</Link>
-            <Link href={"/pro/invoice"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("invoice") ? "text-primary" : "text-white")}>Invoice</Link>
-            <Link href={"/pro/balance"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-white")}>Balance</Link>
-            {!data?.user?.name ? <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link> :
+            <Link href={"/pro"} className={"mx-2 my-1 text-white hover:text-blue-700"}>{language.find_projects}</Link>
+            <Link href={"/pro/estimate"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("estimate") ? "text-primary" : "text-white")}>{language.estimate}</Link>
+            <Link href={"/pro/invoice"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("invoice") ? "text-primary" : "text-white")}>{language.invoice}</Link>
+            <Link href={"/pro/balance"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-white")}>{language.balance}</Link>
+            {!data?.user?.name ? <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link> :
               <button onClick={() => {
                 signOut({ redirect: false }).then(() => {
                   router.push("/auth");
                 });
               }} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">
-                Log Out
+                {language.log_out}
               </button>}
           </nav>
         </div>
@@ -118,18 +119,18 @@ export default function Header() {
                   setDropdownOpen(false)
                   router.push("/pro/profile")
                 }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                  Profile
+                  {language.profile}
                 </button>
                 <button onClick={() => {
                   signOut({ redirect: false }).then(() => {
                     router.push("/auth");
                   });
                 }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                  Log Out
+                 {language.log_out}
                 </button>
               </div>
             </div> :
-              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link>}
+              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link>}
           </div>
         </div>
       </header>

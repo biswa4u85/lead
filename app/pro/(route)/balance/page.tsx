@@ -8,6 +8,8 @@ import { Input, DatePicker } from "antd";
 import dayjs from 'dayjs';
 import { useSession } from 'next-auth/react'
 import Loader from "@/components/common/Loader";
+import language from "@/contexts/language";
+
 
 export default function Page() {
     const router = useRouter();
@@ -45,17 +47,17 @@ export default function Page() {
             <div className="container pt-5 pb-10 mx-auto">
                 <div className="md:flex items-center justify-between px-8 py-3 bg-indigo-400 rounded-3xl mt-10 mx-5 md:mx-0">
                     <div>
-                        <p className='font-normal text-sm1 text-deepblack-100 font-inter'>Your balance</p>
+                        <p className='font-normal text-sm1 text-deepblack-100 font-inter'>{language.your_balance}</p>
                         <p className='font-semibold text-3lg text-deepblack-100 font-inter'>${total.toFixed(2)}</p>
                     </div>
                     <div>
-                        <button className="py-2 text-sm font-normal text-white bg-indigo-800 rounded-md px-13 font-poppins">Withdraw</button>
+                        <button className="py-2 text-sm font-normal text-white bg-indigo-800 rounded-md px-13 font-poppins">{language.withdraw}</button>
                     </div>
                 </div>
 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 my-5 mx-5 md:mx-0">
-                    <p className='text-lg font-bold text-indigo-800'>Balance</p>
+                    <p className='text-lg font-bold text-indigo-800'>{language.balance}</p>
 
                     <div className="grid grid-cols-2 md:grid-cols-4">
 
@@ -68,14 +70,14 @@ export default function Page() {
 
                         <div className="flex items-center">
                             <div className="mx-2">
-                                From
+                            {language.from}
                             </div>
                             <DatePicker onChange={(data, dateString: any) => setFrom(dateString)} />
                         </div>
 
                         <div className="flex items-center">
                             <div className="mx-2">
-                                To
+                            {language.to}
                             </div>
                             <DatePicker onChange={(data, dateString: any) => setTo(dateString)} />
                         </div>
@@ -88,7 +90,7 @@ export default function Page() {
                             <div className="mx-2">
                                 <IoIosCloseCircleOutline />
                             </div>
-                            Clear
+                            {language.clear}
                         </div>
 
                     </div>
@@ -99,12 +101,12 @@ export default function Page() {
                     <table className="min-w-full bg-white border-separate border-spacing-y-3">
                         <thead className="bg-indigo-300 rounded-full shadow-[0px_0px_10px_1px_#F2F6FB] font-inter font-semibold text-deep-black text-sm1">
                             <tr>
-                                <th className="px-4 py-2">Invoice number</th>
-                                <th className="px-4 py-2">Type</th>
-                                <th className="px-4 py-2">Payment From</th>
-                                <th className="px-4 py-2">Date</th>
-                                <th className="px-4 py-2">Total price</th>
-                                <th className="px-4 py-2">Status</th>
+                                <th className="px-4 py-2">{language.invoice_num}</th>
+                                <th className="px-4 py-2">{language.type}</th>
+                                <th className="px-4 py-2">{language.payment_form}</th>
+                                <th className="px-4 py-2">{language.date}</th>
+                                <th className="px-4 py-2">{language.total_price}</th>
+                                <th className="px-4 py-2">{language.status}</th>
                             </tr>
                         </thead>
                         <tbody className="mt-5">
@@ -115,8 +117,8 @@ export default function Page() {
                                 <td className="px-4 py-2">{new Date(item.createdAt).toLocaleDateString()}</td>
                                 <td className="px-4 py-2">${item.amount}</td>
                                 <td className="flex justify-between px-4 py-2">
-                                    <button className="px-4 pb-1 mr-2 text-sm font-normal rounded-2xl bg-yellow text-deepblack-100 font-inter"><p>paid</p></button>
-                                    <button className="px-2 pb-1 text-sm font-normal text-white bg-indigo-800 rounded-xl font-inter"><p>Details</p></button>
+                                    <button className="px-4 pb-1 mr-2 text-sm font-normal rounded-2xl bg-yellow text-deepblack-100 font-inter"><p>{language.paid}</p></button>
+                                    <button className="px-2 pb-1 text-sm font-normal text-white bg-indigo-800 rounded-xl font-inter"><p>{language.details}</p></button>
                                 </td>
                             </tr>))}
                         </tbody>

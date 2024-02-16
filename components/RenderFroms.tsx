@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Field } from "formik";
-import { Avatar, DatePicker, Select, TreeSelect } from "antd";
+import { Avatar, DatePicker, Select, TreeSelect, Switch } from "antd";
 import SiteApis from "@/contexts/SiteApis";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -89,7 +89,7 @@ const PasswordBox = (props: any) => {
             <input
               value={field.value}
               onChange={(obj) => {
-                form.setFieldValue(props.name, obj.target.value);               
+                form.setFieldValue(props.name, obj.target.value);
               }}
               type={show ? "text" : "password"}
               placeholder={props.placeholder}
@@ -111,6 +111,7 @@ const PasswordBox = (props: any) => {
   );
 };
 
+
 const TextareaBox = (props: any) => {
   return (
     <Field name={props.name}>
@@ -124,7 +125,7 @@ const TextareaBox = (props: any) => {
               rows={6}
               value={field.value}
               onChange={(obj) => {
-                form.setFieldValue(props.name, obj.target.value);                
+                form.setFieldValue(props.name, obj.target.value);
               }}
               type="text"
               placeholder={props.placeholder}
@@ -279,6 +280,34 @@ const FileBox = (props: any) => {
   );
 };
 
+const TogelBox = (props: any) => {
+  return (
+    <Field name={props.name}>
+      {({ field, form, meta }: any) => {
+        return <>
+          {props.label && (<label className="mb-2.5 block font-medium text-black dark:text-white">
+            {props.label} {(form?.errors[props.name] || props.required) && (<span className="text-meta-1">{"*"}</span>)}
+          </label>)}
+          <div className="relative">
+            <Switch
+              value={field.value}
+              onChange={(obj) => {
+                form.setFieldValue(props.name, obj);
+              }}
+              placeholder={props.placeholder}
+              className={"w-full py-2 pl-6 pr-10 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" + ((form?.errors[props.name] && form?.touched[props.name]) && " border-b-meta-1")}
+              {...props}
+            />
+            {form?.errors[props.name] && form?.touched[props.name] && (
+              <div className="mt-1 text-xs-1 text-meta-1">{form.errors[props.name]}</div>
+            )}
+          </div>
+        </>
+      }}
+    </Field>
+  );
+};
+
 export {
   Buttons,
   InputBox,
@@ -287,5 +316,6 @@ export {
   SelectBox,
   MultiSelectBox,
   DateBox,
+  TogelBox,
   FileBox
 };

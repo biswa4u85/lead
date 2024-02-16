@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
-            include: { address: true, batimentCategory: { select: { name: true } }, batimentType: { select: { name: true } } }
+            include: { address: true, batimentCategory: { select: { name: true } } }
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);
@@ -33,11 +33,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
-        const { batimentCategoryId, batimentTypeId, title, description, firstName, lastName, city, email, phone, postalCode } = data
+        const { batimentCategoryId, title, description, firstName, lastName, city, email, phone, postalCode } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].create({
             data: {
-                title, description, batimentCategoryId, batimentTypeId,
+                title, description, batimentCategoryId,
                 address: {
                     create: address
                 }
@@ -52,11 +52,8 @@ export async function POST(request: NextRequest) {
 
 async function autoAssignTo(data: any, address: any) {
     let where: any = {}
-    if (data.batimentCategoryId && data.batimentTypeId) {
-        where['OR'] = [
-            { category: { has: data.batimentCategoryId } },
-            { service: { has: data.batimentTypeId } }
-        ]
+    if (data.batimentCategoryId) {
+        where['category'] = { has: data.batimentCategoryId }
     }
     const users: any = await prisma[assignresource].findMany({ where });
     const allAssigns = users.map((item: any) => {
@@ -105,11 +102,11 @@ export async function PATCH(request: NextRequest) {
         delete data.id
         delete data.edit
 
-        const { batimentCategoryId, batimentTypeId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
+        const { batimentCategoryId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].update({
             where: { id },
-            data: { batimentCategoryId, batimentTypeId, title, description, status, address: { update: address } },
+            data: { batimentCategoryId,  title, description, status, address: { update: address } },
             include: { address: true }
         });
         return successResponse(res);

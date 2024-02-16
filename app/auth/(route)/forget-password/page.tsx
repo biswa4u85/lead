@@ -10,6 +10,8 @@ import logo from "../../../images/logo.svg"
 import * as Yup from "yup";
 import { MdOutlineMail } from "react-icons/md";
 import { toast } from 'react-toastify';
+import language from "@/contexts/language";
+
 
 const Page: React.FC = () => {
   const router = useRouter();
@@ -62,8 +64,8 @@ const Page: React.FC = () => {
                 <div className="mb-4">
                   <InputBox
                     error={errors.email}
-                    label="Email"
-                    placeholder="Enter your email"
+                    label={language.email_label} 
+                    placeholder={language.email_placeholder} 
                     icon={<MdOutlineMail />}
                     name="email"
                   />
@@ -75,8 +77,7 @@ const Page: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     <Link href="/auth" className="text-primary">
-                      Back to Login
-                    </Link>
+                    {language.back}                    </Link>
                   </p>
                 </div>
 
