@@ -8,7 +8,6 @@ import { Formik, Field } from "formik";
 import { useSearchParams } from 'next/navigation'
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
-import { AiOutlineCheckCircle, } from "react-icons/ai";
 import language from "@/contexts/language";
 
 const defaultValue = {
@@ -33,7 +32,7 @@ export default function Page() {
     const [depannageCategorys, setDepannageCategorys] = useState<any>(null);
     const [error, setError] = useState<any>(null);
     const [values, setValues] = useState<any>(null);
-    let val = 100 / 7
+    let val = 100 / 5
     const { fetch, data: categorys } = useFetchByLoad({ url: "depannageCategorys", query: JSON.stringify({ parentId: categoryId }) });
 
     useEffect(() => {
@@ -51,21 +50,16 @@ export default function Page() {
 
     const { create, data: respond, loading } = usePost();
 
-    const validationSchemaInfo = Yup.object().shape({
-        title: Yup.string().required("What do you need is required"),
-        postalCode: Yup.string().required("Zip Code is required"),
-    });
-
     const validationSchemaPrice = Yup.object().shape({
-        // accept: Yup.string().required("Accept Terms"),
+        accept: Yup.string().required("Accept Terms"),
     });
 
     const validationSchemaDescription = Yup.object().shape({
+        title: Yup.string().required("What do you need is required"),
         description: Yup.string().required("Description is required"),
     });
 
     const validationSchemaContact = Yup.object().shape({
-        title: Yup.string().required("Title is required"),
         firstName: Yup.string().required("First Name is required"),
         lastName: Yup.string().required("Last Name is required"),
         city: Yup.string().required("City is required"),
@@ -73,12 +67,14 @@ export default function Page() {
             .email("Invalid email address")
             .required("Email is required"),
         phone: Yup.string().required("Phone is required"),
+        postalCode: Yup.string().required("Postal Code is required"),
     });
 
     const handlePrevious = () => {
-        if (step == 5 || step == 4 || step == 3) {
+        if (step == 1) {
+            setDepannageCategorys(null)
             setCategoryId("0")
-            setStep(2)
+            setStep(1)
             setProgress(val)
         } else {
             setStep(step - 1)
@@ -91,7 +87,7 @@ export default function Page() {
             setProgress(progress + val)
             setError(null)
             if (depannageCategorys?.price) {
-                setStep(3)
+                setStep(2)
             } else {
                 setCategoryId(depannageCategorys?.id)
                 setDepannageCategorys(null)
@@ -103,7 +99,7 @@ export default function Page() {
 
     const handleUpdate = (value: any) => {
         setProgress(progress == 0 ? val : progress + val)
-        if (step == 5) {
+        if (step == 4) {
             create("depannages", { ...values, ...value, depannageCategoryId: depannageCategorys?.id })
         } else {
             setValues({ ...values, ...value })
@@ -128,7 +124,6 @@ export default function Page() {
                     <div className="absolute top-0 left-0 items-center h-full text-sm text-center text-white bg-indigo-600" style={{ width: `${Number(progress).toFixed(0)}%` }}>{`${Number(progress).toFixed(0)}%`}</div>
                 </div>
                 {/* stepers end */}
-
 
                 {step == 1 && (<>
                     <div className="mx-3 mb-3 border-b-2 border-indigo-800">
@@ -181,30 +176,6 @@ export default function Page() {
                                             <div className="p-4 border border-gray-500 rounded-md md:col-span-1">
                                                 <p className="pl-2 font-inter font-semibold text-[23px] text-graylight-900">{depannageCategorys?.description}</p>
                                                 <p className="pl-2 font-inter font-bold py-3 text-[31px] text-graylight-900">€{depannageCategorys?.price}</p>
-                                                <div className="flex justify-between gap-8">
-                                                    <div className="flex">
-                                                        <div> <AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
-                                                        <p className="text-sm font-normal font-inter text-graylight-900">{depannageCategorys?.description}</p>
-                                                    </div>
-                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€{depannageCategorys?.price}</p>
-                                                    </div>
-                                                </div>
-
-                                                {/* <div className="flex justify-between pt-2">
-                                                    <div className="flex">
-                                                        <div><AiOutlineCheckCircle size="20" className="mt-1 mr-3 text-indigo-800" /></div>
-                                                        <p className="text-sm font-normal font-inter text-graylight-900">Up to 60 min labor</p>
-                                                    </div>
-                                                    <div><p className="py-3 pl-2 text-sm font-semibold font-inter text-graylight-900">€59.00</p></div>
-                                                </div> */}
-                                                <p className="pb-5 mt-3 text-sm font-normal text-indigo-800 font-inter">{language.installments}</p>
-                                                <InputBox
-                                                    required={true}
-                                                    name="title"
-                                                    readOnly={true}
-                                                    label={language.postalcode_label}
-                                                    placeholder={values.postalCode}
-                                                />
                                                 <input
                                                     name="accept"
                                                     style={{ display: "none" }}
@@ -241,14 +212,24 @@ export default function Page() {
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <>
+
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
                                 <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.describe}</p>
                             </div>
                             <div className="px-5">
+                                <InputBox
+                                    required={true}
+                                    name="title"
+                                    label={language.title_label}
+                                    placeholder={language.title_placeholder}
+                                />
+                            </div>
+                            <div className="px-5 mt-4">
                                 <TextareaBox
                                     required={true}
                                     name="description"
                                     className="w-full p-2 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500"
+                                    label={language.postalcode_label}
                                     placeholder={language.project_detail}
                                 />
                             </div>
@@ -271,14 +252,6 @@ export default function Page() {
                                 <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.complete_details}</p>
                             </div>
                             <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 px-5 py-5">
-                                <div className="flex flex-col">
-                                    <InputBox
-                                        required={true}
-                                        name="title"
-                                        label={language.title_label}
-                                        placeholder={language.title_placeholder}
-                                    />
-                                </div>
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
@@ -320,6 +293,15 @@ export default function Page() {
                                         name="phone"
                                         label={language.phone_label}
                                         placeholder={language.phone_placeholder}
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <InputBox
+                                        required={true}
+                                        name="postalCode"
+                                        label={language.postal_label}
+                                        placeholder={language.postal_placeholder}
+                                        type="number"
                                     />
                                 </div>
                             </div>

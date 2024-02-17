@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Signin Page",
-  description: "This is Signin page",
+  title: "Auth Page",
+  description: "This is Auth page",
 };
 
 export default function RootLayout({

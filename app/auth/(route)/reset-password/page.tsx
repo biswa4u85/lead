@@ -4,33 +4,36 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePost } from "@/contexts/usePost";
-import { InputBox, Buttons } from "@/components/RenderFroms";
+import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import logo from "../../../images/logo.svg"
 import * as Yup from "yup";
+import { useSearchParams } from 'next/navigation'
 import { MdOutlineMail } from "react-icons/md";
 import { toast } from 'react-toastify';
 import language from "@/contexts/language";
 
 const Page: React.FC = () => {
   const router = useRouter();
+  const params = useSearchParams()
+  const email = params.get('email')
   const { create, data, loading } = usePost();
 
   useEffect(() => {
     if (data) {
       toast.success((data as any).data.message)
-      router.push(`/auth/reset-password?email=${(data as any).data.email}`);
+      router.push("/auth");
     }
   }, [data])
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required")
+    token: Yup.string().required("Otp is required"),
+    password: Yup.string().required("Password is required"),
+    conPassword: Yup.string().required("Password is required"),
   });
 
   const onPressHandle = async (values: any) => {
-    create('auth/password/forget', values)
+    create('auth/password/reset', { ...values, email })
   };
 
   return (
@@ -62,11 +65,29 @@ const Page: React.FC = () => {
                 </Link>
                 <div className="mb-4">
                   <InputBox
-                    error={errors.email}
-                    label={language.email_label}
-                    placeholder={language.email_placeholder}
+                    error={true}
+                    label={language.otp}
+                    placeholder={language.otp}
                     icon={<MdOutlineMail />}
-                    name="email"
+                    name="token"
+                  />
+                </div>
+                <div className="mb-4">
+                  <PasswordBox
+                    error={true}
+                    label={language.password}
+                    placeholder={language.password}
+                    icon={<MdOutlineMail />}
+                    name="password"
+                  />
+                </div>
+                <div className="mb-4">
+                  <PasswordBox
+                    error={true}
+                    label={language.confirm_password}
+                    placeholder={language.confirm_password}
+                    icon={<MdOutlineMail />}
+                    name="conPassword"
                   />
                 </div>
                 <div className="mb-4">

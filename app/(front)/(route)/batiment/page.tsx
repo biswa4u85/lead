@@ -33,7 +33,7 @@ export default function Page() {
     const [batimentCategorys, setBatimentCategorys] = useState<any>(null);
     const [error, setError] = useState<any>(null);
     const [values, setValues] = useState<any>(null);
-    let val = 100 / 7
+    let val = 100 / 3
     const { fetch, data: categorys } = useFetchByLoad({ url: "batimentCategorys", query: JSON.stringify({ parentId: categoryId }) });
 
     useEffect(() => {
@@ -49,10 +49,6 @@ export default function Page() {
     }, [name])
 
     const { create, data: respond, loading } = usePost();
-
-    const validationSchemaService1 = Yup.object().shape({
-        batimentCategoryId: Yup.string().required("Category is required"),
-    });
 
     const validationSchemaInfo = Yup.object().shape({
         title: Yup.string().required("Title is required"),
@@ -71,14 +67,36 @@ export default function Page() {
     });
 
     const handlePrevious = () => {
-        setStep(step - 1)
+        if (step == 1) {
+            setBatimentCategorys(null)
+            setCategoryId("0")
+            setStep(1)
+            setProgress(val)
+        } else {
+            setStep(step - 1)
+            setProgress(val)
+        }
+    }
+
+    const handleNext = () => {
+        if (batimentCategorys) {
+            setProgress(progress + val)
+            setError(null)
+            if (!batimentCategorys?.isParent) {
+                setStep(2)
+            } else {
+                setCategoryId(batimentCategorys?.id)
+                setBatimentCategorys(null)
+            }
+        } else {
+            setError('Category is required')
+        }
     }
 
     const handleUpdate = (value: any) => {
-        let val = 100 / 4
         setProgress(progress == 0 ? val : progress + val)
         if (step == 3) {
-            create("batiments", { ...values, ...value })
+            create("batiments", { ...values, ...value, batimentCategoryId: batimentCategorys?.id  })
         } else {
             setValues({ ...values, ...value })
             setStep(step + 1)
@@ -102,52 +120,39 @@ export default function Page() {
                 </div>
                 {/* stepers end */}
 
-                {(step == 1 && values) && (<Formik
-                    initialValues={values}
-                    validationSchema={validationSchemaService1}
-                    onSubmit={(values: any) => handleUpdate(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit }) => (
-                        <><div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                            <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"Select the type of work you wish to carry out"}</p>
-                        </div>
-                            <Field name={'batimentCategoryId'}>
-                                {({ field, form, meta }: any) => {
-                                    return <><div className="flex flex-wrap justify-normal">
-                                        {categorys?.data && categorys.data.map((item: any, key: any) => {
-                                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${field.value == item.id ? "bg-gray-500" : "border-gray-500"}`}
-                                                onClick={() => {
-                                                    field.onChange('batimentCategoryId')(
-                                                        item.id
-                                                    );
-                                                }} >
-                                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
-                                                    <Image
-                                                        alt=""
-                                                        width="44"
-                                                        height="44"
-                                                        src={item.icon}
-                                                    />
-                                                </div>)}
-                                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
-                                            </div>
-                                        })}
-                                    </div>
-                                        <div>
-                                            {form?.errors['batimentCategoryId'] && form?.touched['batimentCategoryId'] && (
-                                                <div className="mt-1 text-xs-1 text-meta-1">{form.errors['batimentCategoryId']}</div>
-                                            )}
-                                        </div>
-                                    </>
-                                }}
-                            </Field>
-
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-                            <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                {step == 1 && (<>
+                    <div className="mx-3 mb-3 border-b-2 border-indigo-800">
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
+                    </div>
+                    <div className="flex flex-wrap justify-normal">
+                        {categorys?.data && categorys.data.map((item: any, key: any) => {
+                            return <div key={key} className={`flex items-center w-73 md:my-2 my-2 mx-2 ml-2 rounded-[5px] border p-2 cursor-pointer ${batimentCategorys?.id == item.id ? "bg-gray-500" : "border-gray-500"}`}
+                                onClick={() => {
+                                    setBatimentCategorys(item);
+                                }}>
+                                {item.icon && (<div className={`flex items-center justify-center rounded-md w-14 h-14 bg-gray-400`}>
+                                    <Image
+                                        alt=""
+                                        width="44"
+                                        height="44"
+                                        src={item.icon}
+                                    />
+                                </div>)}
+                                <p className="pl-2 text-sm font-normal text-deep-black">{item.name}</p>
                             </div>
-                        </>)}
-                </Formik>)}
+                        })}
+                    </div>
+                    <div>
+                        {error && (
+                            <div className="mt-1 text-xs-1 text-meta-1">{error}</div>
+                        )}
+                    </div>
+                    <div className="my-4 border-t-2 border-gray-500"></div>
+                    <div className="flex justify-center">
+                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
+                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
+                    </div>
+                </>)}
 
                 {step == 2 && (<Formik
                     initialValues={values}
@@ -184,7 +189,7 @@ export default function Page() {
                         </>)}
                 </Formik>)}
 
-                {step == 2 && (<Formik
+                {step == 3 && (<Formik
                     initialValues={values}
                     validationSchema={validationSchemaContact}
                     onSubmit={(values: any) => handleUpdate(values)}

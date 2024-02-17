@@ -55,6 +55,10 @@ export default function Page() {
         create("auth/signup", { ...values, ...value, role: "user" })
     }
 
+    const handlePrevious = () => {
+        setStep(step - 1)
+    }
+
     useEffect(() => {
         if (respond) {
             toast.success(`Espace Pro Sign Up successfully`);
@@ -152,7 +156,10 @@ export default function Page() {
                                             placeholder={language.phonenum_placeholder}
                                         />
                                     </div>
-                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
+                                    <div className="flex justify-center">
+                                        <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded mr-5" value={"Précédente"} onClick={handlePrevious} />
+                                        <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
+                                    </div>
                                 </>)}
                         </Formik>)}
 
@@ -190,8 +197,11 @@ export default function Page() {
                                     </div>
                                     <p className="text-black">{language.numeric_character}</p>
                                     <p className="text-black">{language.special_character}</p>
-                                    <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
-                                </>)}
+                                    <div className="flex justify-center">
+                                        <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded mr-5" value={"Précédente"} onClick={handlePrevious} />
+                                        <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
+                                    </div>                                
+                                    </>)}
                         </Formik>)}
 
                         {step == 4 && (
@@ -203,17 +213,6 @@ export default function Page() {
                                 {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                     <>
                                         <div className="w-full mx-auto">
-                                            {/* <p className="my-5 text-lg font-bold text-center text-black ">{language.sponsorship}</p>
-                                            <p className="text-sm text-black">{language.sponsor_code}</p> */}
-                                            {/* <div className="flex items-center mx-auto mt-5 bg-white border border-gray-300 rounded-full ">
-                                                <div className="mx-2">
-                                                    <AiOutlineSearch size="20" className="text-gray" />
-                                                </div>
-                                                <input type="text" className="flex-grow text-sm font-semibold text-black border-none focus:outline-none" placeholder="Sponsor code" />
-                                                <button className="flex flex-row items-center justify-center px-20 py-3 text-xs font-semibold text-white bg-indigo-800 rounded-full hover:bg-blue-700">
-                                                    {language.apply}
-                                                </button>
-                                            </div> */}
                                             <p className="mb-5 text-lg font-bold text-center text-black">cette partie est à supprimer</p>
                                             <p className="py-5 text-sm font-bold text-deep-black">{language.terms}</p>
                                             <ul className="text-sm list-disc list-inside text-gray">
@@ -234,12 +233,14 @@ export default function Page() {
                                                 />
                                                 {language.agree_terms}
                                             </label>
-                                            {/* {errors.terms ? (
-                                                <div style={{ color: 'red' }}>{errors.terms}</div>
-                                            ) : null} */}
+                                            {errors.terms ? (
+                                                <div style={{ color: 'red' }}>{'Vous devez accepter les termes et conditions'}</div>
+                                            ) : null}
                                         </div>
-                                        <Buttons className="w-full p-2 mt-5 text-white bg-indigo-800 rounded" value={"Valider"} onClick={handleSubmit} />
-                                    </>)}
+                                        <div className="flex justify-center">
+                                            <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded mr-5" value={"Précédente"} onClick={handlePrevious} />
+                                            <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
+                                        </div></>)}
                             </Formik>)}
 
                         {step == 5 && (<>

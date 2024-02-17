@@ -1,37 +1,23 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from "react";
 
-export const useStorage = () => {
-    // Function to get an item from AsyncStorage
-    const getItem = async (key: any) => {
-        try {
-            const value = await sessionStorage.getItem(key);
-            return value ? JSON.parse(value) : undefined;
-        } catch (error) {
-            // console.error('AsyncStorage getItem error:', error);
-        }
-    };
+function getStorageValue(key: any, defaultValue: any) {
+  // getting stored value
+  if (typeof window !== "undefined") {
+    const saved = sessionStorage.getItem(key);
+    const initial = saved !== null ? JSON.parse(saved) : defaultValue;
+    return initial;
+  }
+}
 
-    // Function to set an item in AsyncStorage
-    const setItem = async (key: any, value: any) => {
-        try {
-            await sessionStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-            // console.error('AsyncStorage setItem error:', error);
-        }
-    };
+export const useStorage = (key: any, defaultValue: any) => {
+  const [value, setValue] = useState(() => {
+    return getStorageValue(key, defaultValue);
+  });
 
-    // Function to remove an item from AsyncStorage
-    const removeItem = async (key: any) => {
-        try {
-            await sessionStorage.removeItem(key);
-        } catch (error) {
-            // console.error('AsyncStorage removeItem error:', error);
-        }
-    };
+  useEffect(() => {
+    // storing input name
+    sessionStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
 
-    return {
-        getItem,
-        setItem,
-        removeItem,
-    };
+  return [value, setValue];
 };

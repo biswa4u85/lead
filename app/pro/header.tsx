@@ -4,18 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../images/logo.svg"
 import { usePathname } from "next/navigation";
+import { useStorage } from "@/contexts/useStorage";
 import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { signOut, useSession } from 'next-auth/react'
 import language from "@/contexts/language";
 
-
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+  const [users, setUsers] = useStorage("users", null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -50,6 +51,7 @@ export default function Header() {
             <Link href={"/pro/balance"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("balance") ? "text-primary" : "text-white")}>{language.balance}</Link>
             {!data?.user?.name ? <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link> :
               <button onClick={() => {
+                setUsers(null)
                 signOut({ redirect: false }).then(() => {
                   router.push("/auth");
                 });
@@ -83,13 +85,13 @@ export default function Header() {
                   <Image
                     width={90}
                     height={90}
-                    src={data?.user?.image ? data?.user?.image : "/images/user.png"}
+                    src={users ? users.image : (data?.user?.image ? data?.user?.image : "/images/user.png")}
                     alt="User"
-                    className={data?.user?.image ? "rounded-full" : "rounded-full"}
+                    className={(users || data?.user?.image) ? "rounded-full" : "rounded-full"}
                   />
                 </span>
                 <span className="text-indigo-900 hover:text-blue-700">
-                  {data?.user?.name}
+                  {users ? `${users.firstName} ${users.lastName}` : data?.user?.name}
                 </span>
 
                 <svg
@@ -123,10 +125,11 @@ export default function Header() {
                 </button>
                 <button onClick={() => {
                   signOut({ redirect: false }).then(() => {
+                    setUsers(null)
                     router.push("/auth");
                   });
                 }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                 {language.log_out}
+                  {language.log_out}
                 </button>
               </div>
             </div> :

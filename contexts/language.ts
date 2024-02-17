@@ -59,6 +59,14 @@ export default
         phone_placeholder: "Enter your Phone",
         postal_label: "Postal Code",
         postal_placeholder: "Code Postal",
+        phone: "Téléphone",
+        mobile: "Mobile",
+        address: "Address",
+        city: "Ville",
+        creation: "Date de création",
+        SIRET: "SIRET N°",
+        email: "E-mail",
+        website: "Site web",
 
         // depannage
 
@@ -88,7 +96,6 @@ export default
         profeional_details: "Profeional details details",
         name: "Name",
         company: "Company",
-        address: "Address",
 
         // Projects
 
@@ -191,13 +198,17 @@ export default
         add: "Add",
         profile_picture: "Photo de Profil",
         photo: "Inclure une photo de votre visage, une image dans une situation professionnelle ou votre logo afin d'instaurer un climat de confiance, à la fois avec les individus et pour l'image de votre marque.",
-        creation: "Date of creation",
         wallet: "Wallet",
         change_contact: "Change my contact details",
         company_details: "Information About My Company",
         company_paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         information: "My Contact Information",
         company_name: "Company name",
+        civility: "Civility",
+        lace: "Lace",
+        siret: "Number of SIRET",
+        function: "Function",
+        internet: "Site internet",
         company_placeholder: "Enter Company name",
         first_placeholder: "Enter First name",
         last_placeholder: "Enter Last name",
@@ -226,8 +237,13 @@ export default
         contractend_placeholder: "Enter Contract End",
         actions: "Actions",
         downloaded: "Downloaded",
+        otp: "OTP",
 
+        // approval
 
+        assign_to: "Assign To",
+        phone_no: "Phone",
+        
 
 
 

@@ -39,39 +39,39 @@ export default function Page() {
                 <div className="md:flex items-center justify-between">
                     <div className="flex flex-col items-normal w-90">
                         <div className="flex items-center">
-                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.firstName_label}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.firstName}</div>
-                        </div>
-                        <div className="flex items-center">
-                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.lastName_label}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.lastName}</div>
-                        </div>
-                        <div className="flex items-center">
-                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.phone_label}</label>
+                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.phone}</label>
                             <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.phone}</div>
                         </div>
                         <div className="flex items-center">
-                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.email_label}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.email}</div>
+                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.mobile}</label>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.mobile}</div>
+                        </div>
+                        <div className="flex items-center">
+                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.address}</label>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.address}</div>
+                        </div>
+                        <div className="flex items-center">
+                            <label className="w-1/3 font-thin texl-title-sm text-gray">{language.city}</label>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.city}</div>
                         </div>
                     </div>
 
                     <div className="flex flex-col items-normal w-90">
                         <div className="flex items-center">
                             <label className="w-2/3 font-thin texl-title-sm text-gray">{language.creation}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{new Date(user.createdAt).toDateString()}</div>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.creation}</div>
                         </div>
                         <div className="flex items-center">
-                            <label className="w-2/3 font-thin texl-title-sm text-gray">{language.postal_label}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.postalCode}</div>
+                            <label className="w-2/3 font-thin texl-title-sm text-gray">{language.SIRET}</label>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.siret}</div>
                         </div>
                         <div className="flex items-center">
-                            <label className="w-2/3 font-thin texl-title-sm text-gray">{language.wallet}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">${user.wallet}</div>
+                            <label className="w-2/3 font-thin texl-title-sm text-gray">{language.email}</label>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.email}</div>
                         </div>
                         <div className="flex items-center">
-                            <label className="w-2/3 font-thin texl-title-sm text-gray">{language.company}</label>
-                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.company}</div>
+                            <label className="w-2/3 font-thin texl-title-sm text-gray">{language.website}</label>
+                            <div className="w-2/3 p-2 font-thin text-black texl-title-sm">{user.internet}</div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ export default function Page() {
                         Change my password
                     </button>
                     <button onClick={() => router.push(`/pro/profile/${(data?.user as any)?.id}`)} type="submit" className="px-6 py-2 mx-2 font-thin text-white bg-indigo-800 border rounded text-title-xsm">
-                    {language.change_contact}
+                        {language.change_contact}
                     </button>
                 </div>
             </div>

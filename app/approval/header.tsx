@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { signOut, useSession } from 'next-auth/react'
+import language from "@/contexts/language";
+
 
 export default function Header() {
   const pathname = usePathname();
@@ -42,14 +44,14 @@ export default function Header() {
         <div className={`absolute w-full top-0 bg-black opacity-80 lg:hidden p-4 text-white ${isMobileMenuOpen ? '' : 'hidden'}`}>
           <div className="absolute top-2 right-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} /></div>
           <nav className="flex flex-col" >
-            <Link href={"/approval"} className={"mx-2 my-1 hover:text-blue-700 " + (pathname.includes("approval") ? "text-primary" : "text-white")}>Find Projects</Link>
-            {!data?.user?.name ? <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link> :
+            <Link href={"/approval"} className={"mx-2 my-1 hover:text-blue-700 " + (pathname.includes("approval") ? "text-primary" : "text-white")}>{language.find_projects}</Link>
+            {!data?.user?.name ? <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link> :
               <button onClick={() => {
                 signOut({ redirect: false }).then(() => {
                   router.push("/auth");
                 });
               }} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">
-                Log Out
+                {language.log_out}
               </button>}
           </nav>
         </div>
@@ -62,7 +64,7 @@ export default function Header() {
           /></Link>
           <div className='flex'>
             <nav className="flex items-center justify-between" >
-              <Link href={"/approval"} className={"mx-5  hover:text-blue-700 " + (pathname.includes("approval") ? "text-primary" : "text-indigo-900")}>Find Projects</Link>
+              <Link href={"/approval"} className={"mx-5  hover:text-blue-700 " + (pathname.includes("approval") ? "text-primary" : "text-indigo-900")}>{language.find_projects}</Link>
             </nav>
             {data?.user?.name ? <div className="relative">
               <Link
@@ -112,11 +114,11 @@ export default function Header() {
                     router.push("/auth");
                   });
                 }} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
-                  Log Out
+                 {language.log_out}
                 </button>
               </div>
             </div> :
-              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">Login</Link>}
+              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link>}
           </div>
         </div>
       </header>

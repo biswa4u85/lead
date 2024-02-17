@@ -213,7 +213,6 @@ const MultiSelectBox = (props: any) => {
               }}
               placeholder={props.placeholder ?? "Please select"}
               value={field.value}
-              treeCheckable={true}
               showCheckedStrategy={SHOW_PARENT}
               onChange={(obj: any) => {
                 form.setFieldValue(props.name, obj);

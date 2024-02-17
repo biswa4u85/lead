@@ -13,45 +13,73 @@ export async function POST(request: NextRequest) {
     try {
         const type = request.url.split("password/")[1];
         const data = await request.json();
-        const { email, otp, password } = data;
+        const { email, otp, token, password } = data;
 
         // Make Otp
         let newOtp = getOtp()
 
+        let ifUser: any = await prisma[resource].findUnique({ where: { email } });
+        let ifOtp: any = await prisma[subResource].findUnique({ where: { phoneEmail: email } });
+
         switch (type) {
+
+            case 'validate-email':
+                try {
+                    // Check User & Otp  if Exit
+                    if (!ifUser) return errorResponse("User Not Exit !!");
+                    if (!ifOtp) return errorResponse("Otp Not Exit !!");
+                    if (ifOtp.otp != token) return errorResponse("Invalid OTP");
+
+                    // Verified Email
+                    await prisma[resource].update({ where: { email }, data: { emailVerified: true } });
+                    await prisma[subResource].delete({ where: { phoneEmail: email, otp: Number(token) } });
+                    return successResponse({ message: `Email Validated Successfully`, success: true });
+                } catch (error: any) {
+                    errorResponse(error.message);
+                }
+
             case 'forget':
+                try {
 
-                // Check User if Exit
-                const ifUser: any = await prisma[resource].findMany({ where: { email } });
-                if (ifUser && ifUser.length == 0) return errorResponse("User Not Exit !!");
-                const ifOtp: any = await prisma[subResource].findUnique({ where: { phoneEmail: email } });
-                if (ifOtp) return errorResponse("OTP already sent, please try after 1 minute");
+                    // Check User if Exit
+                    if (!ifUser) return errorResponse("User Not Exit !!");
+                    if (ifOtp) {
+                        await prisma[subResource].update({ where: { phoneEmail: email }, data: { otp: newOtp } });
+                    } else {
+                        await prisma[subResource].create({ data: { otp: newOtp, phoneEmail: email } });
+                    }
 
-                const res = await prisma[subResource].create({ data: { otp: newOtp, phoneEmail: email } });
+                    let title = language?.professional_emails?.forgot_title
+                    let body = language?.professional_emails?.forgot_body
+                    body = body.replace('[name]', `${ifUser.firstName} ${ifUser.lastName}`);
+                    body = body.replace('[url]', `OTP is: [ ${newOtp} ]`);
+                    sendEmail(ifUser.email, `${ifUser.firstName} ${ifUser.lastName}`, title, body)
 
-                let title = language?.professional_emails?.forgot_title
-                let body = language?.professional_emails?.forgot_body
-                body = body.replace('[name]', `${ifUser[0].firstName} ${ifUser[0].lastName}`);
-                body = body.replace('[url]', `OTP is: [ ${newOtp} ]`);
-                sendEmail(ifUser[0].email, `${ifUser[0].firstName} ${ifUser[0].lastName}`, title, body)
-
-                return successResponse({ message: `OTP sent successfully`, success: true });
+                    return successResponse({ message: `OTP sent successfully`, email, success: true });
+                } catch (error: any) {
+                    errorResponse(error.message);
+                }
 
             case 'reset':
+                try {
 
-                // Check User if Exit
-                const ifExist: any = await prisma[subResource].findUnique({ where: { phoneEmail: email } });
-                if (!ifExist) return errorResponse("Seems Otp expired !!");
-                if (ifExist.otp != otp) return errorResponse("Invalid OTP");
+                    // Check User & Otp  if Exit
+                    if (!ifUser) return errorResponse("User Not Exit !!");
+                    if (!ifOtp) return errorResponse("Otp Not Exit !!");
+                    if (ifOtp.otp != token) return errorResponse("Invalid OTP");
 
-                // Hash password
-                if (password) {
-                    const salt = await bcryptjs.genSalt(10)
-                    const newPassword = await bcryptjs.hash(password, salt)
-                    await prisma[resource].update({ where: { email }, data: { password: newPassword } });
-                    return successResponse({ message: `Password change successfully`, success: true });
+                    // Hash password
+                    if (password) {
+                        const salt = await bcryptjs.genSalt(10)
+                        const newPassword = await bcryptjs.hash(password, salt)
+                        await prisma[resource].update({ where: { email }, data: { password: newPassword } });
+                        await prisma[subResource].delete({ where: { phoneEmail: email, otp: Number(token) } });
+                        return successResponse({ message: `Password change successfully`, success: true });
+                    }
+                    return errorResponse("Invalid Password");
+                } catch (error: any) {
+                    errorResponse(error.message);
                 }
-                return errorResponse("Invalid Password");
 
 
             case 'validate':
@@ -74,8 +102,8 @@ export async function POST(request: NextRequest) {
                     image: user.image,
                 }
                 //create token
-                const token = await jwt.sign(tokenData, process.env.NEXTAUTH_SECRET!, { expiresIn: "1d" })
-                user['token'] = token
+                const tokens = await jwt.sign(tokenData, process.env.NEXTAUTH_SECRET!, { expiresIn: "1d" })
+                user['token'] = tokens
                 return successResponse(user);
 
             default:

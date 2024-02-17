@@ -1,4 +1,4 @@
-import { InputBox, TextareaBox, SelectBox, Buttons } from "@/components/RenderFroms";
+import { InputBox, TextareaBox, SelectBox,MultiSelectBox,  Buttons } from "@/components/RenderFroms";
 import { Formik, FieldArray } from "formik";
 import * as Yup from "yup";
 import { useFetch } from "@/contexts/useFetch";
@@ -6,6 +6,7 @@ import { FaUser, FaPhoneAlt } from "react-icons/fa";
 import { MdEmail, MdOutlineSubtitles } from "react-icons/md";
 import { TbMapNorth } from "react-icons/tb";
 import { FaLocationDot } from "react-icons/fa6";
+import language from "@/contexts/language";
 
 const initialData = {
     depannageCategoryId: "",
@@ -35,10 +36,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         postalCode: Yup.string().required("Postal Code is required"),
     });
 
-    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({}) });
-    const categoryOptions = categorys?.data ? categorys.data.map((item: any) => {
-        return { label: `${item?.name}`, value: item?.id }
-    }) : []
+    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({showAll: true}) });
 
     return (
         <Formik
@@ -49,13 +47,14 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
                     <div className="mb-4">
-                        <SelectBox
+                    <MultiSelectBox
                             required={true}
-                            options={categoryOptions}
+                            tree={true}
+                            multiple={false}
                             name="depannageCategoryId"
-                            label="Category"
-                            placeholder="Enter Category"
-                            icon={<TbMapNorth />}
+                            label={language.catagorys_label}
+                            placeholder={language.catagorys_placeholder}
+                            options={categorys?.data ?? []}
                         />
                     </div>
                     <div className="mb-4">
