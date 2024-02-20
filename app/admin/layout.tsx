@@ -19,7 +19,7 @@ export default function RootLayout({
   useLayoutEffect(() => {
     if (data && data?.user) {
       if ((data?.user as any)?.role == "user") {
-        router.push("/pro");
+        router.push("/pro/profile");
       }else if ((data?.user as any)?.role == "approval") {
         router.push("/approval");
       }else{

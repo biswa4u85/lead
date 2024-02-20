@@ -191,3 +191,9 @@ body{
 }
 
 .horiZontScroll{width: 100%; overflow-y: hidden; overflow-x: auto;}
+
+
+
+.ant-btn-primary{
+  background: #1677ff!important;
+}

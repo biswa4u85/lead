@@ -10,11 +10,16 @@ export async function GET(request: NextRequest) {
 
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
+        const ids = request.nextUrl.searchParams.get("ids")
+
+        let where: any = {}
+        if (ids) where['id'] = { in: ids.split(',') }
 
         const counts = await prisma[resource].count()
         const result = await prisma[resource].findMany({
             skip,
             take,
+            where
         });
         if (!result) return errorResponse("Record Not Found");
         return successResponse(result, counts);

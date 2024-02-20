@@ -120,7 +120,7 @@ const TextareaBox = (props: any) => {
           {props.label && (<label className="mb-2.5 block font-medium text-black dark:text-white">
             {props.label} {(form?.errors[props.name] || props.required) && (<span className="text-meta-1">{"*"}</span>)}
           </label>)}
-          <div className="relative">
+          <div className="relative w-full">
             <textarea
               rows={6}
               value={field.value}

@@ -39,7 +39,7 @@ model User {
   category      String[]
   category_new  String[]
   citys         String[]
-  tags          String[]
+  tags          Json[]
   docs          Json[]
   accounts      Account[]
   payments      Payment[]

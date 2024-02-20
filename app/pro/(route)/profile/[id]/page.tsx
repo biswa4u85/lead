@@ -2,43 +2,54 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useFetch } from "@/contexts/useFetch";
+import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { usePatch } from "@/contexts/usePatch";
-import { useStorage } from "@/contexts/useStorage";
-import { MultiSelectBox, InputBox, TextareaBox, PasswordBox, FileBox, Buttons } from "@/components/RenderFroms";
+import { MultiSelectBox, InputBox, FileBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Button, message, Popconfirm } from 'antd';
 import { toast } from 'react-toastify';
-import { AiOutlineMinusCircle } from 'react-icons/ai';
+import { Popconfirm } from 'antd';
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import Loader from "@/components/common/Loader";
 import language from "@/contexts/language";
-import Docs from './docs'
+import { useSession } from 'next-auth/react'
+import Description from '../description'
+import Docs from '../docs'
+import Labels from '../labels'
 
 export default function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
+    const { data: userData, update: sessionUpdate } = useSession();
     const [open, setOpen] = useState<any>(false);
+    const [openDescription, setOpenDescription] = useState<any>(false);
+    const [openLabels, setOpenLabels] = useState<any>(false);
     const [value, setValue] = useState<any>(null)
-    const [catagory, setCatagory] = useState<any>(null)
-    const [users, setUsers] = useStorage("users", null);
+    const [tagIds, setTagIds] = useState([]);
+    const [tags, setTags] = useState([]);
 
+    const { fetch, data } = useFetchByLoad({ url: "users", query: JSON.stringify({ id: params.id }) });
+
+    const { data: allTags } = useFetch({ url: "tags", query: JSON.stringify({ ids: tagIds }) });
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({ showAll: true }) });
     const { data: servicesNew } = useFetch({ url: "depannageCategorys", query: JSON.stringify({ showAll: true }) });
     const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({ showAll: true }) });
     const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
         return { label: `${item?.name}-${item?.code}`, value: item?.id }
     }) : []
-    const { data: tags } = useFetch({ url: "tags", query: JSON.stringify({ showAll: true }) });
-    const tagOptions = tags?.data ? tags.data.map((item: any) => {
-        return { label: `${item?.name}`, value: item?.id }
-    }) : []
 
-    const { data } = useFetch({ url: "users", query: JSON.stringify({ id: params.id }) });
     useEffect(() => {
-        if (data.data) {
-            setValue(data.data[0])
-            setCatagory(data.data[0])
+        if (params.id) {
+            fetch()
         }
-    }, [data.data])
+    }, [params])
+
+    useEffect(() => {
+        if (data?.data) {
+            let tags = data.data[0]?.tags ? data.data[0].tags.map((item: any) => item.label) : []
+            setValue(data.data[0])
+            setTagIds(tags)
+        }
+    }, [data])
 
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
@@ -52,19 +63,6 @@ export default function Page({ params }: { params: { id: string } }) {
         citys: Yup.array().min(1, 'Citys must have at least one item'),
     });
 
-    const validationSchema2 = Yup.object().shape({
-        newPassword: Yup.string().required("Password is required"),
-        conPassword: Yup.string().required("Password is required"),
-    });
-
-    const validationSchema3 = Yup.object().shape({
-        tags: Yup.array().min(1, 'Tags must have at least one item'),
-    });
-
-    const validationSchema4 = Yup.object().shape({
-        companyDel: Yup.string().required('Company Details required'),
-    });
-
     const { edit, data: respond, loading } = usePatch();
     const handleUpdate = (values: any) => {
         edit("users", { ...values, id: params.id })
@@ -72,13 +70,27 @@ export default function Page({ params }: { params: { id: string } }) {
 
     useEffect(() => {
         if (respond) {
-            setUsers((respond as any)?.data)
+            sessionUpdate({
+                info: { name: `${(respond as any)?.data?.firstName} ${(respond as any)?.data?.lastName}`, image: `${(respond as any)?.data?.image}` }
+            })
             setTimeout(() => {
                 toast.success(`User update successfully`);
                 router.push(`/pro/profile`)
             }, 1000)
         }
     }, [respond])
+
+    useEffect(() => {
+        if (allTags?.data && value?.tags) {
+            let tags: any = []
+            for (let item of value?.tags) {
+                let tag = allTags.data.find((it: any) => it.id == item.label)
+                item['name'] = tag?.name ?? ''
+                tags.push(item)
+            }
+            setTags(tags)
+        }
+    }, [allTags])
 
     return (
         <>
@@ -89,7 +101,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     onSubmit={(values) => handleUpdate(values)}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors }) => (<div className="container mt-10 mx-auto md:px-10">
-                        <p className="my-5 text-lg font-bold text-black">{language.company_details}</p>
+                        <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
+                            <p className="text-sm font-bold text-black md:text-lg">{language.company_details}</p>
+                            <button onClick={() => setOpenDescription(value)} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
+                                Edit Details
+                            </button>
+                        </div>
                         <div className="my-4 border-t-2 border-gray-500"></div>
                         <p className="py-2 font-semibold text-gray-600 text-title-xsm mx-5 md:mx-0 mb-10">{value?.companyDel}</p>
                         <p className="text-lg font-bold text-black mx-5 md:mx-0">{language.information}</p>
@@ -228,9 +245,9 @@ export default function Page({ params }: { params: { id: string } }) {
                     </div>)}
                 </Formik>}
 
-            {!catagory ? <Loader /> :
+            {!value ? <Loader /> :
                 <Formik
-                    initialValues={catagory}
+                    initialValues={value}
                     validationSchema={validationSchema1}
                     onSubmit={(values) => handleUpdate(values)}
                 >
@@ -285,140 +302,97 @@ export default function Page({ params }: { params: { id: string } }) {
                     }}
                 </Formik>}
 
-            <Formik
-                initialValues={{ ...value, newPassword: "", conPassword: "" }}
-                validationSchema={validationSchema2}
-                onSubmit={(values) => handleUpdate(values)}
-            >
-                {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
-                    return <div className="container mx-auto md:px-10">
-                        <p className="text-lg font-bold text-black md:mx-0">Change my password</p>
-                        <div className="my-4 border-t-2 border-gray-500"></div>
-
-                        {/* start form section */}
-                        <div className='grid grid-cols-1 mb-8 font-inter gap-7 md:grid-cols-4 mx-5 md:mx-0'>
-                            <div className="flex flex-col">
-                                <PasswordBox
-                                    required={true}
-                                    name="newPassword"
-                                    label={language.password}
-                                    placeholder={language.password_placeholder}
-                                />
-                            </div>
-                            <div className="flex flex-col">
-                                <PasswordBox
-                                    required={true}
-                                    name="conPassword"
-                                    label={language.confirm_password}
-                                    placeholder={language.confirm_password_placeholder}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex justify-end mt-5 mb-20 md:mb-40">
-                            <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" loading={loading} onClick={handleSubmit} />
-                        </div>
+            <div className="container mx-auto my-20 md:px-10">
+                <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
+                    <p className="text-sm font-bold text-black md:text-lg">{language.description}</p>
+                    <button onClick={() => setOpenDescription(value)} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
+                        Edit Details
+                    </button>
+                </div>
+                <div className="my-4 border-t-2 border-gray-500"></div>
+                <div className=''>
+                    <div className="flex flex-col w-full">
+                        {value?.companyDel}
                     </div>
-                }}
-            </Formik>
-
-            {!value ? <Loader /> :
-                <Formik
-                    initialValues={value}
-                    validationSchema={validationSchema4}
-                    onSubmit={(values) => handleUpdate(values)}
-                >
-                    {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
-                        return <div className="container mx-auto md:px-10">
-                            <p className="text-lg font-bold text-black md:mx-0">{language.description}</p>
-                            <div className="my-4 border-t-2 border-gray-500"></div>
-
-                            {/* start form section */}
-                            <div className=''>
-                                <div className="flex flex-col w-full">
-                                    <TextareaBox
-                                        required={true}
-                                        name="companyDel"
-                                        style={{ width: '100%' }}
-                                        placeholder={'Company Details'}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex justify-end mt-5 mb-10 md:mb-10">
-                                <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" loading={loading} onClick={handleSubmit} />
-                            </div>
-                        </div>
-                    }}
-                </Formik>}
+                </div>
+            </div>
 
             {/* start last page */}
             <div className="container mx-auto md:px-10">
 
                 <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
                     <p className="text-sm font-bold text-black md:text-lg">{language.document}</p>
-                    <button onClick={() => setOpen({ name: "", file: "" })} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
-                        Add New
+                    <button onClick={() => setOpen(value)} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
+                        {language.edit_details}
                     </button>
                 </div>
+
                 <div className="my-4 border-t-2 border-gray-500"></div>
                 <p className="py-2 text-gray-600 mx-5 md:mx-0">{language.insurance_text}</p>
 
-                {value && value.docs && value.docs.map((item: any, key: any) => <div key={key} className="flex my-3 justify-between p-2 shadow-[0px_0px_10px_1px_#F2F6FB] mx-5 md:mx-0">
-                    <div className="text-xs font-semibold">{item.name}</div>
-                    <div className="flex items-center">
-                        <p className="text-xs font-semibold"><img className="w-20" src={item.file} /></p>
-                        <Popconfirm
-                            title="Delete doc"
-                            description="Are you sure to delete this doc?"
-                            onConfirm={() => {
-                                value.docs.splice(key, 1);
-                                handleUpdate({ docs: value.docs })
-                            }}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                            <div className="cursor-pointer"><AiOutlineMinusCircle size="20" className="ml-10 text-danger" /></div>
-                        </Popconfirm>
-                    </div>
-                </div>)}
-
-                {!value ? <Loader /> :
-                    <Formik
-                        initialValues={value}
-                        validationSchema={validationSchema3}
-                        onSubmit={(values) => handleUpdate(values)}
-                    >
-                        {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
-                            return <div className="container mx-auto mt-10">
-                                <p className="text-lg font-bold text-black md:mx-0">{language.quality}</p>
-                                <div className="my-4 border-t-2 border-gray-500"></div>
-
-                                {/* start form section */}
-                                <div className='grid grid-cols-1 mb-8 font-inter gap-7 md:grid-cols-4 mx-5 md:mx-0'>
-                                    <div className="flex flex-col">
-                                        <MultiSelectBox
-                                            required={true}
-                                            multiple={true}
-                                            treeCheckable={true}
-                                            name="tags"
-                                            placeholder={'Tags'}
-                                            options={tagOptions}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex justify-end mt-5 mb-10 md:mb-10">
-                                    <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" loading={loading} onClick={handleSubmit} />
-                                </div>
-                            </div>
-                        }}
-                    </Formik>}
-
-            </div>
+                {value && value.docs && value.docs.map((item: any, key: any) =>
+                    <div key={key} className="flex my-3 justify-between p-2 shadow-[0px_0px_10px_1px_#F2F6FB] mx-5 md:mx-0">
+                        <div className="text-xs font-semibold">{item.name}</div>
+                        <div className="flex items-center cursor-pointer" onClick={() => setOpen(value)}>
+                            {/* <p className="text-xs font-semibold">{item.file}</p> */}
+                            <img src={item.file} width={30} />
+                            <AiOutlinePlusCircle size="20" className="ml-10 text-indigo-800" />
+                        </div>
+                    </div>)}
+            </div >
             {/* End last page */}
-            {open && (<Docs value={open} setOpen={setOpen} handleOk={(docs: any) => {
-                handleUpdate({ docs: [...value.docs, docs] })
+
+
+            {/* start last page */}
+            <div className="container mx-auto mt-20 md:px-10">
+
+                <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
+                    <p className="text-sm font-bold text-black md:text-lg">{language.quality}</p>
+                    <button onClick={() => setOpenLabels(value)} className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0">
+                        {language.add}
+                    </button>
+                </div>
+                <div className="my-4 border-t-2 border-gray-500"></div>
+                {tags.map((item: any, key: any) =>
+                    <div key={key} className="flex my-3 justify-between p-2 shadow-[0px_0px_10px_1px_#F2F6FB] mx-5 md:mx-0">
+                        <div className="text-xs font-semibold">{item.name}</div>
+                        <div className="text-xs font-semibold">{item.startDate}</div>
+                        <div className="text-xs font-semibold">{item.endDate}</div>
+                        <div className="flex items-center cursor-pointer">
+                            <img src={item.file} width={30} />
+                            <Popconfirm
+                                title="Delete the label"
+                                description="Are you sure to delete this label?"
+                                onConfirm={() => {
+                                    let tags = value.tags ?? []
+                                    tags.splice(key, 1);
+                                    edit("users", { tags, id: value.id })
+                                }}
+                                okText="YES"
+                                cancelText="NO"
+                            >
+                                <AiOutlineMinusCircle size="20" className="ml-10 text-danger" />
+                            </Popconfirm>
+
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* End last page */}
+            {openDescription && (<Description value={openDescription} setOpen={setOpenDescription} handleOk={() => {
+                fetch()
+                setOpenDescription(false)
+            }} />)}
+
+            {open && (<Docs value={open} setOpen={setOpen} handleOk={() => {
+                fetch()
                 setOpen(false)
+            }} />)}
+
+            {openLabels && (<Labels value={openLabels} setOpen={setOpenLabels} handleOk={() => {
+                fetch()
+                setOpenLabels(false)
             }} />)}
         </>
     );

@@ -10,8 +10,6 @@ import Header from "./header"
 import Loader from "@/components/common/Loader";
 import language from "@/contexts/language";
 
-
-
 export default function RootLayout({
   children,
 }: {
@@ -26,7 +24,7 @@ export default function RootLayout({
       if ((data?.user as any)?.role == "admin") {
         router.push("/admin");
       } else if ((data?.user as any)?.role == "user") {
-        router.push("/pro");
+        router.push("/pro/profile");
       } else {
         setLoading(false)
       }

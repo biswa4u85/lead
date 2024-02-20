@@ -53,7 +53,7 @@ const authOptions: NextAuthOptions = {
                 }
             }
         },
-        jwt: ({ token, user }) => {
+        jwt: ({ token, user, trigger, session }) => {
             if (user) {
                 const u = user as unknown as any
                 return {
@@ -62,6 +62,18 @@ const authOptions: NextAuthOptions = {
                     token: u.token,
                     role: u.role,
                     name: `${u.firstName} ${u.lastName}`,
+                    profile: `${u.image}`,
+                }
+            }
+            if (trigger === 'update') {
+                if (session.info) {
+                    return {
+                        ...token,
+                        name: session.info.name,
+                        image: session.info.image,
+                        picture: session.info.image,
+                        profile: session.info.profile,
+                    }
                 }
             }
             return token

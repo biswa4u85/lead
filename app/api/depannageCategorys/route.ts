@@ -10,7 +10,12 @@ export async function GET(request: NextRequest) {
         const skip = Number(request.nextUrl.searchParams.get("skip")) || 0
         const take = Number(request.nextUrl.searchParams.get("take")) || 100
         const parentId = request.nextUrl.searchParams.get("parentId")
+        const ids = request.nextUrl.searchParams.get("ids")
         const showAll = request.nextUrl.searchParams.get("showAll") || false
+
+        let where: any = {}
+        if (ids) where['id'] = { in: ids.split(',') }
+
         if (parentId) {
             let include: any = {}
             if (parentId != "0") {
@@ -27,7 +32,8 @@ export async function GET(request: NextRequest) {
         } else if (showAll) {
             const result = await prisma[resource].findMany({
                 skip,
-                take
+                take,
+                where
             });
             if (!result) return errorResponse("Record Not Found");
             return successResponse(result);
