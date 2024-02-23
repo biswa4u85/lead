@@ -42,32 +42,26 @@ export default function Page() {
                     <h2 className="mb-6 text-lg font-semibold text-center text-black md:xl">Venez tester nos offres pour booster votre <p className="font-bold text-indigo-800 underline break-all">activité de construction</p> </h2>
                     <h3 className="mb-6 text-sm font-semibold text-center text-black md:xl">Des solutions simples conçues pour votre activité </h3>
 
-                    <div className="flex flex-col items-center md:items-start center md:flex-row md:justify-center ">
-                        <div className="py-8 px-4 shadow-custom text-center w-80 h-full rounded-[16px] flex flex-col items-center justify-center">
-                            <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                                <span className="text-lg font-bold text-indigo-800">1</span>
-                            </div>
+                    <div className="grid  md:grid-cols-4 sm:grid-cols-1 gap-8">
+                        <div className="py-8 px-8 bg-gray-4 text-center rounded-[16px]">
+                            <p className="text-lg font-bold text-indigo-800">1</p>
                             <p className="py-5 text-md font-medium text-black">Vous postulez en ligne via notre formulaire intuitif (moins de 2min)</p>
                         </div>
-                        <div className="py-8 px-4 shadow-custom text-center w-80 h-full rounded-[16px] flex flex-col items-center justify-center">
-                            <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                                <span className="text-lg font-bold text-indigo-800">2</span>
-                            </div>
+                        <div className="py-8 px-8 bg-gray-4 text-center rounded-[16px]">
+                            <p className="text-lg font-bold text-indigo-800">2</p>
                             <p className="py-5 text-md font-medium text-black">Nous analysons votre candidature</p>
                         </div>
-                        <div className="py-8 px-4 shadow-custom text-center w-80 h-full rounded-[16px] flex flex-col items-center">
-                            <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                                <span className="text-lg font-bold text-indigo-800">3</span>
-                            </div>
+                        <div className="py-8 px-8 bg-gray-4 text-center rounded-[16px]">
+                            <p className="text-lg font-bold text-indigo-800">3</p>
                             <p className="py-5 text-md font-medium text-black">Vous êtes recontactés sous 7 jours maximum</p>
                         </div>
-                        <div className="py-8 px-4 shadow-custom text-center w-80 h-full rounded-[16px] flex flex-col items-center">
-                            <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                                <span className="text-lg font-bold text-indigo-800">4</span>
-                            </div>
+                        <div className="py-8 px-8 bg-gray-4 text-center rounded-[16px]">
+                            <p className="text-lg font-bold text-indigo-800">4</p>
                             <p className="py-5 text-md font-medium text-black">Vous intégrez notre réseau !</p>
                         </div>
+
                     </div>
+
                 </div>
             </div>
 
