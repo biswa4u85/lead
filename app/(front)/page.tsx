@@ -17,7 +17,7 @@ import chauffage from "../images/chauffage.png"
 import peinture from "../images/peinture.png"
 import renovation from "../images/renovation.png"
 import salle from "../images/salle.png"
-import Maçonnerie from "../images/Maçonnerie.png"
+import Maconnerie from "../images/Maconnerie.png"
 import Carrelage from "../images/Carrelage.png"
 
 
@@ -215,7 +215,7 @@ export default function Page() {
                             alt=""
                             width="242"
                             height="200"
-                            src={Maçonnerie}
+                            src={Maconnerie}
                             className="rounded-[16px]"
                         />
                         <div className="text-sm text-center text-black-light pt-2">{`Maçonnerie`}</div>
