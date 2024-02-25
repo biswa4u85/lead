@@ -2,10 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "felix";
+  src: url("../../public/fonts/Fellix-Regular.ttf");
+}
+
 @layer base {
   body {
     @apply relative text-base font-normal font-opensans text-body bg-whiten z-1;
   }
+}
+
+.myCustomFont{
+  font-family: var(--cooper-font);
+  color: rgb(1, 38, 53);
+   
 }
 
 @layer utilities {

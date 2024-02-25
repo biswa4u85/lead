@@ -42,13 +42,13 @@ export default function Header() {
     <>
       <div className="relative z-999">
         <div className='float-left p-5 lg:hidden md:hidden' onClick={toggleMobileMenu}><CgMenuLeft size={30} /></div>
-        <div className={`absolute w-full top-0 bg-black opacity-80 lg:hidden p-4 text-white ${isMobileMenuOpen ? '' : 'hidden'}`}>
-          <div className="absolute top-2 right-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} /></div>
+        <div className={`absolute w-full top-15 bg-[#f2f6fb] lg:hidden pt-3 pb-10 px-4 text-black transition-opacity ease-in-out delay-150 duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="absolute top-2 right-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} fill="#000" /></div>
           <nav className="flex flex-col" >
-            <Link href={"/"} className="mx-2 my-1 text-white hover:text-blue-700">{language.home}</Link>
-            <Link href={"/batiment"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("batiment") ? "text-primary" : "text-white")}>{language.building}</Link>
-            <Link href={"/depannage"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("depannage") ? "text-primary" : "text-white")}>{language.troubleShot}</Link>
-            <Link href={"/espace-pro"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("espace-pro") ? "text-primary" : "text-white")}>{language.professional}</Link>
+            <Link href={"/"} className="mx-2 my-1 text-black hover:text-blue-700">{language.home}</Link>
+            <Link href={"/batiment"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("batiment") ? "text-primary" : "text-black")}>{language.building}</Link>
+            <Link href={"/depannage"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("depannage") ? "text-primary" : "text-black")}>{language.troubleShot}</Link>
+            <Link href={"/espace-pro"} className={"mx-2 my-1 mb-4  hover:text-blue-700 " + (pathname.includes("espace-pro") ? "text-primary" : "text-black")}>{language.professional}</Link>
             {data?.user?.name ? <button onClick={() => {
               signOut({ redirect: false }).then(() => {
                 router.push("/auth");

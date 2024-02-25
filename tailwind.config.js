@@ -9,7 +9,9 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    fontFamily: { inter: "Inter", opensans: "Open Sans", poppins: "Poppins" },
+    fontFamily: { inter: "Inter", opensans: "Open Sans", poppins: "Poppins",
+    felix: ['felix', "sans-serif"],
+  },
     colors: {
       current: "currentColor",
       transparent: "transparent",
@@ -300,7 +302,10 @@ module.exports = {
           "0%, 100%": { transform: "rotate(360deg)" },
           "50%": { transform: "rotate(0deg)" },
         },
+  
       },
+       
+      
       animation: {
         "ping-once": "ping 5s cubic-bezier(0, 0, 0.2, 1)",
         rotating: "rotating 30s linear infinite",

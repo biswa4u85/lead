@@ -1,13 +1,14 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default
     {
-        // Home
         logo: "https://lead-dusky.vercel.app/_next/static/media/logo.afc16c4c.svg",
-        home: "Home",
-        building: "Building Project",
-        troubleShot: "Troubleshooting Project",
-        professional: "Professional area",
-        login: "Login",
+
+        // Home
+        home: "Accueil",
+        building: "Dépannage",
+        troubleShot: "Travaux",
+        professional: "Espace Pro",
+        login: "Devis Gratuit",
         logout: "Logout",
         find_projects: "Find Projects",
         estimate: "Estimate",
@@ -23,22 +24,25 @@ export default
         step1: "Step 1",
         step2: "Step 2",
         step3: "Step 3",
-        step1_txt: "Describe your project in a few simple steps: Nothing could be easier, let yourself be guided by our simplified route.",
-        step2_txt: "Discover artisans competent for your project: We offer you the best profiles in your region, without cost or commitment.",
-        step3_txt: "Receive multiple quotes and choose your craftsman: We let's forward your request to 4 artisans according Read more to their availability.",
+        step1_txt: "Que ce soit par téléphone ou en ligne, communiquez-nous simplement vos besoins en dépannage.",
+        step2_txt: "Un expert se rend chez vous pour effectuer une évaluation gratuite et vous propose un devis détaillé.",
+        step3_txt: "Le paiement est effectué uniquement à la conclusion de l'intervention.",
+        
+        step1_txt_travaux: "Travaux Que ce soit par téléphone ou en ligne, communiquez-nous simplement vos besoins en dépannage.",
+        step2_txt_travaux: "Travaux Un expert se rend chez vous pour effectuer une évaluation gratuite et vous propose un devis détaillé.",
+        step3_txt_travaux: "Travaux Le paiement est effectué uniquement à la conclusion de l'intervention.",
         finding_txt: "Finding the right craftsman craftsman",
         has_never: "Has never been easier With Travaux Renove, simplify your search for craftsmen for quality projects.",
         expert: "Expert",
-        expert_txt: "Choose them taking into account insurance and quality labels",
-        customer_feedback: "Customer feedback",
-        customer_feedback_txt: "Choose them taking into account insurance and quality labels",
-        years_exp: "Years of experience",
-        years_exp_txt: "Choose them taking into account insurance and quality labels",
+        expert_txt: "Choisissez-les en tenant compte des assurances et des labels de qualité",
+        customer_feedback: "Retours d'expérience clients  ",
+        customer_feedback_txt: "Tous les avis sont authentiques : seuls les utilisateurs du site peuvent évaluer les professionnels",
+        years_exp: "D'expérience",
+        years_exp_txt: "Depuis 2006, 300 000 particuliers nous ont fait confiance pour leurs projets.",
         start: "Start",
         copy_write: "© 2024 PRO POS. All rights reserved",
 
-        // batimeent
-
+        // Batimeent
         describe: "Describe your project to us",
         complete_details: "Complete your contact details",
         thank_proposal: "Thank you for submitting a proposal!",
@@ -68,8 +72,7 @@ export default
         email: "E-mail",
         website: "Site web",
 
-        // depannage
-
+        // Depannage
         solution: "Troubleshooting or small jobs, we have the solution!",
         need_label: "What do you need",
         need_placeholder: "Enter What do you need",
@@ -79,14 +82,12 @@ export default
         order: "I Order",
         project_detail: "Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in order to install a parquet floor already in my possession",
 
-        // espace-pro
-
+        // Espace Pro
         productivity: "Increase your business productivity and performance with our ",
         services: "services",
         need_request: "What do you need ?",
 
-        // payment
-
+        // Payment
         project: "Project Detail",
         payment: "Payment",
         payment_method: "Select Payment Method",
@@ -98,7 +99,6 @@ export default
         company: "Company",
 
         // Projects
-
         submit: "Submit Proposal",
         client_details: "Client Details",
         Professional_text: "Professional",
@@ -140,8 +140,7 @@ export default
         successfully: "Sign up Successfully!",
         sign_up: "You are Sign up Successfully. We will contact you very soon!",
 
-        // success
-
+        // Success
         payment_sucessful: "Payment Successfully",
         payment_id: "Payment ID",
         amount: "Amount Paid",
@@ -149,12 +148,10 @@ export default
         download: "Download",
         cancel: "Cancel",
 
-        // forget-passward
-
+        // Forget-passward
         back: "Back to Login",
 
-        // pro
-
+        // pro users
         find_project: "Find Project",
         search: "Search…",
         new: "New",
@@ -164,7 +161,6 @@ export default
         profile: "Profile",
 
         // balance
-
         your_balance: "Your balance",
         withdraw: "Withdraw",
         from: "From",
@@ -180,7 +176,6 @@ export default
         details: "Details",
 
         // estimate
-
         carry_out: "Select the type of work you want to carry out",
         posted: "Posted",
         assigned: "Assigned",
@@ -232,7 +227,6 @@ export default
         quality: "MY QUALITY LABELS",
 
         // proposal
-
         contract_placeholder: "Enter Contract Start",
         contractend_placeholder: "Enter Contract End",
         actions: "Actions",
@@ -240,10 +234,9 @@ export default
         otp: "OTP",
 
         // approval
-
         assign_to: "Assign To",
         phone_no: "Phone",
-        
+
 
 
 

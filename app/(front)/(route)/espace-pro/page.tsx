@@ -19,7 +19,7 @@ export default function Page() {
             <div className="bg-custom-blue">
                 <div className="container flex flex-col mx-auto md:flex-row md:justify-between md:items-center">
                     <div className="flex-none md:w-1/2">
-                        <p className="py-5 font-medium leading-tight text-black whitespace-pre-wrap text-title-xl2 md:text-6xl mx-5 md:mx-0">Augmentez vos revenus et votre performance avec nos <span className="font-bold text-indigo-800 border-b" >services</span></p>
+                        <p className="py-5 font-medium leading-tight text-black whitespace-pre-wrap text-title-xl2 md:text-6xl mx-5 md:mx-0">{`Trouver de nouveaux clients en toute simplicité `} <span className="font-bold text-indigo-800 border-b" >{`avec`}</span></p>
                         <button className="flex items-center justify-between flex-initial px-4 py-4 my-6 text-xs font-semibold text-white bg-indigo-800 rounded-md w-60 hover:bg-blue-700 ml-5 md:ml-0">
                             <Link href={"/espace-pro-detail"} className="flex items-center justify-between">
                                 Inscription <AiOutlineRight className="mt-1" />

@@ -230,6 +230,10 @@ const MultiSelectBox = (props: any) => {
               onChange={(obj: any) => {
                 form.setFieldValue(props.name, obj);
               }}
+              filterOption={(input: any, option: any) => {
+                return option.label.toLowerCase().includes(input.toLowerCase())
+              }
+              }
               options={props.options}
               {...props}
             />}
