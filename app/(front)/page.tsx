@@ -17,7 +17,7 @@ import chauffage from "../images/chauffage.png"
 import peinture from "../images/peinture.png"
 import renovation from "../images/renovation.png"
 import salle from "../images/salle.png"
-import maconnerie from "../images/maconnerie.png"
+import maconnerie from "../images/Maconnerie.png"
 import Carrelage from "../images/Carrelage.png"
 
 export default function Page() {
