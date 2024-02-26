@@ -208,3 +208,6 @@ body{
 .ant-btn-primary{
   background: #1677ff!important;
 }
+header>.container>a img{
+  width: 200px;
+}

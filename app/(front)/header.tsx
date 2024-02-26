@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import logo from "../images/logo.svg"
+import logo from "../images/logo.png"
 import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
