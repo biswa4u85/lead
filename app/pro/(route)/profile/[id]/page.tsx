@@ -104,7 +104,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
                             <p className="text-sm font-bold text-black md:text-lg">{language.company_details}</p>
                             <button onClick={() => setOpenDescription(value)} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
-                                Edit Details
+                            Modifier la description de mon entreprise
                             </button>
                         </div>
                         <div className="my-4 border-t-2 border-gray-500"></div>
@@ -220,14 +220,14 @@ export default function Page({ params }: { params: { id: string } }) {
                                     placeholder={language.city}
                                 />
                             </div>
-                            <div className="flex flex-col">
+                            {/* <div className="flex flex-col">
                                 <InputBox
                                     required={true}
                                     name="job"
                                     label={language.job}
                                     placeholder={language.job}
                                 />
-                            </div>
+                            </div> */}
                         </div>
 
                         <p className="mt-5 text-lg font-bold text-black mx-5 md:mx-0">{language.profile_photo}</p>
@@ -235,12 +235,12 @@ export default function Page({ params }: { params: { id: string } }) {
                             <FileBox
                                 required={true}
                                 name="image"
-                                label="Profile"
-                                placeholder="Upload Profile"
+                                label={`Profil`}
+                                placeholder={`Upload Profil`}
                             /></div>
                         <p className="py-5 text-indigo-800 text-xs1 mx-5 md:mx-0">{language.format_text}</p>
                         <div className="flex justify-end mt-5 mb-10 md:mb-10">
-                            <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" loading={loading} onClick={handleSubmit} />
+                            <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value={`Enregistré`} loading={loading} onClick={handleSubmit} />
                         </div>
                     </div>)}
                 </Formik>}
@@ -296,7 +296,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             </div>
 
                             <div className="flex justify-end mt-5 mb-10 md:mb-10">
-                                <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" loading={loading} onClick={handleSubmit} />
+                                <Buttons className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value={`Enregistré`} loading={loading} onClick={handleSubmit} />
                             </div>
                         </div>
                     }}
@@ -306,7 +306,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
                     <p className="text-sm font-bold text-black md:text-lg">{language.description}</p>
                     <button onClick={() => setOpenDescription(value)} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
-                        Edit Details
+                    Modifier la description de mon entreprise
                     </button>
                 </div>
                 <div className="my-4 border-t-2 border-gray-500"></div>

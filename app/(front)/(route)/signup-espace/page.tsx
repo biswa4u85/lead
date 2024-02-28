@@ -213,7 +213,7 @@ export default function Page() {
                                 {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                                     <>
                                         <div className="w-full mx-auto">
-                                            <p className="mb-5 text-lg font-bold text-center text-black">cette partie est à supprimer</p>
+                                            {/* <p className="mb-5 text-lg font-bold text-center text-black">cette partie est à supprimer</p> */}
                                             <p className="py-5 text-sm font-bold text-deep-black">{language.terms}</p>
                                             <ul className="text-sm list-disc list-inside text-gray">
                                                 <li className="py-1">{language.conditions_1}</li>

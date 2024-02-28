@@ -23,7 +23,7 @@ const initialData = {
 export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
-        depannageCategoryId: Yup.string().required("Category is required"),
+        depannageCategoryId: Yup.string().required("La catégorie est obligatoire"),
         title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
         firstName: Yup.string().required("First Name is required"),

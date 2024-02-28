@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import logo from "../images/logo.png"
+import logo from "../images/logo.svg"
 import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
@@ -85,7 +85,7 @@ export default function Header() {
                     height={100}
                     src={data?.user?.image ? data?.user?.image : "/images/user.png"}
                     alt="User"
-                    className="mt-2 rounded-full"
+                    className="p-1 rounded-full"
                   />
                 </span>
                 <span className="text-indigo-900 hover:text-blue-700">

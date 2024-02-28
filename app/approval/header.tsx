@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../images/logo.png"
+import logo from "../images/logo.svg"
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";

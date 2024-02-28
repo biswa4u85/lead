@@ -17,7 +17,7 @@ import chauffage from "../images/chauffage.png"
 import peinture from "../images/peinture.png"
 import renovation from "../images/renovation.png"
 import salle from "../images/salle.png"
-import maconnerie from "../images/Maconnerie.png"
+import maconnerie from "../images/maconnerie.png"
 import Carrelage from "../images/Carrelage.png"
 
 export default function Page() {
@@ -39,14 +39,15 @@ export default function Page() {
         <>
             {/* new start */}
             <div className="bg-custom-blue">
-                <div className="container flex flex-col mx-auto md:flex-row md:justify-between md:items-center md:gap-20 gap-10">
-                    <div>
+                <div className="container mx-auto">
+                <div className="flex flex-col  md:flex-row md:justify-between md:items-center md:gap-20 gap-10 mx-10">
+                    <div className="w-2/3">
 
                         <p className="md:text-[44px] text-[16px] text-indigo-800 font-medium mx-5 xl:mx-0 font-felix">{language.banner_title}</p>
                         <p className="md:text-[44px] text-[18px] text-indigo-800 font-bold mx-5 xl:mx-0 font-felix">{language.banner_sub_title}</p>
                         <p className="text-sm font-semibold md:text-lg text-black-light mx-5 xl:mx-0 myCustomFont">{`Plateforme de rénovation et dépannage`}</p>
 
-                        <div className="flex flex-col justify-center items-start md:items-center md:flex-row md:justify-evenly mx-5 xl:mx-0 mb-10">
+                        <div className="flex flex-col items-start md:flex-row  mx-5 xl:mx-0 mb-10">
 
                             <button onClick={() => router.push(`/depannage`)} className="flex flex-row items-center justify-center px-8 py-4 mt-5 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700 mr-10">
                                 {language.trouble_btn} <AiOutlineRight className="ml-2" />
@@ -56,15 +57,16 @@ export default function Page() {
                             </button>
                         </div>
                     </div>
-                    <div className="flex justify-end pt-5 md:pt-6" >
+                    <div className="flex justify-end pt-5 md:pt-6 w-1/3" >
                         <Image
                             alt=""
                             width="522"
                             height="484"
                             src={services}
-                            className="w-[244px] h-[226px] md:w-auto md:h-auto "
+                            className="bannerImg"
                         />
                     </div>
+                </div>
                 </div>
             </div>
 
@@ -83,7 +85,7 @@ export default function Page() {
                                     src={demoimg}
                                 />
                             </div>
-                            <p className="text-sm2 font-normal text-black text-center">{`Tirafs fixas devis gratuit`}</p>
+                            <p className="text-sm2 font-normal text-black text-center">{`Tarifs fixes, devis gratuit`}</p>
                         </div>
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
                             <div className="pb-5 text-lg font-medium text-black font-poppins">
@@ -94,7 +96,7 @@ export default function Page() {
                                     src={demoimg2}
                                 />
                             </div>
-                            <p className="text-sm2 font-normal text-black text-center">{`Prix connus a i advance`}</p>
+                            <p className="text-sm2 font-normal text-black text-center">{`Prix connus à l'avance`}</p>
                         </div>
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
                             <div className="pb-5 text-lg font-medium text-black font-poppins">
@@ -105,7 +107,7 @@ export default function Page() {
                                     src={demoimg3}
                                 />
                             </div>
-                            <p className="text-sm2 font-normal text-black text-center">{`Professionnels qualifies`}</p>
+                            <p className="text-sm2 font-normal text-black text-center">{`Professionnels qualifiés`}</p>
                         </div>
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
                             <div className="pb-5 text-lg font-medium text-black font-poppins">
@@ -116,7 +118,7 @@ export default function Page() {
                                     src={demoimg4}
                                 />
                             </div>
-                            <p className="text-sm2 font-normal text-black text-center">{`Service continu 24/7`}</p>
+                            <p className="text-sm2 font-normal text-black text-center">{`Service continu 24h/7j`}</p>
                         </div>
 
 
@@ -173,7 +175,7 @@ export default function Page() {
             </div>
 
             <div className="py-10 bg-indigo-200 w-full">
-                <p className="text-sm text-center whitespace-normal text-black-light md:whitespace-normal md:text-title-sm mx-10">{`Trouver le bon professionnel pour vos travaux n'a jamais été aussi simple. Avec Dépannage - Travaux, simplifiez votre recherche de dépanneurs pour des projets de qualité.`}</p>
+                <p className="text-lg text-center whitespace-normal text-black-light md:whitespace-normal mx-10 font-normal">{`Trouver le bon professionnel pour vos travaux n'a jamais été aussi simple. Avec Dépannage - Travaux, simplifiez votre recherche de dépanneurs pour des projets de qualité.`}</p>
                 <div className="flex flex-wrap justify-center items-center pt-6 mx-5 lg:flex-wrap-4 sm:flex-wrap-1 gap-x-4 gap-y-8 ">
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -183,7 +185,7 @@ export default function Page() {
                             src={plomber}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Plombier`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Plombier`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -193,7 +195,7 @@ export default function Page() {
                             src={electrician}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Électricien`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Électricien`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -203,7 +205,7 @@ export default function Page() {
                             src={chauffage}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Chauffage`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Chauffage`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -213,7 +215,7 @@ export default function Page() {
                             src={peinture}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Peinture`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Peinture`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -223,7 +225,7 @@ export default function Page() {
                             src={renovation}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Rénovation Complète`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Rénovation Complète`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -233,7 +235,7 @@ export default function Page() {
                             src={salle}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Salle de bain & WC`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Salle de bain & WC`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -243,7 +245,7 @@ export default function Page() {
                             src={maconnerie}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Maçonnerie`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Maçonnerie`}</div>
                     </div>
                     <div className="bg-white p-4 text-center rounded-[16px]">
                         <Image
@@ -253,37 +255,37 @@ export default function Page() {
                             src={Carrelage}
                             className="rounded-[16px]"
                         />
-                        <div className="text-sm text-center text-black-light pt-2">{`Carrelage, Dallage`}</div>
+                        <div className="text-lg font-normal text-center text-black-light pt-2">{`Carrelage, Dallage`}</div>
                     </div>
 
                 </div>
             </div>
 
             <div className="container mx-auto">
-                <div className="grid grid-col grid-cols-1 justify-center items-center md:grid-row md:grid-cols-3 gap-10 md:gap-20 my-10">
-                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center">
-                        <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                            <span className="font-bold text-indigo-800">5000</span>
+                <div className="flex flex-col justify-between items-start md:flex-row">
+                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-1/4">
+                        <div className="flex items-center justify-center text-white rounded-full w-28 h-28 bg-custom-blue">
+                            <span className="font-bold text-indigo-800 text-title-xl2">5000</span>
                         </div>
 
-                        <p className="py-5 font-semibold text-black-light text-title-sm">{language.expert}</p>
-                        <p className="text-xs font-semibold text-black-light">{language.expert_txt}</p>
+                        <p className="py-5 font-semibold text-black text-title-md">{language.expert}</p>
+                        <p className="text-sm font-normal text-black-light">{language.expert_txt}</p>
                     </div>
-                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center">
-                        <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                            <span className="font-bold text-indigo-800">30k</span>
+                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-1/4">
+                        <div className="flex items-center justify-center text-white rounded-full w-28 h-28 bg-custom-blue">
+                            <span className="font-bold text-indigo-800 text-title-xl2">30k</span>
                         </div>
 
-                        <p className="py-5 font-semibold text-black-light text-title-sm">{language.customer_feedback}</p>
-                        <p className="text-xs font-semibold text-black-light">{language.customer_feedback_txt}</p>
+                        <p className="py-5 font-semibold text-black text-title-md">{language.customer_feedback}</p>
+                        <p className="text-sm font-normal text-black-light">{language.customer_feedback_txt}</p>
                     </div>
-                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center">
-                        <div className="flex items-center justify-center text-white rounded-full w-14 h-14 bg-custom-blue">
-                            <span className="font-bold text-indigo-800">17</span>
+                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-1/4">
+                        <div className="flex items-center justify-center text-white rounded-full w-28 h-28 bg-custom-blue">
+                            <span className="font-bold text-indigo-800 text-title-xl2">17</span>
                         </div>
 
-                        <p className="py-5 font-semibold text-black-light text-title-sm">{language.years_exp}</p>
-                        <p className="text-xs font-semibold text-black-light">{language.years_exp_txt}</p>
+                        <p className="py-5 font-semibold text-black text-title-md">{language.years_exp}</p>
+                        <p className="text-sm font-normal text-black-light">{language.years_exp_txt}</p>
                     </div>
 
                 </div>

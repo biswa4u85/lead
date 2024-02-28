@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePost } from "@/contexts/usePost";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
-import logo from "../../../images/logo.png"
+import logo from "../../../images/logo.svg"
 import * as Yup from "yup";
 import { useSearchParams } from 'next/navigation'
 import { MdOutlineMail } from "react-icons/md";

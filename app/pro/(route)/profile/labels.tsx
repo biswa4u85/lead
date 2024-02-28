@@ -49,14 +49,14 @@ export default function Labels({ value, setOpen, handleOk }: any) {
                             <SelectBox
                                 required={true}
                                 name="label"
-                                label="Labels"
+                                label={`Étiquettes`}
                                 options={tagOptions}
                             />
                         </div>
                         <div className="flex my-3 justify-between p-2 shadow-[0px_0px_10px_1px_#F2F6FB] mx-5 md:mx-0">
                             <FileBox
                                 required={true}
-                                label="File"
+                                label={`Fichier`}
                                 name="file"
                                 placeholder={'Tags'}
                             />
@@ -66,19 +66,21 @@ export default function Labels({ value, setOpen, handleOk }: any) {
                                 <DateBox
                                     required={true}
                                     name="startDate"
-                                    label="Start Date"
+                                    placeholder={`Sélectionner la date`}
+                                    label={`Date de validation du`}
                                 />
                             </div>
                             <div className="flex flex-col">
                                 <DateBox
                                     required={true}
+                                    placeholder={`Sélectionner la date`}
                                     name="endDate"
-                                    label="End Date"
+                                    label={`Date de fin`}
                                 />
                             </div>
                         </div>
                         <div className="flex justify-end mt-5">
-                            <Buttons loading={loading} className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" onClick={handleSubmit} />
+                            <Buttons loading={loading} className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value={`Ajouter un label`} onClick={handleSubmit} />
                         </div>
                     </div>
                 }}

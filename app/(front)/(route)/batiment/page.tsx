@@ -51,7 +51,7 @@ export default function Page() {
     const { create, data: respond, loading } = usePost();
 
     const validationSchemaInfo = Yup.object().shape({
-        title: Yup.string().required("Title is required"),
+        // title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
     });
 
@@ -89,7 +89,7 @@ export default function Page() {
                 setBatimentCategorys(null)
             }
         } else {
-            setError('Category is required')
+            setError('La catégorie est obligatoire')
         }
     }
 
@@ -122,7 +122,7 @@ export default function Page() {
 
                 {step == 1 && (<>
                     <div className="mx-3 mb-3 border-b-2 border-indigo-800">
-                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"What is your problem ?"}</p>
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black">{"Quel est votre problème ? "}</p>
                     </div>
                     <div className="flex flex-wrap justify-normal">
                         {categorys?.data && categorys.data.map((item: any, key: any) => {
@@ -149,8 +149,8 @@ export default function Page() {
                     </div>
                     <div className="my-4 border-t-2 border-gray-500"></div>
                     <div className="flex justify-center">
-                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleNext} />
+                        <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Précédent"} onClick={handlePrevious} />
+                        <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Suivant"} onClick={handleNext} />
                     </div>
                 </>)}
 
@@ -164,27 +164,27 @@ export default function Page() {
                             <div className="mx-3 mb-3 border-b-2 border-indigo-800">
                                 <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.describe}</p>
                             </div>
-                            <div className="px-5 mb-2">
+                            {/* <div className="px-5 mb-2">
                                 <InputBox
                                     required={true}
                                     name="title"
                                     label={language.title_label}
                                     placeholder={language.title_placeholder}
                                 />
-                            </div>
+                            </div> */}
                             <div className="px-5">
                                 <TextareaBox
                                     required={true}
                                     name="description"
-                                    label={language.description_label}
+                                    // label={language.description_label}
                                     className="w-full p-2 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500"
                                     placeholder={language.description_placeholder}
                                 />
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Next"} onClick={handleSubmit} />
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Précédent"} onClick={handlePrevious} />
+                                <Buttons className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Suivant"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}
@@ -257,8 +257,8 @@ export default function Page() {
                             </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
-                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Previous"} onClick={handlePrevious} />
-                                <Buttons loading={loading} className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Submitted"} onClick={handleSubmit} />
+                                <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Précédent"} onClick={handlePrevious} />
+                                <Buttons loading={loading} className="p-2 mt-3 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Demander le devis"} onClick={handleSubmit} />
                             </div>
                         </>)}
                 </Formik>)}

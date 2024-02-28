@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import logo from "../../images/logo.png"
+import logo from "../../images/logo.svg"
 import { MdOutlineMail } from "react-icons/md";
 import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
