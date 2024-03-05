@@ -52,9 +52,9 @@ export default function Page({ params }: { params: { id: string } }) {
     }, [data])
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required("First Name is required"),
-        lastName: Yup.string().required("Last Name is required"),
-        company: Yup.string().required("Company is required"),
+        firstName: Yup.string().required("Champ requis"),
+        lastName: Yup.string().required("Champ requis"),
+        company: Yup.string().required("La société est requise"),
         sponsorCode: Yup.string().required("Sponsor Code is required"),
         image: Yup.string().required("Image is required"),
     });

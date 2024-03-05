@@ -14,7 +14,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
-        description: Yup.string().required("Description is required"),
+        description: Yup.string().required("Une description est requise"),
     });
 
     return (

@@ -52,18 +52,18 @@ export default function Page() {
 
     const validationSchemaInfo = Yup.object().shape({
         // title: Yup.string().required("Title is required"),
-        description: Yup.string().required("Description is required"),
+        description: Yup.string().required("Une description est requise"),
     });
 
     const validationSchemaContact = Yup.object().shape({
-        firstName: Yup.string().required("First Name is required"),
-        lastName: Yup.string().required("Last Name is required"),
-        city: Yup.string().required("City is required"),
+        firstName: Yup.string().required("Champ requis"),
+        lastName: Yup.string().required("Champ requis"),
+        city: Yup.string().required("Champ requise"),
         email: Yup.string()
             .email("Invalid email address")
-            .required("Email is required"),
-        phone: Yup.string().required("Phone is required"),
-        postalCode: Yup.string().required("Postal Code is required"),
+            .required("Champ requis"),
+        phone: Yup.string().required("Champ requis"),
+        postalCode: Yup.string().required("Champ requis"),
     });
 
     const handlePrevious = () => {

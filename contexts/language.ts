@@ -9,21 +9,21 @@ export default
         troubleShot: "Travaux",
         professional: "Espace Pro",
         login: "Devis Gratuit",
-        logout: "Logout",
-        find_projects: "Find Projects",
-        estimate: "Estimate",
-        invoice: "Invoice",
-        balance: "Balance",
+        logout: "Se déconnecter",
+        find_projects: "Trouver des projets",
+        estimate: "Devis",
+        invoice: "Facture",
+        balance: "Solde",
 
         banner_title: "Dépannez et rénovez en toute sérénité avec",
         banner_sub_title: "Dépannage - Travaux",
-        area_code: "Area Code",
+        area_code: "Code Postal",
         trouble_btn: "Besoin de dépannage",
         build_btn: "Envie de rénover",
         how_works: "Pourquoi choisir  Dépannage - Travaux ?",
-        step1: "Step 1",
-        step2: "Step 2",
-        step3: "Step 3",
+        step1: "Étape 1",
+        step2: "Étape 2",
+        step3: "Étape 3",
         step1_txt: "Que ce soit par téléphone ou en ligne, communiquez-nous simplement vos besoins en dépannage.",
         step2_txt: "Un expert se rend chez vous pour effectuer une évaluation gratuite et vous propose un devis détaillé.",
         step3_txt: "Le paiement est effectué uniquement à la conclusion de l'intervention.",
@@ -31,88 +31,88 @@ export default
         step1_txt_travaux: "Décrivez votre projet en suivant notre parcours simplifié en quelques étapes faciles.",
         step2_txt_travaux: "Trouvez des artisans qualifiés près de chez vous, sans frais ni engagement.",
         step3_txt_travaux: "Nous envoyons votre demande à 4 professionnels disponibles qui vous contactent ensuite avec des devis personnalisés.",
-        finding_txt: "Finding the right craftsman craftsman",
-        has_never: "Has never been easier With Travaux Renove, simplify your search for craftsmen for quality projects.",
+        finding_txt: "Trouver le bon artisan",
+        has_never: "Rien de plus facile Avec Dépannage-Travaux, simplifiez votre recherche d'artisans pour des projets de qualité.",
         expert: "Expert",
         expert_txt: "Choisissez-les en tenant compte des assurances et des labels de qualité",
         customer_feedback: "Retours d'expérience clients  ",
         customer_feedback_txt: "Tous les avis sont authentiques : seuls les utilisateurs du site peuvent évaluer les professionnels",
         years_exp: "D'expérience",
         years_exp_txt: "Depuis 2006, 300 000 particuliers nous ont fait confiance pour leurs projets.",
-        start: "Start",
-        copy_write: "© 2024 PRO POS. All rights reserved",
+        start: "Commencer",
+        copy_write: "© 2024 DÉPANNAGE-TRAVAUX. Tous droits réservés",
 
         // Batimeent
-        describe: "Describe your project to us",
-        complete_details: "Complete your contact details",
-        thank_proposal: "Thank you for submitting a proposal!",
-        confirmation_email: "Thank you for submitting your proposal. A confirmation email will be sent. We will review your proposal and will get back to you within the next few days.",
-        title_label: "Title",
-        title_placeholder: "Enter the Title",
+        describe: "Décrivez-nous votre projet",
+        complete_details: "Compléter vos coordonnées",
+        thank_proposal: "Votre demande d'intervention à bien été prise en compte!",
+        confirmation_email: "Un courriel de confirmation vous sera envoyé. Nous examinerons votre proposition et prendrons contact avec vous dans les prochains jours.",
+        title_label: "Titre",
+        title_placeholder: "Saisissez le titre",
         description_label: "Description",
-        description_placeholder: "Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in order to install a parquet floor already in my possession",
+        description_placeholder: "Détaillez votre projet, par exemple : Je souhaite enlever 50 m2 de carrelage avec plinthes pour installer un parquet déjà en ma possession.",
         firstName_label: "Prénom",
-        firstName_placeholder: "Saisissez votre prénom",
+        firstName_placeholder: "Gabriel",
         lastName_label: "Nom",
-        lastName_placeholder: "Saisissez votre nom",
-        city_label: "City",
-        city_placeholder: "Enter City",
+        lastName_placeholder: "Louis",
+        city_label: "Ville",
+        city_placeholder: "Paris",
         email_label: "E-mail",
-        email_placeholder: "Saisissez votre adresse mail",
+        email_placeholder: "contact@gmail.com",
         phone_label: "Numéro Téléphone",
-        phone_placeholder: "Enter your Phone",
+        phone_placeholder: "06 00 00 00 00",
         postal_label: `Ma zone Géographique`,
         postal_placeholder: "Code Postal",
         phone: "Téléphone",
-        mobile: "Mobile",
-        address: "Address",
+        mobile: "Numéro de téléphone",
+        address: "Adresse",
         city: "Ville",
         creation: "Date de création",
-        SIRET: "SIRET N°",
+        SIRET: "N° SIRET ",
         email: "E-mail",
         website: "Site web",
 
         // Depannage
-        solution: "Troubleshooting or small jobs, we have the solution!",
-        need_label: "What do you need",
-        need_placeholder: "Enter What do you need",
-        problem: "Where does the problem come from ?",
-        installments: "Pay in 3 or 4 installments without fees",
+        solution: "Dépannage ou petits travaux, nous avons la solution !",
+        need_label: "Quels sont vos besoins ?",
+        need_placeholder: "Indiquez ce dont vous avez besoin",
+        problem: "D'où vient le problème ?",
+        installments: "Paiement en 3 ou 4 fois sans frais",
         postalcode_label: "Votre Code Postal",
-        order: "I Order",
-        project_detail: "Detail your project, for example: I would like to remove 50 m2 of tiles with plinths in order to install a parquet floor already in my possession",
+        order: "Demandez un devis",
+        project_detail: "Détaillez votre projet, par exemple : Je souhaite enlever 50 m2 de carrelage avec plinthes pour installer un parquet déjà en ma possession.",
 
         // Espace Pro
-        productivity: "Increase your business productivity and performance with our ",
+        productivity: "Augmentez la productivité et la performance de votre entreprise grâce à notre ",
         services: "services",
-        need_request: "What do you need ?",
+        need_request: "Quels sont vos besoins ?",
 
         // Payment
-        project: "Project Detail",
-        payment: "Payment",
-        payment_method: "Select Payment Method",
+        project: "Détail du projet",
+        payment: "Paiement",
+        payment_method: "Sélectionner le mode de paiement",
         stripe: "Stripe",
-        cards_details: "Add your cards Details",
-        pay: "Pay",
-        profeional_details: "Profeional details details",
-        name: "Name",
-        company: "Company",
+        cards_details: "Ajoutez les coordonnées de votre carte",
+        pay: "Payer",
+        profeional_details: "Informations sur le professionnelles",
+        name: "Nom",
+        company: "Entreprise",
 
         // Projects
-        submit: "Submit Proposal",
-        client_details: "Client Details",
+        submit: "Envoyer la proposition",
+        client_details: "Informations sur le client",
         Professional_text: "Professional",
-        contact_start: "Contract Start",
-        contact_end: "Contract End",
-        items: "Items",
-        qty: "QTY/HRS",
-        rate: "Rate",
+        contact_start: "Début du contrat",
+        contact_end: "Fin du contrat",
+        items: "Services",
+        qty: "QTÉ/H",
+        rate: "Taux",
         tax: "Tax",
-        subtotal: "Subtotal",
-        invoice_summary: "Invoice Summary",
+        subtotal: "Sous-total",
+        invoice_summary: "Récapitulatif de la facture",
         total: "Total",
-        generate: "Generate signature",
-        uplode: "Upload signature",
+        generate: "Générer une signature",
+        uplode: "Télécharger la facture",
         job: "Votre travail",
         activity: "Votre activité principale",
         company_label: "Nom de l'entreprise",
@@ -123,12 +123,12 @@ export default
         password: "Mot de passe",
         password_placeholder: "Saisissez votre mot de passe",
         confirm_password: "Confirmer le mot de passe",
-        confirm_password_placeholder: "Saisir le mot de passe de confirmation",
+        confirm_password_placeholder: "confirmer le mot de passe",
         numeric_character: "Au moins six caractères numériques",
         special_character: "Au moins un caractère spécial",
-        sponsorship: "Sponsorship",
-        sponsor_code: "Sponsor code",
-        apply: "APPLY",
+        sponsorship: "Parrainage",
+        sponsor_code: "Code de parrainage",
+        apply: "APPLIQUER",
         terms: "Conditions générales d'utilisation",
         conditions_1: "Je reconnais avoir pris connaissance des conditions générales d'utilisation",
         conditions_2: "J'accepte de recevoir des communications électroniques sur les offres de produits ou de services de Dépannage - Travaux",
@@ -137,105 +137,105 @@ export default
         additional_1: "Les informations recueillies sur ce formulaire sont destinées à Dépannage-Travaux aux fins de traitement de vos commandes, de gestion de votre compte client, de suivi de la qualité de nos services et de prospection commerciale. Elles font l'objet d'un traitement informatique destiné au service client et au service marketing de Dépannage-Travaux.",
         additional_2: "Pour connaître et exercer vos droits relatifs à l'utilisation de vos données, veuillez consulter notre Charte sur la protection des données personnelles ou nous contacter à l'adresse suivante :  Pour valider cette partie est à supprimer Valider Les informations recueillies sur ce formulaire sont destinées à Dépannage-Travaux aux fins de traitement de vos commandes, de gestion de votre compte client, de suivi de la qualité de nos services et de prospection commerciale. Elles font l'objet d'un traitement informatique destiné au service client et au service marketing de Dépannage-Travaux. Pour connaître et exercer vos droits relatifs à l'utilisation de vos données, veuillez consulter notre Charte sur la protection des données personnelles ou nous contacter à l'adresse suivante :  Pour valider",
         agree_terms: "J'accepte les conditions générales d'utilisation",
-        successfully: "Sign up Successfully!",
-        sign_up: "You are Sign up Successfully. We will contact you very soon!",
+        successfully: "Inscription réussie !",
+        sign_up: "Vous êtes inscrit avec succès. Nous vous contacterons très prochainement !",
 
         // Success
-        payment_sucessful: "Payment Successfully",
+        payment_sucessful: "Paiement effectué avec succès",
         payment_id: "Payment ID",
-        amount: "Amount Paid",
-        Category: "Depannage Category",
-        download: "Download",
-        cancel: "Cancel",
+        amount: "Montant payé",
+        Category: "Prestation de Dépannage",
+        download: "Télécharger",
+        cancel: "Annuler",
 
         // Forget-passward
-        back: "Back to Login",
+        back: "Retour à la page de connexion",
 
         // pro users
-        find_project: "Find Project",
-        search: "Search…",
-        new: "New",
-        accepted: "Accepted",
-        appointments: "Appointments Date",
-        log_out: "Log Out",
-        profile: "Profile",
+        find_project: "Trouver un projet",
+        search: "Recherche...",
+        new: "Nouveau",
+        accepted: "Accepté",
+        appointments: "Date de rendez-vous",
+        log_out: "Se déconnecter",
+        profile: "Profil",
 
         // balance
-        your_balance: "Your balance",
-        withdraw: "Withdraw",
-        from: "From",
-        to: "To",
-        clear: "Clear",
-        invoice_num: "Invoice number",
+        your_balance: "Votre solde",
+        withdraw: "Se retirer",
+        from: "De",
+        to: "Pour",
+        clear: "Supprimer",
+        invoice_num: "N° de facture",
         type: "Type",
-        payment_form: "Payment From",
+        payment_form: "Paiement à partir de",
         date: "Date",
-        total_price: "Total price",
-        status: "Status",
-        paid: "paid",
-        details: "Details",
+        total_price: "Prix total",
+        status: "Statut de l'entreprise",
+        paid: "payé",
+        details: "Détails",
 
         // estimate
-        carry_out: "Select the type of work you want to carry out",
-        posted: "Posted",
-        assigned: "Assigned",
-        active: "Active",
-        pending: "Pending",
-        refused: "Refused",
+        carry_out: "Sélectionnez le type de prestation que vous souhaitez effectuer",
+        posted: "Affiché",
+        assigned: "Attribué",
+        active: "Actif",
+        pending: "En cours",
+        refused: "Refusé",
 
         // invoice
-        invoice_history: "Invoice History",
-        start_at: "Start At",
-        end_at: "End At",
+        invoice_history: "Historique des factures",
+        start_at: "Commencer à",
+        end_at: "Fin à",
         action: "Action",
 
         // profile
-        add: "Add",
+        add: "Ajouter",
         profile_picture: "Photo de Profil",
         photo: "Inclure une photo de votre visage, une image dans une situation professionnelle ou votre logo afin d'instaurer un climat de confiance, à la fois avec les individus et pour l'image de votre marque.",
-        wallet: "Wallet",
+        wallet: "Portefeuille",
         change_contact: "Modifier mon profil",
-        company_details: "Information About My Company",
-        company_paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        information: "My Contact Information",
-        company_name: "Company name",
-        civility: "Civility",
-        lace: "Lace",
-        siret: "Number of SIRET",
-        function: "Function",
+        company_details: "Informations concernant mon entreprise",
+        company_paragraph: "Spécialisés dans les travaux de rénovation et de dépannage, nous sommes là pour répondre à vos besoins avec efficacité et professionnalisme.",
+        information: "Vos coordonnées",
+        company_name: "Nom de société",
+        civility: "Civilité",
+        lace: "Prénom",
+        siret: `N° de SIRET`,
+        function: "Fonction",
         internet: "Site internet",
-        company_placeholder: "Enter Company name",
-        first_placeholder: "Enter First name",
-        last_placeholder: "Enter Last name",
-        postalcode_placeholder: "Enter Postal Code",
-        Sponsor_placeholder: "Enter Sponsor Code",
-        profile_photo: "Your Profile Photo",
-        format_text: "Only images in jpg, jpeg and png format are accepted with a minimum size of 112 pixels by 112 pixels.",
+        company_placeholder: "Saisir le nom de l'entreprise",
+        first_placeholder: "Saisir le prénom",
+        last_placeholder: "Saisir le nom de famille",
+        postalcode_placeholder: "Saisir le code postal",
+        Sponsor_placeholder: "Saisir le code de parrainage",
+        profile_photo: "Votre photo de profil",
+        format_text: "Seules les images aux formats jpg, jpeg et png sont acceptées avec une taille minimale de 112 pixels par 112 pixels.",
         catagorys: `Métier`,
         catagorys_label: `Travaux`,
-        catagorys_placeholder: "Please select Categorys",
-        services_placeholder: "Please select Services",
+        catagorys_placeholder: "Veuillez sélectionner les catégories",
+        services_placeholder: "Veuillez sélectionner les services",
         Depannage_label: `Dépannage`,
-        description: "DESCRIPTION OF MY BUSINESS",
+        description: "Description de mon activité",
         edit_details: "Modifier la description de mon entreprise",
-        document: "MY OFFICIAL DOCUMENTS",
-        insurance_text: "You must have certain insurance and documents to certify the legality of your business and its skills. Individuals are sensitive to it.",
+        document: "Mes documents officiels",
+        insurance_text: "Vous devez disposer de certaines assurances et de documents attestant de la légalité de votre entreprise et de ses compétences. Les particuliers y sont sensibles.",
         kbis: "KBIS",
-        missing_doc: "Missing document",
+        missing_doc: "Document manquant",
         assurance: "Assurance",
-        guarantee: "Ten-year guarantee",
+        guarantee: "Garantie Décennale",
         quality: `MES LABELS DE QUALITÉ`,
 
         // proposal
-        contract_placeholder: "Enter Contract Start",
-        contractend_placeholder: "Enter Contract End",
+        contract_placeholder: "Saisir la date de début du contrat",
+        contractend_placeholder: "Entrer la date de fin de contrat",
         actions: "Actions",
-        downloaded: "Downloaded",
+        downloaded: "Téléchargé",
         otp: "OTP",
 
         // approval
-        assign_to: "Assign To",
-        phone_no: "Phone",
+        assign_to: "Attribuer à",
+        phone_no: "Téléphone",
 
 
 
@@ -249,42 +249,41 @@ export default
         professional_emails: {
 
             // Welcome email, when Sign Up
-            welcome_title: "Bienvenue sur  Dépannage travaux!",
+            welcome_title: "Bienvenue sur  Dépannage-Travaux!",
             welcome_body: `Bonjour [name],
             <br /><br />
-            Nous sommes ravis de vous accueillir sur Dépannage Travaux ! 
+            Nous sommes ravis de vous accueillir sur Dépannage-Travaux ! 
             Vous êtes désormais prêt(e) à découvrir toutes les opportunités professionnelles qui vous attendent. 
             N'hésitez pas à explorer notre plateforme et à nous contacter si vous avez des questions.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Validate email address
             validate_title: "Confirmez votre adresse e-mail pour terminer votre inscription",
             validate_body: `Bonjour [name],
             <br /><br />
-            Merci de vous être inscrit(e) sur Dépannage Travaux . 
-            Veuillez cliquer sur le lien ci-dessous pour valider votre adresse e-mail et finaliser votre inscription : 
-           ( Please click on the link below to validate your e-mail address and finalise your registration:)
+            Merci de vous être inscrit(e) sur Dépannage-Travaux . 
+            Veuillez cliquer sur le lien ci-dessous pour valider votre adresse e-mail et finaliser votre inscription :
            <br /><br />
            [url]
            <br /><br />
            Cordialement,
-           L'équipe de Dépannage Travaux           
+           L'équipe de Dépannage-Travaux           
             `,
 
             // Email when the administrator publishes a project
-            validation_title: "Nouveau projet disponible sur Dépannage Travaux",
+            validation_title: "Nouveau projet disponible sur Dépannage-Travaux",
             validation_body: `Bonjour [name],
             <br /><br />
-            Un nouveau projet a été publié sur Dépannage Travaux. 
+            Un nouveau projet a été publié sur Dépannage-Travaux. 
             Ne manquez pas cette opportunité et postulez dès maintenant !
             <br /><br />
             [url]
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Email notification when the customer accepts and pays the quote
@@ -298,7 +297,7 @@ export default
             [url]
             <br /><br />
             Cordialement,
-            L'équipe de dépannage Travaux
+            L'équipe de dépannage-Travaux
             `,
 
             // Email with copy of invoice
@@ -311,7 +310,7 @@ export default
             [url]
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux.
+            L'équipe de Dépannage-Travaux.
             `,
 
             // Email when the administrator declares that the money has been paid into the professional's account
@@ -324,7 +323,7 @@ export default
             [url]
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux            
+            L'équipe de Dépannage-Travaux            
             `,
 
             // Forgot your password
@@ -337,7 +336,7 @@ export default
             [url]
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
         },
@@ -346,7 +345,7 @@ export default
             project_allocation_body: `Bonjour, 
             nous avons un projet  [project] à vous proposer près de [Ville]. 
             [url] 
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `
         },
         customer_emails: {
@@ -358,7 +357,7 @@ export default
             Nous avons bien reçu votre demande et nous sommes actuellement en train de la traiter. Nous vous tiendrons informé(e) de l'avancement de votre demande dans les plus brefs délais.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Notification of acceptance of the request by the professional
@@ -370,7 +369,7 @@ export default
             Vous serez bientôt contacté(e) par celui-ci pour discuter des détails et procéder à la suite de la démarche.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Notification that the estimate has been sent by the professional
@@ -382,7 +381,7 @@ export default
             Si vous avez des questions ou des modifications à apporter, n'hésitez pas à contacter directement [name_pro].
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Notification of signature of quotation and payment
@@ -396,17 +395,17 @@ export default
             N'hésitez pas à nous contacter si vous avez des questions ou besoin d'assistance supplémentaire.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
         },
         admin_emails: {
 
             // New professional registration
-            registration_title: "Nouvelle inscription professionnelle sur Dépannage Travaux",
+            registration_title: "Nouvelle inscription professionnelle sur Dépannage-Travaux",
             registration_body: `Cher(e) administrateur,
             <br /><br />
-            Un nouveau professionnel s'est inscrit sur Dépannage Travaux. Voici les détails de son inscription :
+            Un nouveau professionnel s'est inscrit sur Dépannage-Travaux. Voici les détails de son inscription :
             <br /><br />
             Nom : [name_pro]
             Email : [email_pro]
@@ -415,14 +414,14 @@ export default
             Veuillez prendre les mesures nécessaires pour valider son inscription et lui accorder l'accès à la plateforme.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Lead form filled in by a visitor
-            new_lead_title: "Nouveau lead sur Dépannage Travaux",
+            new_lead_title: "Nouveau lead sur Dépannage-Travaux",
             new_lead_body: `Cher(e) administrateur/administratrice,
             <br /><br />
-            Un visiteur a rempli un formulaire de lead sur Dépannage Travaux. Voici les détails du lead :
+            Un visiteur a rempli un formulaire de lead sur Dépannage-Travaux. Voici les détails du lead :
             <br /><br />
             Nom : [name_cus]
             Email : [email_cus]
@@ -433,7 +432,7 @@ export default
             Veuillez prendre contact avec ce visiteur dès que possible pour répondre à sa demande.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Acceptance of the project by the professional
@@ -445,7 +444,7 @@ export default
             Vous pouvez maintenant poursuivre le processus avec le client.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // The professional sends the customer a quote
@@ -459,7 +458,7 @@ export default
             Veuillez vérifier les détails du devis et prendre les mesures nécessaires pour le valider ou le modifier si nécessaire.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
             // Customer signs and countries the quote
@@ -469,7 +468,7 @@ export default
             Le client a signé et payé le devis pour le projet [project]. Le processus peut maintenant passer à l'étape suivante.
             <br /><br />
             Cordialement,
-            L'équipe de Dépannage Travaux
+            L'équipe de Dépannage-Travaux
             `,
 
         },

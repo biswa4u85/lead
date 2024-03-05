@@ -24,16 +24,16 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
         batimentCategoryId: Yup.string().required("La catégorie est obligatoire"),
-        title: Yup.string().required("Title is required"),
-        description: Yup.string().required("Description is required"),
-        firstName: Yup.string().required("First Name is required"),
-        lastName: Yup.string().required("Last Name is required"),
-        city: Yup.string().required("City is required"),
+        title: Yup.string().required("Le titre est requis"),
+        description: Yup.string().required("Une description est requise"),
+        firstName: Yup.string().required("Champ requis"),
+        lastName: Yup.string().required("Champ requis"),
+        city: Yup.string().required("Champ requise"),
         email: Yup.string()
             .email("Invalid email address")
-            .required("Email is required"),
-        phone: Yup.string().required("Phone is required"),
-        postalCode: Yup.string().required("Postal Code is required"),
+            .required("Champ requis"),
+        phone: Yup.string().required("Champ requis"),
+        postalCode: Yup.string().required("Champ requis"),
     });
 
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({ showAll: true }) });
@@ -98,7 +98,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             required={true}
                             name="city"
                             label="City"
-                            placeholder="Enter City"
+                            placeholder="Saisissez votre ville"
                             icon={<FaLocationDot />}
                         />
                     </div>
@@ -116,7 +116,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             required={true}
                             name="phone"
                             label="Phone"
-                            placeholder="Enter your Phone"
+                            placeholder="Saisissez votre numéro"
                             icon={<FaPhoneAlt />}
                         />
                     </div>

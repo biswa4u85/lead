@@ -12,10 +12,10 @@ export default function Password({ value, setOpen, handleOk }: any) {
     const { edit, data: respond, loading } = usePatch();
 
     const validationSchema = Yup.object().shape({
-        newPassword: Yup.string().required("Password is required"),
+        newPassword: Yup.string().required("Mot de passe requis"),
         conPassword: Yup.string()
             .oneOf([Yup.ref('newPassword')], 'Passwords must match')
-            .required('Confirm Password is required'),
+            .required('Confirmer que le mot de passe est requis'),
     });
 
     const handleUpdate = (values: any) => {

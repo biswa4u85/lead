@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePost } from "@/contexts/usePost";
 import { InputBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
-import logo from "../../../images/logo.svg"
+import logo from "../../../images/logo.png"
 import * as Yup from "yup";
 import { MdOutlineMail } from "react-icons/md";
 import { toast } from 'react-toastify';
@@ -26,7 +26,7 @@ const Page: React.FC = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
-      .required("Email is required")
+      .required("Champ requis")
   });
 
   const onPressHandle = async (values: any) => {
@@ -46,14 +46,14 @@ const Page: React.FC = () => {
               <div className="w-full p-4">
                 <Link className="mb-5.5 flex justify-center items-center" href="/">
                   <Image
-                    className="hidden dark:block"
+                    className="hidden dark:block siteLogo"
                     src={logo}
                     alt="Logo"
                     width={176}
                     height={32}
                   />
                   <Image
-                    className="dark:hidden"
+                    className="dark:hidden siteLogo"
                     src={logo}
                     alt="Logo"
                     width={176}

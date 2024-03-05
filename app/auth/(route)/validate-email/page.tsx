@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePost } from "@/contexts/usePost";
-import logo from "../../../images/logo.svg"
+import logo from "../../../images/logo.png"
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'react-toastify';
 import language from "@/contexts/language";
@@ -29,14 +29,14 @@ const Page: React.FC = () => {
           <div className="w-full p-4">
             <Link className="mb-5.5 flex justify-center items-center" href="/">
               <Image
-                className="hidden dark:block"
+                className="hidden dark:block siteLogo"
                 src={logo}
                 alt="Logo"
                 width={176}
                 height={32}
               />
               <Image
-                className="dark:hidden"
+                className="dark:hidden siteLogo"
                 src={logo}
                 alt="Logo"
                 width={176}

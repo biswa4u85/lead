@@ -19,12 +19,12 @@ const Settings = () => {
   const { data: user, loading } = useFetchSingle({ url: resource, query: { id: data?.user?.id } });
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last Name is required"),
+    firstName: Yup.string().required("Champ requis"),
+    lastName: Yup.string().required("Champ requis"),
     email: Yup.string()
       .email("Invalid email address")
-      .required("Email is required"),
-    phone: Yup.string().required("Phone is required"),
+      .required("Champ requis"),
+    phone: Yup.string().required("Champ requis"),
   });
 
   const validationSchemaProfile = Yup.object().shape({
@@ -100,7 +100,7 @@ const Settings = () => {
                           required={true}
                           name="phone"
                           label="Phone"
-                          placeholder="Enter your Phone"
+                          placeholder="Saisissez votre numéro"
                           icon={<FaPhoneAlt />}
                         />
                       </div>

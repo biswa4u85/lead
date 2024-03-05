@@ -40,14 +40,14 @@ export default function Page() {
             {/* new start */}
             <div className="bg-custom-blue">
                 <div className="container mx-auto">
-                <div className="flex flex-col  md:flex-row md:justify-between md:items-center md:gap-20 gap-10 mx-10">
-                    <div className="w-2/3">
+                <div className="flex flex-col  md:flex-row md:justify-between md:items-center md:gap-20 gap-10 mr-8 md:mx-10">
+                    <div className="w-full md:w-2/3 mt-15 md:mt-0">
 
-                        <p className="md:text-[44px] text-[16px] text-indigo-800 font-medium mx-5 xl:mx-0 font-felix">{language.banner_title}</p>
-                        <p className="md:text-[44px] text-[18px] text-indigo-800 font-bold mx-5 xl:mx-0 font-felix">{language.banner_sub_title}</p>
-                        <p className="text-sm font-semibold md:text-lg text-black-light mx-5 xl:mx-0 myCustomFont">{`Plateforme de rénovation et dépannage`}</p>
+                        <p className="md:text-[44px] text-[16px] text-indigo-800 font-medium xl:mx-0 font-felix">{language.banner_title}</p>
+                        <p className="md:text-[44px] text-[18px] text-indigo-800 font-bold xl:mx-0 font-felix">{language.banner_sub_title}</p>
+                        <p className="text-sm font-semibold md:text-lg text-black-lightxl:mx-0 myCustomFont">{`Plateforme de rénovation et dépannage`}</p>
 
-                        <div className="flex flex-col items-start md:flex-row  mx-5 xl:mx-0 mb-10">
+                        <div className="flex flex-col items-start md:flex-row xl:mx-0 mb-10">
 
                             <button onClick={() => router.push(`/depannage`)} className="flex flex-row items-center justify-center px-8 py-4 mt-5 text-xs font-normal text-white bg-indigo-800 rounded-full font-poppins hover:bg-blue-700 mr-10">
                                 {language.trouble_btn} <AiOutlineRight className="ml-2" />
@@ -57,7 +57,7 @@ export default function Page() {
                             </button>
                         </div>
                     </div>
-                    <div className="flex justify-end pt-5 md:pt-6 w-1/3" >
+                    <div className="flex justify-end pt-5 md:pt-6 w-full md:w-1/3" >
                         <Image
                             alt=""
                             width="522"
@@ -77,7 +77,7 @@ export default function Page() {
 
                     <div className="grid grid-col grid-cols-1 justify-center items-center md:grid-row md:grid-cols-4 gap-10">
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
-                            <div className="pb-5 text-lg font-medium text-black font-poppins">
+                            <div className="pb-2 text-lg font-medium text-black font-poppins">
                                 <Image
                                     width={70}
                                     height={60}
@@ -88,7 +88,7 @@ export default function Page() {
                             <p className="text-sm2 font-normal text-black text-center">{`Tarifs fixes, devis gratuit`}</p>
                         </div>
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
-                            <div className="pb-5 text-lg font-medium text-black font-poppins">
+                            <div className="pb-2 text-lg font-medium text-black font-poppins">
                                 <Image
                                     width={70}
                                     height={60}
@@ -99,7 +99,7 @@ export default function Page() {
                             <p className="text-sm2 font-normal text-black text-center">{`Prix connus à l'avance`}</p>
                         </div>
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
-                            <div className="pb-5 text-lg font-medium text-black font-poppins">
+                            <div className="pb-2 text-lg font-medium text-black font-poppins">
                                 <Image
                                     width={70}
                                     height={60}
@@ -110,7 +110,7 @@ export default function Page() {
                             <p className="text-sm2 font-normal text-black text-center">{`Professionnels qualifiés`}</p>
                         </div>
                         <div className="h-45 py-8 px-6 bg-[#E7EBFE] shadow-[0px_8px_0px_0px_#80A6FF]  text-center rounded-[30px] flex flex-col items-center justify-center">
-                            <div className="pb-5 text-lg font-medium text-black font-poppins">
+                            <div className="pb-2 text-lg font-medium text-black font-poppins">
                                 <Image
                                     width={70}
                                     height={60}
@@ -129,7 +129,7 @@ export default function Page() {
                         <p onClick={() => setTab('travaux')} className={tab == "travaux" ? "font-bold text-sm1 text-indigo-800" : "font-bold text-sm1 text-black cursor-pointer"}>{`Travaux`}</p>
                     </div>
 
-                    {tab == "depannage" &&(<div className="grid grid-col grid-cols-1 justify-center items-center md:grid-row md:grid-cols-3 gap-10 mt-7">
+                    {tab == "depannage" &&(<div className="grid grid-col grid-cols-1 justify-center items-center md:grid-row md:grid-cols-3 gap-10 mt-7 mx-8 md:mx-0">
                         <div className="h-60 overflow-y-auto pt-4 pb-8 px-6 bg-gray-4 text-center rounded-[16px] flex flex-col items-center justify-center">
                             <div className="flex items-center justify-center text-white rounded-full w-12 h-12 bg-indigo-200">
                                 <span className="text-lg font-semibold text-indigo-800">1</span>
@@ -150,7 +150,7 @@ export default function Page() {
                         </div>
                     </div>)}
 
-                    {tab == "travaux" &&(<div className="grid grid-col grid-cols-1 justify-center items-center md:grid-row md:grid-cols-3 gap-10 mt-7">
+                    {tab == "travaux" &&(<div className="grid grid-col grid-cols-1 justify-center items-center md:grid-row md:grid-cols-3 gap-10 mt-7 mx-8 md:mx-0">
                         <div className="h-60 overflow-y-auto pt-4 pb-8 px-6 bg-gray-4 text-center rounded-[16px] flex flex-col items-center justify-center">
                             <div className="flex items-center justify-center text-white rounded-full w-12 h-12 bg-indigo-200">
                                 <span className="text-lg font-semibold text-indigo-800">1</span>
@@ -263,7 +263,7 @@ export default function Page() {
 
             <div className="container mx-auto">
                 <div className="flex flex-col justify-between items-start md:flex-row">
-                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-1/4">
+                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-full md:w-1/4">
                         <div className="flex items-center justify-center text-white rounded-full w-28 h-28 bg-custom-blue">
                             <span className="font-bold text-indigo-800 text-title-xl2">5000</span>
                         </div>
@@ -271,7 +271,7 @@ export default function Page() {
                         <p className="py-5 font-semibold text-black text-title-md">{language.expert}</p>
                         <p className="text-sm font-normal text-black-light">{language.expert_txt}</p>
                     </div>
-                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-1/4">
+                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-full md:w-1/4">
                         <div className="flex items-center justify-center text-white rounded-full w-28 h-28 bg-custom-blue">
                             <span className="font-bold text-indigo-800 text-title-xl2">30k</span>
                         </div>
@@ -279,7 +279,7 @@ export default function Page() {
                         <p className="py-5 font-semibold text-black text-title-md">{language.customer_feedback}</p>
                         <p className="text-sm font-normal text-black-light">{language.customer_feedback_txt}</p>
                     </div>
-                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-1/4">
+                    <div className="py-8 px-4 text-center flex flex-col items-center justify-center w-full md:w-1/4">
                         <div className="flex items-center justify-center text-white rounded-full w-28 h-28 bg-custom-blue">
                             <span className="font-bold text-indigo-800 text-title-xl2">17</span>
                         </div>

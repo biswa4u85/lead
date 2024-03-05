@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../images/logo.svg"
+import logo from "../images/logo.png"
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { CgMenuLeft } from "react-icons/cg";
@@ -60,6 +60,7 @@ export default function Header() {
         <div className="container flex justify-between px-10 mx-auto">
           <Link href={"/"}><Image
             alt=""
+            className='siteLogo'
             src={logo}
           /></Link>
           <div className='flex'>

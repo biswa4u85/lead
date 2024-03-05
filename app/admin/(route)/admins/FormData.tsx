@@ -17,12 +17,12 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
         image: Yup.string().required("Profile required"),
-        firstName: Yup.string().required("First Name is required"),
-        lastName: Yup.string().required("Last Name is required"),
+        firstName: Yup.string().required("Champ requis"),
+        lastName: Yup.string().required("Champ requis"),
         email: Yup.string()
             .email("Invalid email address")
-            .required("Email is required"),
-        phone: Yup.string().required("Phone is required")
+            .required("Champ requis"),
+        phone: Yup.string().required("Champ requis")
     });
 
     return (
@@ -74,7 +74,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             required={true}
                             name="phone"
                             label="Phone"
-                            placeholder="Enter your Phone"
+                            placeholder="Saisissez votre numéro"
                             icon={<FaPhoneAlt />}
                         />
                     </div>

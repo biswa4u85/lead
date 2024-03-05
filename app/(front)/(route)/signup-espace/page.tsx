@@ -15,8 +15,8 @@ export default function Page() {
     const { create, data: respond, loading } = usePost();
 
     const validationSchema1 = Yup.object().shape({
-        postalCode: Yup.string().required("Postal Code is required"),
-        company: Yup.string().required("Company is required"),
+        postalCode: Yup.string().required("Champ requis"),
+        company: Yup.string().required("La société est requise"),
     });
 
     const handleUpdate1 = (value: any) => {
@@ -24,9 +24,9 @@ export default function Page() {
         setStep(step + 1)
     }
     const validationSchema2 = Yup.object().shape({
-        firstName: Yup.string().required("First Name is required"),
-        lastName: Yup.string().required("Last Name is required"),
-        phone: Yup.string().required("Phone is required"),
+        firstName: Yup.string().required("Champ requis"),
+        lastName: Yup.string().required("Champ requis"),
+        phone: Yup.string().required("Champ requis"),
     });
 
     const handleUpdate2 = (value: any) => {
@@ -37,9 +37,9 @@ export default function Page() {
     const validationSchema3 = Yup.object().shape({
         email: Yup.string()
             .email("Invalid email address")
-            .required("Email is required"),
-        password: Yup.string().required("Password is required"),
-        cPassword: Yup.string().required("Conform Password is required"),
+            .required("Champ requis"),
+        password: Yup.string().required("Mot de passe requis"),
+        cPassword: Yup.string().required("Conform Mot de passe requis"),
     });
 
     const handleUpdate3 = (value: any) => {

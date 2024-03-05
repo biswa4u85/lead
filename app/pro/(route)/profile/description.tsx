@@ -11,7 +11,7 @@ export default function Description({ value, setOpen, handleOk }: any) {
     const { edit, data: respond, loading } = usePatch();
 
     const validationSchema = Yup.object().shape({
-        companyDel: Yup.string().required('Company Details required'),
+        companyDel: Yup.string().required('Les détails de l\'entreprise sont requis'),
     });
 
     const handleUpdate = (values: any) => {
@@ -26,7 +26,7 @@ export default function Description({ value, setOpen, handleOk }: any) {
     }, [respond])
 
     return (
-        <Modal width="70%" title="Company Details" open={true} footer={null} onCancel={() => setOpen(false)}>
+        <Modal width="70%" title="Détails de l'entreprise" open={true} footer={null} onCancel={() => setOpen(false)}>
             <Formik
                 initialValues={value}
                 validationSchema={validationSchema}
@@ -39,11 +39,11 @@ export default function Description({ value, setOpen, handleOk }: any) {
                                 required={true}
                                 name="companyDel"
                                 style={{ width: '100%' }}
-                                placeholder={'Company Details'}
+                                placeholder={'Détails de l\'entreprise'}
                             />
                         </div>
                         <div className="flex justify-end mt-5">
-                            <Buttons loading={loading} className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value="Save" onClick={handleSubmit} />
+                            <Buttons loading={loading} className="px-4 py-2 mt-3 text-sm font-medium text-white bg-indigo-800 border border-indigo-800 rounded-md mx-5 md:mx-0" value={`Enregistré`} onClick={handleSubmit} />
                         </div>
                     </div>
                 }}

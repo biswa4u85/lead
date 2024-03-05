@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { usePost } from "@/contexts/usePost";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
-import logo from "../../../images/logo.svg"
+import logo from "../../../images/logo.png"
 import * as Yup from "yup";
 import { useSearchParams } from 'next/navigation'
 import { MdOutlineMail } from "react-icons/md";
@@ -28,8 +28,8 @@ const Page: React.FC = () => {
 
   const validationSchema = Yup.object().shape({
     token: Yup.string().required("Otp is required"),
-    password: Yup.string().required("Password is required"),
-    conPassword: Yup.string().required("Password is required"),
+    password: Yup.string().required("Mot de passe requis"),
+    conPassword: Yup.string().required("Mot de passe requis"),
   });
 
   const onPressHandle = async (values: any) => {
@@ -49,14 +49,14 @@ const Page: React.FC = () => {
               <div className="w-full p-4">
                 <Link className="mb-5.5 flex justify-center items-center" href="/">
                   <Image
-                    className="hidden dark:block"
+                    className="hidden dark:block siteLogo"
                     src={logo}
                     alt="Logo"
                     width={176}
                     height={32}
                   />
                   <Image
-                    className="dark:hidden"
+                    className="dark:hidden siteLogo"
                     src={logo}
                     alt="Logo"
                     width={176}

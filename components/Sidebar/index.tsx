@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import logo from "../../app/images/logo.svg"
+import logo from "../../app/images/logo.png"
 import { usePathname } from "next/navigation";
 import { MdAdminPanelSettings, MdPayment, MdOutlineHomeRepairService, MdAreaChart, MdReportProblem, MdMergeType } from "react-icons/md";
 import { FaUserFriends, FaProjectDiagram } from "react-icons/fa";
@@ -70,6 +70,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <Image
             width={176}
             height={32}
+            className='siteLogo'
             src={logo}
             alt="Logo"
           />

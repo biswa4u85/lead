@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
     return (
-        <div className="container flex flex-col mx-auto my-10 md:my-30 md:flex-row md:justify-between md:items-center">
+        <div className="container flex flex-col mx-auto mt-10 md:mt-30 md:flex-row md:justify-between md:items-center">
             <div className="flex-none md:w-1/2 mx-5 md:mx-0">
                 <p className="text-sm font-medium md:text-title-sm text-gray">ÉTAPE 1</p>
                 <p className="py-5 font-semibold leading-tight text-black whitespace-pre-wrap text-title-xl2 md:text-xl">Découvrir de nouvelles opportunités sur les projets de construction et dépannage</p>

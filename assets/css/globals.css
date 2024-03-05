@@ -190,7 +190,10 @@ body{
   font-style: normal;
   font-weight: 600;
 }
-
+.siteLogo{
+  height: 40px;
+  width: auto;
+}
 @media print {
   .print_css {
     width: 70%;

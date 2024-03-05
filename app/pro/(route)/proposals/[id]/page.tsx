@@ -75,8 +75,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
     const validationSchema = Yup.object().shape({
         // description: Yup.string().required("Description is required"),
-        contractStart: Yup.string().required("Start Date is required"),
-        contractEnd: Yup.string().required("End Date is required"),
+        contractStart: Yup.string().required("La date de début est requise"),
+        contractEnd: Yup.string().required("La date de fin est obligatoire"),
         // proSignature: Yup.string().required("Signature is required"),
     });
 

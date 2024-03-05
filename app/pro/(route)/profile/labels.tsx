@@ -18,10 +18,10 @@ export default function Labels({ value, setOpen, handleOk }: any) {
     const { edit, data: respond, loading } = usePatch();
 
     const validationSchema = Yup.object().shape({
-        label: Yup.string().required("Label is required"),
-        file: Yup.string().required("File is required"),
-        startDate: Yup.string().required("Start Date is required"),
-        endDate: Yup.string().required("End Date is required"),
+        label: Yup.string().required("L'étiquette est obligatoire"),
+        file: Yup.string().required("Le fichier est requis"),
+        startDate: Yup.string().required("La date de début est requise"),
+        endDate: Yup.string().required("La date de fin est obligatoire"),
     });
 
     const handleUpdate = (values: any) => {
