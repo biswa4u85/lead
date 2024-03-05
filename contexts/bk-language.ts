@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default
     {
-        logo: "https://lead-dusky.vercel.app/_next/static/media/logo.afc16c4c.svg",
+        logo: "https://lead-dusky.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.90a2cfee.png&w=640&q=75",
 
         // Home
         home: "Accueil",
