@@ -21,6 +21,9 @@ export async function GET(request: NextRequest) {
         const result = await prisma[resource].findMany({
             skip,
             take,
+            orderBy: {
+                createdAt: 'desc',
+            },
             include: { address: true, depannageCategory: { select: { name: true, price: true } } }
         });
         if (!result) return errorResponse("Record Not Found");
@@ -33,21 +36,30 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
-        const { depannageCategoryId, title, description, firstName, lastName, city, email, phone, postalCode } = data
+        const { depannageCategoryId, title, description, firstName, lastName, city, email, phone, postalCode, full_address } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].create({
             data: {
-                title, description, depannageCategoryId,
+                title, description, depannageCategoryId, full_address, assignStatus: "Draft",
                 address: {
                     create: address
                 }
             }
         });
-        autoAssignTo(res, address)
+        conformEmail(address)
         return successResponse(res);
     } catch (error: any) {
         errorResponse(error.message);
     }
+}
+
+async function conformEmail(address: any) {
+    // Email to Customer
+    let title = language?.customer_emails?.receipt_title + "demande"
+    let body = language?.customer_emails?.receipt_body
+    body = body.replace('[name]', `${address.firstName} ${address.lastName}`);
+    sendEmail(address.email, `${address.firstName} ${address.lastName}`, title, body)
+
 }
 
 async function autoAssignTo(data: any, address: any) {
@@ -77,12 +89,6 @@ async function autoAssignTo(data: any, address: any) {
         sendEmail(admin[0].email, `${admin[0].firstName} ${admin[0].lastName}`, title, body)
     }
 
-    // Email to Customer
-    let title = language?.customer_emails?.receipt_title
-    let body = language?.customer_emails?.receipt_body
-    body = body.replace('[name]', `${address.firstName} ${address.lastName}`);
-    sendEmail(address.email, `${address.firstName} ${address.lastName}`, title, body)
-
     // SMS to Pros
     for (let user of users) {
         let body = language?.professional_sms?.project_allocation_body
@@ -102,13 +108,16 @@ export async function PATCH(request: NextRequest) {
         delete data.id
         delete data.edit
 
-        const { depannageCategoryId, title, description, status, firstName, lastName, city, email, phone, postalCode } = data
+        const { depannageCategoryId, title, description, status, firstName, lastName, city, email, phone, postalCode, assignStatus, autoAssign } = data
         const address = { firstName, lastName, city, email, phone, postalCode }
         const res = await prisma[resource].update({
             where: { id },
-            data: { depannageCategoryId, title, description, status, address: { update: address } },
+            data: { depannageCategoryId, title, description, status, assignStatus, address: { update: address } },
             include: { address: true }
         });
+        if (assignStatus == 'new' && autoAssign) {
+            autoAssignTo(res, address)
+        }
         return successResponse(res);
     } catch (error: any) {
         errorResponse(error);

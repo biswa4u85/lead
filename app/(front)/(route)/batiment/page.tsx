@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
-import { useFetch } from "@/contexts/useFetch";
 import { usePost } from "@/contexts/usePost";
 import { useSearchParams } from 'next/navigation'
 import { InputBox, TextareaBox, Buttons } from "@/components/RenderFroms";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import language from "@/contexts/language";
@@ -21,7 +20,8 @@ const defaultValue = {
     city: "",
     email: "",
     phone: "",
-    postalCode: ""
+    postalCode: "",
+    full_address: ""
 }
 
 export default function Page() {
@@ -64,6 +64,7 @@ export default function Page() {
             .required("Champ requis"),
         phone: Yup.string().required("Champ requis"),
         postalCode: Yup.string().required("Champ requis"),
+        full_address: Yup.string().required("Adresse requis"),
     });
 
     const handlePrevious = () => {
@@ -80,7 +81,7 @@ export default function Page() {
 
     const handleNext = () => {
         if (batimentCategorys) {
-            setProgress(progress + val)
+            setProgress(val)
             setError(null)
             if (!batimentCategorys?.isParent) {
                 setStep(2)
@@ -96,7 +97,7 @@ export default function Page() {
     const handleUpdate = (value: any) => {
         setProgress(progress == 0 ? val : progress + val)
         if (step == 3) {
-            create("batiments", { ...values, ...value, batimentCategoryId: batimentCategorys?.id  })
+            create("batiments", { ...values, ...value, batimentCategoryId: batimentCategorys?.id })
         } else {
             setValues({ ...values, ...value })
             setStep(step + 1)
@@ -176,7 +177,6 @@ export default function Page() {
                                 <TextareaBox
                                     required={true}
                                     name="description"
-                                    // label={language.description_label}
                                     className="w-full p-2 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500"
                                     placeholder={language.description_placeholder}
                                 />
@@ -255,6 +255,14 @@ export default function Page() {
                                     />
                                 </div>
                             </div>
+                            <div className="px-5 mt-4">
+                                <TextareaBox
+                                    required={true}
+                                    name="full_address"
+                                    label={language.address}
+                                    className="w-full p-2 text-xs placeholder-gray-500 border border-gray-500 rounded-xs backdrop:rounded focus:outline-none focus:border-blue-500"
+                                />
+                            </div>
                             <div className="my-4 border-t-2 border-gray-500"></div>
                             <div className="flex justify-center">
                                 <Buttons className="p-2 mt-3 mr-2 text-sm font-medium text-indigo-800 border border-indigo-800 rounded-md" value={"Précédent"} onClick={handlePrevious} />
@@ -265,9 +273,9 @@ export default function Page() {
 
                 {step == 4 && (<>
                     <div className="mb-3 border-b-2 border-indigo-800">
-                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.thank_proposal}</p>
+                        <p className="text-sm leading-10 md:text-lg font-Normal text-deep-black md:max-w-2xl">{language.thank_proposal_batiment}</p>
                     </div>
-                    <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">{language.confirmation_email}</p>
+                    {/* <p className="text-sm leading-10 md:text-md font-Normal text-deep-black md:max-w-2xl">{language.confirmation_email}</p> */}
                 </>)}
             </div>
         </>

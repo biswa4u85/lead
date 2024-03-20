@@ -63,7 +63,7 @@ export async function sendEmail(email: any, name: any, title: any, body: any) {
 
   axios.request(config)
     .then((response) => {
-      // console.log(JSON.stringify(response.data));
+      console.log(JSON.stringify(response.data));
     })
     .catch((error) => {
       console.log(error);

@@ -90,6 +90,10 @@ export default function Page({ params }: { params: { id: string } }) {
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.firstName} {lead?.address?.lastName}</p>
                             </div>
                             <div className="flex items-center justify-between py-3">
+                                <p className="text-sm font-normal text-gray-700">{language.address}</p>
+                                <p className="font-semibold text-sm1 text-deep-black">{lead?.full_address}</p>
+                            </div>
+                            <div className="flex items-center justify-between py-3">
                                 <p className="text-sm font-normal text-gray-700">{language.city_label}</p>
                                 <p className="font-semibold text-sm1 text-deep-black">{lead?.address?.city}</p>
                             </div>

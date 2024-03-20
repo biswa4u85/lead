@@ -1,15 +1,17 @@
 "use client"
 import { useState, useEffect } from "react";
 import { usePost } from "@/contexts/usePost";
-import { AiOutlineSearch } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 import { InputBox, PasswordBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { signIn } from "next-auth/react";
 import { toast } from 'react-toastify';
 import language from "@/contexts/language";
 
 
 export default function Page() {
+    const router = useRouter();
     const [step, setStep] = useState<any>(1);
     const [values, setValues] = useState<any>({});
     const { create, data: respond, loading } = usePost();
@@ -64,8 +66,16 @@ export default function Page() {
             toast.success(`Espace Pro Sign Up successfully`);
             setValues({})
             setStep(step + 1)
+            onLogin(values, respond)
         }
     }, [respond])
+
+    const onLogin = async (values: any, respond: any) => {
+        const res: any = await signIn("credentials", { ...values, redirect: false })
+        if (!res.error) {
+            router.push(`/pro/profile/${respond.data.id}`);
+        }
+    };
 
     return (
         <>
@@ -200,8 +210,8 @@ export default function Page() {
                                     <div className="flex justify-center">
                                         <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded mr-5" value={"Précédente"} onClick={handlePrevious} />
                                         <Buttons className="p-2 mt-5 text-white bg-indigo-800 rounded" value={"Suivant"} onClick={handleSubmit} />
-                                    </div>                                
-                                    </>)}
+                                    </div>
+                                </>)}
                         </Formik>)}
 
                         {step == 4 && (

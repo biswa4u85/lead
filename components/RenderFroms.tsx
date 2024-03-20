@@ -76,6 +76,49 @@ const InputBox = (props: any) => {
   );
 };
 
+const CheckBox = (props: any) => {
+  return (
+    <Field name={props.name}>
+      {({ field, form, meta }: any) => {
+        return <>
+          {props.label && (<label className="mb-2.5 block font-medium text-black dark:text-white">
+            {props.label} {(form?.errors[props.name] || props.required) && (<span className="text-meta-1">{"*"}</span>)}
+          </label>)}
+          <div className="relative">
+            {props.pre && (<div style={{ position: "absolute", left: 5, top: 10 }}>{props.pre}</div>)}
+            {props.post && (<div style={{ position: "absolute", right: 5, top: 10 }}>{props.post}</div>)}
+            {props.options.map((item: any, key: any) => <label key={key} style={{ padding: 5 }}>
+              <input
+                type="radio"
+                value={field.value}
+                checked={field.value === item}
+                onChange={(obj) => {
+                  form.setFieldValue(props.name, item);
+                }}
+              />
+              {` ${item}`}
+            </label>)}
+            {/* <input
+              value={field.value}
+              onChange={(obj) => {
+                form.setFieldValue(props.name, obj.target.value);
+              }}
+              type="text"
+              placeholder={props.placeholder}
+              className={"w-full p-2 pl-3 bg-transparent border rounded-lg outline-none border-stroke focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" + ((form?.errors[props.name] && form?.touched[props.name]) && " border-b-meta-1")}
+              {...props}
+            /> */}
+            {form?.errors[props.name] && form?.touched[props.name] && (
+              <div className="mt-1 text-xs-1 text-meta-1">{form.errors[props.name]}</div>
+            )}
+            {props.icon && (<span className="absolute right-4 top-4">{props.icon}</span>)}
+          </div>
+        </>
+      }}
+    </Field>
+  );
+};
+
 const PasswordBox = (props: any) => {
   const [show, setShow] = useState(false);
   return (
@@ -110,7 +153,6 @@ const PasswordBox = (props: any) => {
     </Field>
   );
 };
-
 
 const TextareaBox = (props: any) => {
   return (
@@ -314,6 +356,7 @@ const TogelBox = (props: any) => {
 export {
   Buttons,
   InputBox,
+  CheckBox,
   PasswordBox,
   TextareaBox,
   SelectBox,

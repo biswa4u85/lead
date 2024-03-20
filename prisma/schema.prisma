@@ -87,6 +87,7 @@ model Batiment {
   id                 String           @id @default(auto()) @map("_id") @db.ObjectId
   title              String
   description        String
+  full_address       String?
   address            BatimentAddress?
   status             String           @default("active")
   createdAt          DateTime         @default(now())
@@ -132,6 +133,7 @@ model Depannage {
   id                  String            @id @default(auto()) @map("_id") @db.ObjectId
   title               String
   description         String
+  full_address        String?
   address             DepannageAddress?
   status              String            @default("active")
   createdAt           DateTime          @default(now())

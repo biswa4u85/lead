@@ -27,7 +27,7 @@ export default
         step1_txt: "Que ce soit par téléphone ou en ligne, communiquez-nous simplement vos besoins en dépannage.",
         step2_txt: "Un expert se rend chez vous pour effectuer une évaluation gratuite et vous propose un devis détaillé.",
         step3_txt: "Le paiement est effectué uniquement à la conclusion de l'intervention.",
-        
+
         step1_txt_travaux: "Décrivez votre projet en suivant notre parcours simplifié en quelques étapes faciles.",
         step2_txt_travaux: "Trouvez des artisans qualifiés près de chez vous, sans frais ni engagement.",
         step3_txt_travaux: "Nous envoyons votre demande à 4 professionnels disponibles qui vous contactent ensuite avec des devis personnalisés.",
@@ -45,6 +45,8 @@ export default
         // Batimeent
         describe: "Décrivez-nous votre projet",
         complete_details: "Compléter vos coordonnées",
+        thank_proposal_depannage: "Votre demande d'intervention à bien été prise en compte!",
+        thank_proposal_batiment: "Votre demande de contact nous a bien été envoyée, nous vous répondrons dans les plus brefs délais!",
         thank_proposal: "Votre demande d'intervention à bien été prise en compte!",
         confirmation_email: "Un courriel de confirmation vous sera envoyé. Nous examinerons votre proposition et prendrons contact avec vous dans les prochains jours.",
         title_label: "Titre",
@@ -351,7 +353,7 @@ export default
         customer_emails: {
 
             // Notification of receipt of application
-            receipt_title: "Confirmation de réception de votre demande",
+            receipt_title: "Confirmation de réception de votre ",
             receipt_body: `Bonjour [name],
             <br /><br />
             Nous avons bien reçu votre demande et nous sommes actuellement en train de la traiter. Nous vous tiendrons informé(e) de l'avancement de votre demande dans les plus brefs délais.

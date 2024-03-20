@@ -42,20 +42,20 @@ export default function Header() {
     <>
       <div className="relative z-999">
         <div className='float-left p-5 lg:hidden md:hidden' onClick={toggleMobileMenu}><CgMenuLeft size={30} /></div>
-        <div className={`absolute w-full top-15 bg-[#f2f6fb] lg:hidden pt-3 pb-10 px-4 text-black transition-opacity ease-in-out delay-150 duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`absolute w-full top-15 bg-[#f2f6fb] lg:hidden pt-3 pb-10 px-4 text-black transition-opacity ease-in-out delay-150 duration-300 ${isMobileMenuOpen ? 'display-block' : 'display-none'}`}>
           <div className="absolute top-2 right-2" onClick={toggleMobileMenu}><AiOutlineClose size={30} fill="#000" /></div>
           <nav className="flex flex-col" >
             <Link href={"/"} className="mx-2 my-1 text-black hover:text-blue-700">{language.home}</Link>
             <Link href={"/batiment"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("batiment") ? "text-primary" : "text-black")}>{language.building}</Link>
             <Link href={"/depannage"} className={"mx-2 my-1  hover:text-blue-700 " + (pathname.includes("depannage") ? "text-primary" : "text-black")}>{language.troubleShot}</Link>
-            <Link href={"/espace-pro"} className={"mx-2 my-1 mb-4  hover:text-blue-700 " + (pathname.includes("espace-pro") ? "text-primary" : "text-black")}>{language.professional}</Link>
+            <Link href={"/espace-pro"} className={"mx-2 my-1 mb-4  hover:text-blue-700 " + (pathname.includes("espace-pro") ? "text-primary" : "text-black")}>{`S'inscrire en tant que professionnel`}</Link>
             {data?.user?.name ? <button onClick={() => {
               signOut({ redirect: false }).then(() => {
                 router.push("/auth");
               });
             }} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">
               {language.logout}
-            </button> : <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link>}
+            </button> : <Link href={"/auth"} className="inline-block p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{`Connexion Pro`}</Link>}
           </nav>
         </div>
       </div>
@@ -71,7 +71,7 @@ export default function Header() {
               <Link href={"/"} className={"mx-5 text-indigo-900 hover:text-blue-700 "}>{language.home}</Link>
               <Link href={"/batiment"} className={"mx-1 mr-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("batiment") && ("text-primary"))}>{language.building}</Link>
               <Link href={"/depannage"} className={"mx-1 text-indigo-900 hover:text-blue-700 " + (pathname.includes("depannage") && ("text-primary"))}>{language.troubleShot}</Link>
-              <Link href={"/espace-pro"} className={"mx-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("espace-pro") && ("text-primary"))}>{language.professional}</Link>
+              <Link href={"/espace-pro"} className={"mx-5 text-indigo-900 hover:text-blue-700 " + (pathname.includes("espace-pro") && ("text-primary"))}>{`S'inscrire en tant que professionnel`}</Link>
             </nav>
             {data?.user?.name ? <div className="relative">
               <Link
@@ -124,7 +124,7 @@ export default function Header() {
                 </button>
               </div>
             </div> :
-              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{language.login}</Link>}
+              <Link href={"/auth"} className="p-2 font-bold text-indigo-600 border border-indigo-600 rounded-md">{'Connexion Pro'}</Link>}
           </div>
         </div>
       </header>

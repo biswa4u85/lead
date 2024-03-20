@@ -82,9 +82,9 @@ export default function Page() {
     },
     {
       title: "Status",
-      dataIndex: "status",
+      dataIndex: "assignStatus",
       render(val: any) {
-        return <Tag color={val == "active" ? "success" : "error"}>{val}</Tag>;
+        return <Tag color={val !== "Draft" ? "success" : "error"}>{val}</Tag>;
       },
     },
     {
@@ -108,7 +108,7 @@ export default function Page() {
                   type="link"
                   onClick={() => setDetail({ ...record, "active": true })}
                 >
-                  {record.status == "active" ? "INACTIVE" : "ACTIVE"}
+                 {record.assignStatus == "Draft" ? "ACTIVE" : "DRAFT"}
                 </Button>
               </Menu.Item>
               <Menu.Item key="3">

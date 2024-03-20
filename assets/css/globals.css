@@ -194,6 +194,12 @@ body{
   height: 40px;
   width: auto;
 }
+.display-none{
+  display: none;
+}
+.display-block{
+  display: block;
+}
 @media print {
   .print_css {
     width: 70%;
@@ -205,8 +211,6 @@ body{
 }
 
 .horiZontScroll{width: 100%; overflow-y: hidden; overflow-x: auto;}
-
-
 
 .ant-btn-primary{
   background: #1677ff!important;
