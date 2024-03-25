@@ -296,7 +296,7 @@ export default function Page() {
                                 </div>
                             </div>
                             <div className="px-5 mt-4">
-                                <TextareaBox
+                                <InputBox
                                     required={true}
                                     name="full_address"
                                     label={language.address}
