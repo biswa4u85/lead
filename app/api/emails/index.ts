@@ -71,6 +71,34 @@ export async function sendEmail(email: any, name: any, title: any, body: any) {
 }
 
 export async function sendSms(phone: any, body: any) {
-  console.log(phone)
-  console.log(body)
+  let data = JSON.stringify({
+    "content": body,
+    "recipient": `+33 ${phone}`,
+    "sender": "Depannage",
+    "type": "marketing",
+    "tag": "accountValidation",
+    "webUrl": "http://requestb.in/173lyyx1",
+    "unicodeEnabled": true
+  });
+
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://api.brevo.com/v3/transactionalSMS/sms',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'API-key': process.env.SMS_KEY,
+    },
+    data: data
+  };
+
+  axios.request(config)
+    .then((response: any) => {
+      // console.log(JSON.stringify(response.data));
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+
 }

@@ -62,7 +62,7 @@ export default
         email_label: "E-mail",
         email_placeholder: "contact@gmail.com",
         phone_label: "Numéro Téléphone",
-        phone_placeholder: "06 00 00 00 00",
+        phone_placeholder: "7 00 00 00 00",
         postal_label: `Ma zone Géographique`,
         postal_placeholder: "Code Postal",
         phone: "Téléphone",

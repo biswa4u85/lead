@@ -36,8 +36,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
+        
         const { batimentCategoryId, title, description, firstName, lastName, city, email, phone, postalCode, full_address } = data
+        
         const address = { firstName, lastName, city, email, phone, postalCode }
+ 
         const res = await prisma[resource].create({
             data: {
                 title, description, batimentCategoryId, full_address, assignStatus: "Draft",
