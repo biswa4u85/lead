@@ -33,7 +33,7 @@ export default function Page() {
         }
     }
 
-    console.log(tab)
+   
 
     return (
         <>
