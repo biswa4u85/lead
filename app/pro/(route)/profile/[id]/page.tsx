@@ -79,7 +79,7 @@ export default function Page({ params }: { params: { id: string } }) {
             })
             setTimeout(() => {
                 toast.success(`User update successfully`);
-                router.push(`/pro/profile`)
+                // router.push(`/pro/profile`)
             }, 1000)
         }
     }, [respond])
