@@ -73,7 +73,7 @@ export async function sendEmail(email: any, name: any, title: any, body: any) {
 export async function sendSms(phone: any, body: any) {
   let data = JSON.stringify({
     "content": body,
-    "recipient": `+33 ${phone}`,
+    "recipient": `+33${phone}`,
     "sender": "Depannage",
     "type": "marketing",
     "tag": "accountValidation",

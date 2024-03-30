@@ -10,7 +10,7 @@ import language from "@/contexts/language";
 
 const initialData = {
     batimentCategoryId: "",
-    title: "",
+    // title: "",
     description: "",
     firstName: "",
     lastName: "",
@@ -24,7 +24,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
 
     const validationSchema = Yup.object().shape({
         batimentCategoryId: Yup.string().required("La catégorie est obligatoire"),
-        title: Yup.string().required("Le titre est requis"),
+        // title: Yup.string().required("Le titre est requis"),
         description: Yup.string().required("Une description est requise"),
         firstName: Yup.string().required("Champ requis"),
         lastName: Yup.string().required("Champ requis"),
@@ -57,7 +57,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             options={categorys?.data ?? []}
                         />
                     </div>
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                         <InputBox
                             required={true}
                             name="title"
@@ -65,7 +65,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             placeholder="Enter Title"
                             icon={<MdOutlineSubtitles />}
                         />
-                    </div>
+                    </div> */}
                     <div className="mb-4">
                         <TextareaBox
                             required={true}

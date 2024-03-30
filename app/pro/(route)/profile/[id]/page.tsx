@@ -108,6 +108,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         return <div className="container mt-10 mx-auto md:px-10">
                             <div className="flex justify-between mt-5 items-cente mx-5 md:mx-0">
                                 <p className="text-sm font-bold text-black md:text-lg">{language.company_details}</p>
+                                <p onClick={() => router.push(`/pro/profile`)} className="text-sm font-bold text-black md:text-lg cursor-pointer">{`Dones`}</p>
                                 <button onClick={() => setOpenDescription(value)} className="p-2 font-medium text-indigo-800 border border-indigo-800 rounded-md text-xs1 md:text-sm ">
                                     Modifier la description de mon entreprise
                                 </button>
