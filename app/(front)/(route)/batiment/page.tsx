@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
+import { useFetch } from "@/contexts/useFetch";
 import { usePost } from "@/contexts/usePost";
 import { useSearchParams } from 'next/navigation'
-import { InputBox, TextareaBox, Buttons } from "@/components/RenderFroms";
+import { InputBox, TextareaBox, SelectBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
@@ -35,6 +36,10 @@ export default function Page() {
     const [values, setValues] = useState<any>(null);
     let val = 100 / 3
     const { fetch, data: categorys } = useFetchByLoad({ url: "batimentCategorys", query: JSON.stringify({ parentId: categoryId }) });
+    const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({ showAll: true }) });
+    const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
+        return { label: `${item?.name}-${item?.code}`, value: item?.id }
+    }) : []
 
     useEffect(() => {
         fetch()
@@ -246,12 +251,13 @@ export default function Page() {
                                     />
                                 </div>
                                 <div className="flex flex-col">
-                                    <InputBox
+                                    <SelectBox
                                         required={true}
+                                        treeCheckable={true}
                                         name="postalCode"
                                         label={language.postal_label}
                                         placeholder={language.postal_placeholder}
-                                        type="number"
+                                        options={zipcodeOptions}
                                     />
                                 </div>
                             </div>

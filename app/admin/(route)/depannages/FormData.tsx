@@ -1,4 +1,4 @@
-import { InputBox, TextareaBox, SelectBox,MultiSelectBox,  Buttons } from "@/components/RenderFroms";
+import { InputBox, TextareaBox, SelectBox, MultiSelectBox, Buttons } from "@/components/RenderFroms";
 import { Formik, FieldArray } from "formik";
 import * as Yup from "yup";
 import { useFetch } from "@/contexts/useFetch";
@@ -36,7 +36,11 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
         postalCode: Yup.string().required("Champ requis"),
     });
 
-    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({showAll: true}) });
+    const { data: categorys } = useFetch({ url: "depannageCategorys", query: JSON.stringify({ showAll: true }) });
+    const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({ showAll: true }) });
+    const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
+        return { label: `${item?.name}-${item?.code}`, value: item?.id }
+    }) : []
 
     return (
         <Formik
@@ -47,7 +51,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
             {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                 <div className="w-full p-3">
                     <div className="mb-4">
-                    <MultiSelectBox
+                        <MultiSelectBox
                             required={true}
                             tree={true}
                             multiple={false}
@@ -121,13 +125,13 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                         />
                     </div>
                     <div className="mb-4">
-                    <InputBox
+                        <SelectBox
                             required={true}
+                            treeCheckable={true}
                             name="postalCode"
-                            type="number"
-                            label="Postal Code"
-                            placeholder="Enter Postal Code"
-                            icon={<TbMapNorth />}
+                            label={language.postal_label}
+                            placeholder={language.postal_placeholder}
+                            options={zipcodeOptions}
                         />
                     </div>
                     <div className="fixed bottom-3 right-5 z-999">

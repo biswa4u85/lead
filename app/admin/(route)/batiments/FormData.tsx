@@ -37,6 +37,10 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
     });
 
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({ showAll: true }) });
+    const { data: zipcodes } = useFetch({ url: "zipcode", query: JSON.stringify({ showAll: true }) });
+    const zipcodeOptions = zipcodes?.data ? zipcodes.data.map((item: any) => {
+        return { label: `${item?.name}-${item?.code}`, value: item?.id }
+    }) : []
 
     return (
         <Formik
@@ -57,15 +61,6 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             options={categorys?.data ?? []}
                         />
                     </div>
-                    {/* <div className="mb-4">
-                        <InputBox
-                            required={true}
-                            name="title"
-                            label="Title"
-                            placeholder="Enter Title"
-                            icon={<MdOutlineSubtitles />}
-                        />
-                    </div> */}
                     <div className="mb-4">
                         <TextareaBox
                             required={true}
@@ -121,13 +116,13 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                         />
                     </div>
                     <div className="mb-4">
-                        <InputBox
+                        <SelectBox
                             required={true}
+                            treeCheckable={true}
                             name="postalCode"
-                            type="number"
-                            label="Postal Code"
-                            placeholder="Enter Postal Code"
-                            icon={<TbMapNorth />}
+                            label={language.postal_label}
+                            placeholder={language.postal_placeholder}
+                            options={zipcodeOptions}
                         />
                     </div>
                     <div className="fixed bottom-3 right-5 z-999">
