@@ -10,7 +10,6 @@ import language from "@/contexts/language";
 
 const initialData = {
     batimentCategoryId: "",
-    // title: "",
     description: "",
     firstName: "",
     lastName: "",
@@ -18,6 +17,7 @@ const initialData = {
     email: "",
     phone: "",
     postalCode: "",
+    full_address: "",
 }
 
 export function FormData({ initialValues, handleUpdate, loading }: any) {
@@ -34,6 +34,7 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
             .required("Champ requis"),
         phone: Yup.string().required("Champ requis"),
         postalCode: Yup.string().required("Champ requis"),
+        full_address: Yup.string().required("Address requis"),
     });
 
     const { data: categorys } = useFetch({ url: "batimentCategorys", query: JSON.stringify({ showAll: true }) });
@@ -123,6 +124,14 @@ export function FormData({ initialValues, handleUpdate, loading }: any) {
                             label={language.postal_label}
                             placeholder={language.postal_placeholder}
                             options={zipcodeOptions}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <InputBox
+                            required={true}
+                            name="full_address"
+                            label="Addres"
+                            placeholder="Enter your Addres"
                         />
                     </div>
                     <div className="fixed bottom-3 right-5 z-999">

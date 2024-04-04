@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useFetch } from "@/contexts/useFetch";
 import { useFetchByLoad } from "@/contexts/useFetchByLoad";
 import { usePatch } from "@/contexts/usePatch";
-import { MultiSelectBox, InputBox, CheckBox, FileBox, Buttons } from "@/components/RenderFroms";
+import { MultiSelectBox, InputBox, CheckBox, FileBox, SelectBox, Buttons } from "@/components/RenderFroms";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
@@ -147,14 +147,6 @@ export default function Page({ params }: { params: { id: string } }) {
                                         placeholder={language.email}
                                     />
                                 </div>
-                                {/* <div className="flex flex-col">
-                                <InputBox
-                                    required={true}
-                                    name="lace"
-                                    label={language.lace}
-                                    placeholder={language.lace}
-                                />
-                            </div> */}
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
@@ -179,22 +171,6 @@ export default function Page({ params }: { params: { id: string } }) {
                                         placeholder={language.creation}
                                     />
                                 </div>
-                                {/* <div className="flex flex-col">
-                                <InputBox
-                                    required={true}
-                                    name="firstName"
-                                    label={language.firstName_label}
-                                    placeholder={language.firstName_label}
-                                />
-                            </div> */}
-                                {/* <div className="flex flex-col">
-                                <InputBox
-                                    required={true}
-                                    name="mobile"
-                                    label={language.mobile}
-                                    placeholder={language.mobile}
-                                />
-                            </div> */}
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
@@ -211,14 +187,6 @@ export default function Page({ params }: { params: { id: string } }) {
                                         placeholder={language.function}
                                     />
                                 </div>
-                                {/* <div className="flex flex-col">
-                                <InputBox
-                                    required={true}
-                                    name="internet"
-                                    label={language.internet}
-                                    placeholder={language.internet}
-                                />
-                            </div> */}
                                 <div className="flex flex-col">
                                     <InputBox
                                         required={true}
@@ -227,21 +195,14 @@ export default function Page({ params }: { params: { id: string } }) {
                                         placeholder={language.city}
                                     />
                                 </div>
-                                {/* <div className="flex flex-col">
-                                <InputBox
-                                    required={true}
-                                    name="job"
-                                    label={language.job}
-                                    placeholder={language.job}
-                                />
-                            </div> */}
                                 <div className="flex flex-col">
-                                    <InputBox
+                                    <SelectBox
                                         required={true}
+                                        treeCheckable={true}
                                         name="postalCode"
                                         label={language.postal_label}
                                         placeholder={language.postal_placeholder}
-                                        type="number"
+                                        options={zipcodeOptions}
                                     />
                                 </div>
                             </div>
